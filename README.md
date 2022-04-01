@@ -70,6 +70,41 @@ For the next section, we used the dataset of “country_partner_sitcproduct4digi
 For this dataset, there are a total of 235 out of 258 countries that traded a total of 766 different SITC-4 digit products.
 From this dataset, we can get some basic trading information for the year 2019. Below are tables describing by descending order of the value the highest exporting countries, the highest importing countries, the strongest pairs of country partners and the most traded SITC-4 digit products.
 
+### Strongest countries according to descending export value
+|location_id|export_value|location_name_short_en|Percentage|
+|-----------|------------|----------------------|----------|
+|43|2455821372827|China|13.467775|
+|231|1632206655429|United States of America|
+|8.951055|61|1492780104757|Germany|8.186437|
+|114|717978619544|Japan|3.937409|
+|77|554501869931|France|3.040900|
+
+### Strongest countries according to descending import value
+|location_id|import_value|location_name_short_en|Percentage|
+|-----------|------------|----------------------|----------|
+|231|2333016626976|United States of America|12.794311|
+|43|1643417201652|China|9.012534|
+|61|1165700201526|Germany|6.392724|
+|81|658130564040|United Kingdom|3.609201|
+|77|638637545124|France|3.502301|
+
+### Strongest partners according to descending export/import value
+|location_id|partner_id|value|export_country|import_country|Percentage|
+|-----------|----------|-----|--------------|--------------|----------|
+|43|231|387348497156|China|United States of America|2.124227|
+|138|231|361292099796|Mexico|United States of America|1.981333|
+|39|231|330853780633|Canada|United States of America|1.814409|
+|231|39|288655180128|United States of America|Canada|1.582991|
+|43|97|278149267556|China|Hong Kong|1.525376|
+
+### Highest traded SITC-4 digit products according to descending value
+|product_id|value|sitc_product_name_short_en|Percentage|
+|----------|-----|--------------------------|----------|
+|865|1090531439917|Crude petroleum and oils |5.980497|
+|866|740376437519|Petroleum products, refined|4.060240|
+|1314|732562848187|Passenger motor vehicles |4.017390|
+|1432|676133162948|Special transactions|3.707928|
+|1307|635348789903|Electronic microcircuits|3.484266|
 
 
 ### Related work
