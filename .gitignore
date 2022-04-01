@@ -109,7 +109,7 @@ Thumbs.db
 
 
 
-# Exclude the .csv and archieve files in the data/dataverse_files folder
-./dataset/*.csv
-./dataset/*.zip
-./dataset/*.tab
+# Exclude the .csv and archieve files
+*.csv
+*.zip
+*.tab
