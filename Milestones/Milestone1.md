@@ -25,8 +25,13 @@ Note that we might modify or extend our ideas during the implementation but we t
 
 ## Exploratory Data Analysis
 
-The dataset is divided into 3 types of tables. The main data table contains the trade infos and two classification tables containing the info about the products and the countries. There are 6 different types of data tables. All table types contain data ranging from 1962 up to 2019:
+The dataset contains trade data for a total of 235 out of 258 countries and a total of 766 different SITC-4 digit products, across 20 categories. All table types contain data ranging from 1962 up to 2019. 
 
+The products are divided into 3 categories: SITC product section, SITC 2 digit products and SITC 4 digit products.  Each category classifies all products into a sub-group of products. The SITC product section ranges from 0 to 9, the SITC 2 digit products ranges from 00 to 99 and the SITC 4 digit products ranges from 0000 to 9999. All 3 SITC types of products are inter-connected i.e. a product with SITC 4 digit product code “wxyz” is contained in the SITC 2 digit products of “wx” and is contained in the SITC product section of “w”.
+
+### Types of Tables in the Dataset
+
+The dataset is divided into 3 types of tables. The main data table contains the trade infos and two classification tables containing the info about the products and the countries. There are 6 different types of data tables, as shown in Tab. 1. 
 
 |Table|Description|
 |-----|-----------|
@@ -36,13 +41,11 @@ The dataset is divided into 3 types of tables. The main data table contains the 
 |country_sitcproduct2digit_year|Country exports/imports for SITC 2 digit products|
 |country_sitcproduct4digit_year|Country exports/imports for SITC 4 digit products|
 |country_sitcproductsection_year|Country exports/imports for SITC product section|
-<p align = "center">
-Tab.1 - Types of Tables in Dataset
-</p>
 
-The products are divided into 3 categories: SITC product section, SITC 2 digit products and SITC 4 digit products.  Each category classifies all products into a sub-group of products. The SITC product section ranges from 0 to 9, the SITC 2 digit products ranges from 00 to 99 and the SITC 4 digit products ranges from 0000 to 9999. All 3 SITC types of products are inter-connected i.e. a product with SITC 4 digit product code “wxyz” is contained in the SITC 2 digit products of “wx” and is contained in the SITC product section of “w”.
+**Tab. 1** - Types of Tables in Dataset
 
-For the next section, we used the dataset of “country_partner_sitcproduct4digit_year_2019” to have a first look at the available data. The dataset contains 4 085 596 entries where each entry corresponds to a trade realized between two countries. Note that since every trade consists of either an import or export between two countries, every trade is represented twice. For every trade, we have :
+
+Here we used the dataset of “country_partner_sitcproduct4digit_year_2019” to have a first look at the available data. The dataset contains 4 085 596 entries where each entry corresponds to a trade realized between two countries. Note that since every trade consists of either an import or export between two countries, every trade is represented twice. For every trade, we have related information listed in Tab. 2. 
 
 
 |Name|Description|
@@ -59,11 +62,12 @@ For the next section, we used the dataset of “country_partner_sitcproduct4digi
 |partner_code|3-character ISO country code|
 |sitc_product_code|SITC (Rev. 2) product code|
 
+**Tab. 2** - Types of Entries in Dataset 
 
-For this dataset, there are a total of 235 out of 258 countries that traded a total of 766 different SITC-4 digit products.
-From this dataset, we can get some basic trading information for the year 2019. Below are tables describing by descending order of the value the highest exporting countries, the highest importing countries, the strongest pairs of country partners and the most traded SITC-4 digit products.
+### Strongest Countries for Different Attributes
 
-### Strongest countries according to descending export value
+This dataset provides some basic trading information for the year 2019. Below are tables describing by descending order of the value the highest exporting countries, the highest importing countries, the strongest pairs of country partners and the most traded SITC-4 digit products.
+
 |location_id|export_value|location_name_short_en|Percentage|
 |-----------|------------|----------------------|----------|
 |43|2455821372827|China|13.467775|
@@ -72,7 +76,9 @@ From this dataset, we can get some basic trading information for the year 2019. 
 |114|717978619544|Japan|3.937409|
 |77|554501869931|France|3.040900|
 
-### Strongest countries according to descending import value
+**Tab. 3** - The Countries with Highest and Descending Export Values
+
+
 |location_id|import_value|location_name_short_en|Percentage|
 |-----------|------------|----------------------|----------|
 |231|2333016626976|United States of America|12.794311|
@@ -81,7 +87,9 @@ From this dataset, we can get some basic trading information for the year 2019. 
 |81|658130564040|United Kingdom|3.609201|
 |77|638637545124|France|3.502301|
 
-### Strongest partners according to descending export/import value
+**Tab. 4** - The Countries with Highest and Descending Import Values
+
+
 |location_id|partner_id|value|export_country|import_country|Percentage|
 |-----------|----------|-----|--------------|--------------|----------|
 |43|231|387348497156|China|United States of America|2.124227|
@@ -90,7 +98,9 @@ From this dataset, we can get some basic trading information for the year 2019. 
 |231|39|288655180128|United States of America|Canada|1.582991|
 |43|97|278149267556|China|Hong Kong|1.525376|
 
-### Highest traded SITC-4 digit products according to descending value
+**Tab. 5** - The Strongest Pairs of Country Partners with Highest and Descending Export/Import Value
+
+
 |product_id|value|sitc_product_name_short_en|Percentage|
 |----------|-----|--------------------------|----------|
 |865|1090531439917|Crude petroleum and oils |5.980497|
@@ -99,6 +109,23 @@ From this dataset, we can get some basic trading information for the year 2019. 
 |1432|676133162948|Special transactions|3.707928|
 |1307|635348789903|Electronic microcircuits|3.484266|
 
+**Tab. 6** - The Most Traded SITC-4 Digit Products with Highest and Descending Value
+
+### Statiscal Preperties
+
+From Tab. 7, we can see the statistics of export & import values for different countries and products. 
+
+|attribute (in 2019)|mean|median|standard deviation|
+|----------|-----|--------------------------|----------|
+|Exports for Different Countries|2.3e10|7.6e9 |7.2e10 |
+|Imports for Different Countries|7.7e10|6.6e9 |2.3e11 |
+|Exports for Different Products|7.7e10|4.1e9 |2.4e11 |
+
+**Tab. 7** - The Most Traded SITC-4 Digit Products with Highest and Descending Value
+
+From the high value of standard deviation, we can see that the import and export value of different countries and products are highly diverse. Also, the import and export amount of countries is dominated by a small number of main importer/exporter countries. This can also be seen from the histogram below. The histogram of country and products exports and imports are heavily right-skewed. 
+
+**Fig 1.** - Product space for exports
 
 ## Related work
 We have found trade visualizations such as: 
@@ -108,17 +135,18 @@ We have found trade visualizations such as:
 
 And of course the [The Atlas of Economic Complexity](https://atlas.cid.harvard.edu/) from where our data originates. In some of these works, for each country, the percentage of each category of products in terms of import or export is visualized as the area of the corresponding color, as shown in fig. 1. Some visualized the trade amounts between countries, as shown in fig. 2. Some visualized trade relationships between countries, yet failed to relate that to geography locations, as shown in fig. 3. 
 
-![Fig 1.](../images/Country_analysis_UK_WITS.png)
-**Fig 1.** - United Kingdom, Import by Product
+<img src="../images/Country_analysis_UK_WITS.png" width="1000">
 
-![Fig 2.](../images/importers_ukrainian_sunflower_seeds.png)
-**Fig 2.** - Top 5 importers of Ukraininan sunflower seeds
+**Fig. 2** - United Kingdom, Import by Product
 
-![Fig 3.](../images/Product_space_exports_Atlas.png)
-**Fig 3.** - Product space for exports
+<img src="../images/importers_ukrainian_sunflower_seeds.png" width="600">
 
+**Fig. 3** - Top 5 importers of Ukraininan sunflower seeds
 
+<img src="../images/Product_space_exports_Atlas.png" width="600">
 
-Apart from visualizing imports and exports between countries on a world map using colors, our novelty also lies in that we use  an interactive map together with the time series data that shows the evolution of trade throughout the years. In other words,  we will implement our original idea of showing the rise or decline of a country's trade as years went on.
+**Fig. 4** - Product space for exports
 
- We took inspiration from the previously mentioned related works. We also analyzed the subreddit called r/dataisbeautiful where redditors produce great visualizations in a lot of different topics. While we don’t have any specific examples that we directly incorporate into our project, this [post](https://www.reddit.com/r/dataisbeautiful/comments/pt7gu3/earths_submarine_fiber_optic_cable_network_oc/) especially gave us the idea to use an interactive 3D globe.
+Apart from visualizing imports and exports between countries on a world map using colors, our novelty also lies in that we use an interactive map together with the time series data that shows the evolution of trade throughout the years. In other words,  we will implement our original idea of showing the rise or decline of a country's trade as years went on.
+
+We took inspiration from the previously mentioned related works. We also analyzed the subreddit called r/dataisbeautiful where redditors produce great visualizations in a lot of different topics. While we don’t have any specific examples that we directly incorporate into our project, this [post](https://www.reddit.com/r/dataisbeautiful/comments/pt7gu3/earths_submarine_fiber_optic_cable_network_oc/) especially gave us the idea to use an interactive 3D globe.
