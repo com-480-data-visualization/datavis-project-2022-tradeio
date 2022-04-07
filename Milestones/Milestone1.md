@@ -1,22 +1,12 @@
-# Project of Data Visualization (COM-480)
+# Milestone 1 (8th April, 5pm)
 
-| Student's name | SCIPER |
-| -------------- | ------ |
-| Gangloff Maximilian| 322220|
-| Liu Ziwei| |
-| Soydinç Mert| |
-
-[Milestone 1](./Milestones/Milestone1.md) • [Milestone 2](#milestone-2) • [Milestone 3](#milestone-3)
-
-## Milestone 1 (8th April, 5pm)
-
-### Dataset
+## Dataset
 
 We will be working on the International Trade Data dataset which was produced with the contributions of the European Union, United Nations and World Trade Organization. This dataset contains the import and export values(in USD) of more than 200 countries spread across more than 700 product goods, in 10  categories such as Food, Services, Chemicals, etc for a given year. We will discuss more about the dataset in the third Exploratory Data Analysis chapter. 
 
 International Trade Data dataset is widely and freely available online from a number of different sources in slightly different formats. Among those, we decided to use the [dataset provided by Harvard](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/H8SFD2) due to the Harvard dataverse being better structured and organized than its alternatives. Compared to other datasets, it provides trade data over a longer time span, from 1962 to 2019. The dataset was also cleaned already by the [Harvard Growth Lab](https://growthlab.cid.harvard.edu) researchers using bilateral trade flows to account for inconsistent reporting which provides more reliable data. This method is called the Bustos-Yildrim Method. The raw data of this dataset originates from the [United Nations Statistical Division (COMTRADE)](https://comtrade.un.org/) and the [International Monetary Fund (IMF)](https://www.imf.org/en/Data). Choosing this dataset would save us time for the data cleaning and  support convenient implementation.  
 
-### Problematic
+## Problematic
 With our implementation, we intend to show  complex trade networks between countries based on their import/export relations using easy to understand visuals. Our main motivation is that a user without any trade background should be able to discern which countries are the biggest importers/exporters for a given product and what products & how much of them each country imports/exports. The user should also easily see which countries are strongly linked (meaning trade a great amount with each other) through the visualized flow of products. This makes it so that our main target audience  is the broader public interested in world trade and economics without any past trade knowledge who wants to quickly understand the trade relations and their evolution between any two countries.
 
 In order to achieve these tasks, we are thinking about implementing a visualization as follows:
@@ -33,7 +23,7 @@ In order to achieve these tasks, we are thinking about implementing a visualizat
 Note that we might modify or extend our ideas during the implementation but we think the above plan is a solid general idea to use as a foundation.
 
 
-### Exploratory Data Analysis
+## Exploratory Data Analysis
 
 The dataset is divided into 3 types of tables. The main data table contains the trade infos and two classification tables containing the info about the products and the countries. There are 6 different types of data tables. All table types contain data ranging from 1962 up to 2019:
 
@@ -107,7 +97,7 @@ From this dataset, we can get some basic trading information for the year 2019. 
 |1307|635348789903|Electronic microcircuits|3.484266|
 
 
-### Related work
+## Related work
 We have found trade visualizations such as: 
 - [Trade Data Visualization WITS](https://wits.worldbank.org/trade-visualization.aspx)
 - [What did Switzerland export in 2019?](https://atlas.cid.harvard.edu/explore?country=41&product=undefined&year=2019&productClass=HS&target=Product&partner=undefined&startYear=1995)
@@ -115,13 +105,13 @@ We have found trade visualizations such as:
 
 And of course the [The Atlas of Economic Complexity](https://atlas.cid.harvard.edu/) from where our data originates. In some of these works, for each country, the percentage of each category of products in terms of import or export is visualized as the area of the corresponding color, as shown in fig. 1. Some visualized the trade amounts between countries, as shown in fig. 2. Some visualized trade relationships between countries, yet failed to relate that to geography locations, as shown in fig. 3. 
 
-![Fig 1.](./images/Country_analysis_UK_WITS.png)
+![Fig 1.](../images/Country_analysis_UK_WITS.png)
 **Fig 1.** - United Kingdom, Import by Product
 
-![Fig 2.](./images/importers_ukrainian_sunflower_seeds.png)
+![Fig 2.](../images/importers_ukrainian_sunflower_seeds.png)
 **Fig 2.** - Top 5 importers of Ukraininan sunflower seeds
 
-![Fig 3.](./images/Product_space_exports_Atlas.png)
+![Fig 3.](../images/Product_space_exports_Atlas.png)
 **Fig 3.** - Product space for exports
 
 
@@ -129,20 +119,3 @@ And of course the [The Atlas of Economic Complexity](https://atlas.cid.harvard.e
 Apart from visualizing imports and exports between countries on a world map using colors, our novelty also lies in that we use  an interactive map together with the time series data that shows the evolution of trade throughout the years. In other words,  we will implement our original idea of showing the rise or decline of a country's trade as years went on.
 
  We took inspiration from the previously mentioned related works. We also analyzed the subreddit called r/dataisbeautiful where redditors produce great visualizations in a lot of different topics. While we don’t have any specific examples that we directly incorporate into our project, this [post](https://www.reddit.com/r/dataisbeautiful/comments/pt7gu3/earths_submarine_fiber_optic_cable_network_oc/) especially gave us the idea to use an interactive 3D globe.
-
-
-## Milestone 2 (7th May, 5pm)
-
-**10% of the final grade**
-
-
-## Milestone 3 (4th June, 5pm)
-
-**80% of the final grade**
-
-
-## Late policy
-
-- < 24h: 80% of the grade for the milestone
-- < 48h: 70% of the grade for the milestone
-
