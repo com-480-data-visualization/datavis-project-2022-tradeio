@@ -36,9 +36,7 @@ The dataset is divided into 3 types of tables. The main data table contains the 
 |country_sitcproduct2digit_year|Country exports/imports for SITC 2 digit products|
 |country_sitcproduct4digit_year|Country exports/imports for SITC 4 digit products|
 |country_sitcproductsection_year|Country exports/imports for SITC product section|
-
-| <b>Table 1 Types of Tables in Dataset </b>|
-
+<figcaption align = "center"><b>Tab.1 Types of Tables in Dataset</b></figcaption>
 
 The products are divided into 3 categories: SITC product section, SITC 2 digit products and SITC 4 digit products.  Each category classifies all products into a sub-group of products. The SITC product section ranges from 0 to 9, the SITC 2 digit products ranges from 00 to 99 and the SITC 4 digit products ranges from 0000 to 9999. All 3 SITC types of products are inter-connected i.e. a product with SITC 4 digit product code “wxyz” is contained in the SITC 2 digit products of “wx” and is contained in the SITC product section of “w”.
 
