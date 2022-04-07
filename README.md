@@ -6,7 +6,7 @@
 | Liu Ziwei| 336553 | 
 | Soydinç Mert| 321131 | 
 
-[Milestone 1](#milestone-2) • [Milestone 2](#milestone-2) • [Milestone 3](#milestone-3)
+[Milestone 1](#Milestone-1) • [Milestone 2](#Milestone-2) • [Milestone 3](#Milestone-3)
 
 ## Milestone 1 (8th April, 5pm)
 
