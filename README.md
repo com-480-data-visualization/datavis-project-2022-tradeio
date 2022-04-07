@@ -3,7 +3,7 @@
 | Student's name | SCIPER |
 | -------------- | ------ |
 | Gangloff Maximilian| 322220|
-| Liu Ziwei| |
+| Liu Ziwei| | 336553 | 
 | Soydinç Mert| 321131 | 
 
 [Milestone 1](#milestone-1) • [Milestone 2](#milestone-2) • [Milestone 3](#milestone-3)
