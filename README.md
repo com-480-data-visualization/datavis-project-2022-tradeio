@@ -10,7 +10,7 @@
 
 ## Milestone 1 (8th April, 5pm)
 
-[Milestone 1](./Milestones/Milestone1.md)
+[Milestone 1 - Report](./Milestones/Milestone1.md)
 
 ## Milestone 2 (7th May, 5pm)
 
