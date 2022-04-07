@@ -125,7 +125,9 @@ From Tab. 7, we can see the statistics of export & import values for different c
 
 From the high value of standard deviation, we can see that the import and export value of different countries and products are highly diverse. Also, the import and export amount of countries is dominated by a small number of main importer/exporter countries. This can also be seen from the histogram below. The histogram of country and products exports and imports are heavily right-skewed. 
 
-**Fig 1.** - Product space for exports
+<img src="../images/Statistics.png" width="1000">
+
+**Fig 1.** - Distribution for Country and Products Export and Import Values
 
 ## Related work
 We have found trade visualizations such as: 
