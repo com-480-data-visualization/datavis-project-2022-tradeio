@@ -111,7 +111,7 @@ This dataset provides some basic trading information for the year 2019. Below ar
 
 **Tab. 6** - The Most Traded SITC-4 Digit Products with Highest and Descending Value
 
-### Statiscal Preperties
+### Statiscal Properties
 
 From Tab. 7, we can see the statistics of export & import values for different countries and products. 
 
