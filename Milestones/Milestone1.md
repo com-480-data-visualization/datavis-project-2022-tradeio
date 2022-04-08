@@ -14,7 +14,7 @@ In order to achieve these tasks, we are thinking about implementing a visualizat
 - Our main screen will be an interactive world map showing the country borders. - We plan to have a 3D globe that you can spin around for this. Alternatively, we might also use a 2D plane.
 - This map will be colorless except the country borders.
 - We will assign colors to different product groups so that they will be visually distinct. Countries will be colored depending on their trade value in these products.
-- There will be 2 modes: export and import; information on them will be visualized.
+- There will be 2 modes: export and import; information on each category will be visualized independently.
 - The user will be able to select a single product from the sidebar to see only the colors (imports & exports) corresponding to that product.
 - Selecting a country will clear the map of all colors unrelated to that country and the map will now show arrows representing the flow of trade going in and out of the selected country
 - We will have a year slider at the bottom where the user can adjust to see world’s trade in different years.
