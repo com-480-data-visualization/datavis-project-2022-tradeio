@@ -135,7 +135,7 @@ We have found trade visualizations such as:
 - [What did Switzerland export in 2019?](https://atlas.cid.harvard.edu/explore?country=41&product=undefined&year=2019&productClass=HS&target=Product&partner=undefined&startYear=1995)
 - [Importers of Ukrainian sunflower seeds 2020](https://preview.redd.it/ygwp4krup7q81.png?width=960&crop=smart&auto=webp&s=9a6dbfc9f9b36b46e0d8b286da737eb58737c7f7)
 
-And of course the [The Atlas of Economic Complexity](https://atlas.cid.harvard.edu/) from where our data originates. In some of these works, for each country, the percentage of each category of products in terms of import or export is visualized as the area of the corresponding color, as shown in fig. 1. Some visualized the trade amounts between countries, as shown in fig. 2. Some visualized trade relationships between countries, yet failed to relate that to geography locations, as shown in fig. 3. 
+And of course the [The Atlas of Economic Complexity](https://atlas.cid.harvard.edu/) from where our data originates. In some of these works, for each country, the percentage of each category of products in terms of import or export is visualized as the area of the corresponding color, as shown in fig. 2. Some visualized the trade amounts between countries, as shown in fig. 3. Some visualized trade relationships between countries, yet failed to relate that to geography locations, as shown in fig. 4. 
 
 <img src="../images/Country_analysis_UK_WITS.png" width="1000">
 
