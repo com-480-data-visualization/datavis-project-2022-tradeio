@@ -7,6 +7,7 @@
 | Soydinç Mert| 321131 | 
 
 [Milestone 1](#Milestone-1) • [Milestone 2](#Milestone-2) • [Milestone 3](#Milestone-3)
+**[https://com-480-data-visualization.github.io/data-visualization-project-2022-Tradeio](https://com-480-data-visualization.github.io/datavis-project-2022-tradeio/)**
 
 ## Milestone 1 (8th April, 5pm)
 
