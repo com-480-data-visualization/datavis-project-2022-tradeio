@@ -1,0 +1,146 @@
+<head>
+    <style> body { margin: 0; } </style>
+  
+    <script src="https://unpkg.com/d3-dsv@3.0.1/dist/d3-dsv.min.js"></script>
+    <script src="https://unpkg.com/index-array-by@1.3.2/dist/index-array-by.min.js"></script>
+    <script src="https://unpkg.com/d3@7.4.4/dist/d3.min.js"></script>
+  
+    <script src="https://unpkg.com/globe.gl@2.26.1/dist/globe.gl.min.js"></script>
+    <!--<script src="../../dist/globe.gl.js"></script>-->
+  </head>
+  
+  <body>
+  <div id="globeViz"></div>
+  
+  <script>
+  
+    const COUNTRY = 'United States';
+    //const OPACITY = 0.22;
+    const OPACITY = 0.99;
+    const colorScale = d3.scaleSequentialSqrt(d3.interpolateYlOrRd);
+
+    // GDP per capita (avoiding countries with small pop)
+    const getVal = feat => feat.properties.GDP_MD_EST / (5 * 1e7); //  / Math.max(1e5, feat.properties.POP_EST);
+
+    fetch('./dataset/classifications_data/ne_110m_admin_0_countries.geojson').then(res => res.json()).then(countries =>
+    {
+        fetch('./dataset/geo_export.json').then(x => x.json()).then(exports =>
+        {
+            const myGlobe = Globe()
+        (document.getElementById('globeViz'))  
+        .globeImageUrl('https://unpkg.com/three-globe@2.24.4/example/img/earth-night.jpg')
+        .backgroundImageUrl('https://unpkg.com/three-globe@2.24.4/example/img/night-sky.png')
+        .pointOfView({ lat: 39.6, lng: -98.5, altitude: 2 }) // aim at continental US centroid
+
+            //.arcDashLength(0.5)
+            //.arcDashGap(0.5)
+            //.arcDashInitialGap(() => Math.random())
+            //.arcDashAnimateTime(2000)
+
+            .arcDashLength(0.1)
+            .arcDashGap(0.1)
+            //.arcDashInitialGap(() => Math.random())
+            .arcDashAnimateTime(2000)
+
+
+
+
+            //.arcColor(d => [`rgba(0, 255, 0, ${OPACITY})`, `rgba(255, 0, 0, ${OPACITY})`])
+            .arcColor('color')
+            .arcsTransitionDuration(0)
+            .onGlobeClick(reset)
+            .onPolygonClick(radiate_arcs)
+            .arcStroke("stroke")
+            //airport
+            .lineHoverPrecision(0)
+            .polygonsData(countries.features.filter(d => d.properties.ISO_A2 !== 'AQ'))
+            .polygonAltitude(0.02)
+            .polygonCapColor(feat => colorScale(getVal(feat)))
+            .polygonSideColor(() => 'rgba(0, 100, 0, 0.15)')
+            .polygonStrokeColor(() => '#111')
+            .polygonsTransitionDuration(300)
+
+
+
+            // Gen random data
+            const N = 20;
+            const arcsData = [...Array(N).keys()].map(() => ({
+            startLat: 56.6,
+            startLng: -104.5,
+            endLat: (Math.random() - 0.5) * 180,
+            endLng: (Math.random() - 0.5) * 360,
+            //color: [['red', 'white', 'blue', 'green'][Math.round(Math.random() * 3)], ['red', 'white', 'blue', 'green'][Math.round(Math.random() * 3)]]
+            color: [`rgba(0, 255, 0, ${OPACITY})`, `rgba(255, 0, 0, ${OPACITY})`],
+            stroke: 0.5
+            }));
+
+            //myGlobe.arcsData(arcsData)
+
+            var neutral = false
+
+            function reset({ lat: endLat, lng: endLng }) {
+                myGlobe.arcsData([]);
+                myGlobe.polygonCapColor(feat => colorScale(getVal(feat)))
+                myGlobe.labelsData([])
+            }
+            function radiate_arcs(polygon, event, { lat: clicklat, lng:clicklng, altitude }){
+                reset(10,10)
+                //const arc = { startLat: startlat, startLng: startlng, endLat:39.6, endLng:-98.5 };
+                //myGlobe.arcsData([...myGlobe.arcsData(), arc]);
+                console.log(exports[polygon.properties.ISO_A3]);
+                var arcArray = exports[polygon.properties.ISO_A3];
+                var allArcs = []
+                for (var i = 0; i < arcArray.length; i++) {
+                    var newArc = {
+                        startLat: arcArray[i][3],
+                        startLng: arcArray[i][4],
+                        endLat: arcArray[i][7],
+                        endLng: arcArray[i][8],
+                        //color: [['red', 'white', 'blue', 'green'][Math.round(Math.random() * 3)], ['red', 'white', 'blue', 'green'][Math.round(Math.random() * 3)]]
+                        //color: [`rgba(0, 255, 0, ${arcArray[i][9]})`, `rgba(255, 0, 0, ${arcArray[i][9]})`],
+                        //color: [`rgba(0, 255, 0, 1.50)`, `rgba(255, 0, 0, 1.50)`],
+                        color: "gainsboro",
+                        stroke: Math.min(Math.max(arcArray[i][9] * 8, 0.5) , 2) 
+                    }
+                    allArcs =   [...allArcs, newArc]             
+                }
+                myGlobe.arcsData(allArcs);    
+                //myGlobe.polygonCapColor(d => d === polygon ? 'steelblue' : "lightsalmon")
+                myGlobe.polygonCapColor(d => PolygonColorChanger(d,polygon,arcArray))     
+                //console.log(exports[polygon.properties.ISO_A3]);
+                var clickLabel = ["a", "a", "a","a", "a", "a",arcArray[0][2], arcArray[0][3],arcArray[0][4] ];
+
+
+                myGlobe.labelsData([...arcArray, clickLabel]);
+                myGlobe.labelLat(d => d[7])
+                myGlobe.labelLng(d => d[8])
+                myGlobe.labelText(d => d[6])
+                myGlobe.labelSize(d => 1.2)
+                myGlobe.labelDotRadius(d => 0.9)
+                myGlobe.labelColor(() => 'darkturquoise')                
+                myGlobe.labelResolution(8)
+                myGlobe.labelAltitude(0.025)
+
+            }
+            function PolygonColorChanger(d,polygon,arcArray){
+                var targets = arcArray.map(d => d[5]);
+                if (d === polygon){
+                    console.log(d)
+                    return "steelblue"
+                }else if(targets.includes(d.properties.ISO_A3)){
+                    return "lightsalmon"
+                }                    
+                else{
+                    return "grey"
+                }
+            }
+
+            
+
+    })});
+  
+    
+
+    
+  </script>
+  </body>
