@@ -7,7 +7,8 @@ const colorScale = d3.scaleSequentialSqrt(d3.interpolateYlOrRd);
 const flagEndpoint = 'https://corona.lmao.ninja/assets/img/flags';
 
 // GDP per capita (avoiding countries with small pop)
-const getVal = feat => feat.properties.GDP_MD / (5 * 1e6); //  / Math.max(1e5, feat.properties.POP_EST);
+//const getVal = feat => feat.properties.GDP_MD / (5 * 1e6); //  / Math.max(1e5, feat.properties.POP_EST);
+const getVal = feat => feat.properties.total_trades_2019 / (5*1e12); //  / Math.max(1e5, feat.properties.POP_EST);
 
 //fetch('../dataset/classifications_data/ne_110m_admin_0_countries.geojson').then(res => res.json()).then(countries =>{
 fetch('../dataset/countries.geojson').then(res => res.json()).then(countries =>{
@@ -72,7 +73,7 @@ fetch('../dataset/countries.geojson').then(res => res.json()).then(countries =>{
                     <div class="card-spacer"></div>
                     <hr />
                     <div class="card-spacer"></div>
-                    <span><b>Total Trade:</b> ${d.total_trades_2019 === -1  ? 'No Data available' : d3.format('.4s')(d.total_trades_2019).replace(/G/,"B USD").replace(/M/,"M USD").replace(/k/,"k USD") } - ${d3.format(".2f")(d.percentage_total_2019)}%</span><br />
+                    <span><b>Total Trades:</b> ${d.total_trades_2019 === -1  ? 'No Data available' : d3.format('.4s')(d.total_trades_2019).replace(/G/,"B USD").replace(/M/,"M USD").replace(/k/,"k USD") } - ${d3.format(".2f")(d.percentage_total_2019)}%</span><br />
                     <span><b>Total Export:</b> ${d.export_value_2019 === -1  ? 'No Data available' : d3.format('.4s')(d.export_value_2019).replace(/G/,"B USD").replace(/M/,"M USD").replace(/k/,"k USD") } - ${d3.format(",.2f")(d.percentage_exports_2019)}%</span> <br />
                     <span><b>Total Import:</b> ${d.import_value_2019 === -1  ? 'No Data available' : d3.format('.4s')(d.import_value_2019).replace(/G/,"B USD").replace(/M/,"M USD").replace(/k/,"k USD") } - ${d3.format(",.2f")(d.percentage_imports_2019)}%</span>
 
