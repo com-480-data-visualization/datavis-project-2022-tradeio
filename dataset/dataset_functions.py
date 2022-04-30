@@ -12,7 +12,7 @@ country_sitc_4digit = 'country_sitcproduct4digit_year.csv'
 country_sitc_section = 'country_sitcproductsection_year.csv'
 sitc_2digit=2
 sitc_4digit=4
-years = range(1969, 2019+1)
+years = range(1962, 2019+1)
 
 def get_data(country_partner=True, sitc_digit=4, year=2019):
     """
