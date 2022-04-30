@@ -72,9 +72,9 @@ fetch('../dataset/countries.geojson').then(res => res.json()).then(countries =>{
                     <div class="card-spacer"></div>
                     <hr />
                     <div class="card-spacer"></div>
-                    <span><b>Total Trade:</b> ${d.total_trades_2019 === -1  ? 'No Data available' : d3.format('.4s')(d.total_trades_2019).replace(/G/,"B USD").replace(/M/,"M USD").replace(/k/,"k USD") } - ${d3.format(",.2%")(d.percentage_total_2019)}</span><br />
-                    <span><b>Total Export:</b> ${d.export_value_2019 === -1  ? 'No Data available' : d3.format('.4s')(d.export_value_2019).replace(/G/,"B USD").replace(/M/,"M USD").replace(/k/,"k USD") } - ${d3.format(",.2%")(d.percentage_exports_2019)}</span> <br />
-                    <span><b>Total Import:</b> ${d.import_value_2019 === -1  ? 'No Data available' : d3.format('.4s')(d.import_value_2019).replace(/G/,"B USD").replace(/M/,"M USD").replace(/k/,"k USD") } - ${d3.format(",.2%")(d.percentage_imports_2019)}</span>
+                    <span><b>Total Trade:</b> ${d.total_trades_2019 === -1  ? 'No Data available' : d3.format('.4s')(d.total_trades_2019).replace(/G/,"B USD").replace(/M/,"M USD").replace(/k/,"k USD") } - ${d3.format(".2f")(d.percentage_total_2019)}%</span><br />
+                    <span><b>Total Export:</b> ${d.export_value_2019 === -1  ? 'No Data available' : d3.format('.4s')(d.export_value_2019).replace(/G/,"B USD").replace(/M/,"M USD").replace(/k/,"k USD") } - ${d3.format(",.2f")(d.percentage_exports_2019)}%</span> <br />
+                    <span><b>Total Import:</b> ${d.import_value_2019 === -1  ? 'No Data available' : d3.format('.4s')(d.import_value_2019).replace(/G/,"B USD").replace(/M/,"M USD").replace(/k/,"k USD") } - ${d3.format(",.2f")(d.percentage_imports_2019)}%</span>
 
                     <div class="card-spacer"></div>
                     <hr />
