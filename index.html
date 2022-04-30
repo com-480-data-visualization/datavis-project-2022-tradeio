@@ -13,10 +13,8 @@
   <div id="globeViz"></div>
   
   <script>
-  
-    const COUNTRY = 'United States';
-    //const OPACITY = 0.22;
-    const OPACITY = 0.99;
+
+    //const OPACITY = 0.4;
     const colorScale = d3.scaleSequentialSqrt(d3.interpolateYlOrRd);
 
     // GDP per capita (avoiding countries with small pop)
@@ -27,10 +25,10 @@
         fetch('./dataset/geo_export.json').then(x => x.json()).then(exports =>
         {
             const myGlobe = Globe()
-        (document.getElementById('globeViz'))  
-        .globeImageUrl('https://unpkg.com/three-globe@2.24.4/example/img/earth-night.jpg')
-        .backgroundImageUrl('https://unpkg.com/three-globe@2.24.4/example/img/night-sky.png')
-        .pointOfView({ lat: 39.6, lng: -98.5, altitude: 2 }) // aim at continental US centroid
+            (document.getElementById('globeViz'))  
+            .globeImageUrl('https://unpkg.com/three-globe@2.24.4/example/img/earth-night.jpg')
+            .backgroundImageUrl('https://unpkg.com/three-globe@2.24.4/example/img/night-sky.png')
+            .pointOfView({ lat: 39.6, lng: -98.5, altitude: 2 }) // aim at continental US centroid
 
             //.arcDashLength(0.5)
             //.arcDashGap(0.5)
@@ -39,9 +37,24 @@
 
             .arcDashLength(0.1)
             .arcDashGap(0.1)
-            //.arcDashInitialGap(() => Math.random())
             .arcDashAnimateTime(2000)
+            .onArcHover(hoverArc => {
+                console.log("here")
+                if(hoverArc== null){
+                    myGlobe.arcColor(d => {
+                        return d.original_color;
+                });
+                }else{
+                    myGlobe.arcColor(d => {                     
+                    var split_color = hoverArc.color.substring(5, hoverArc.color.length-1).split(",");
+                    //const op = !hoverArc ? split_color[3] : d === hoverArc ? 0.9 : split_color[3] / 4;
+                    const op = hoverArc == d? 1:0.15
+                    return `rgba(${split_color[0]}, ${split_color[1]}, ${split_color[2]}, ${op})`;
+                });
 
+                }                               
+                
+            })
 
 
 
@@ -61,21 +74,6 @@
             .polygonsTransitionDuration(300)
 
 
-
-            // Gen random data
-            const N = 20;
-            const arcsData = [...Array(N).keys()].map(() => ({
-            startLat: 56.6,
-            startLng: -104.5,
-            endLat: (Math.random() - 0.5) * 180,
-            endLng: (Math.random() - 0.5) * 360,
-            //color: [['red', 'white', 'blue', 'green'][Math.round(Math.random() * 3)], ['red', 'white', 'blue', 'green'][Math.round(Math.random() * 3)]]
-            color: [`rgba(0, 255, 0, ${OPACITY})`, `rgba(255, 0, 0, ${OPACITY})`],
-            stroke: 0.5
-            }));
-
-            //myGlobe.arcsData(arcsData)
-
             var neutral = false
 
             function reset({ lat: endLat, lng: endLng }) {
@@ -87,8 +85,23 @@
                 reset(10,10)
                 //const arc = { startLat: startlat, startLng: startlng, endLat:39.6, endLng:-98.5 };
                 //myGlobe.arcsData([...myGlobe.arcsData(), arc]);
-                console.log(exports[polygon.properties.ISO_A3]);
-                var arcArray = exports[polygon.properties.ISO_A3];
+                var arcArray = 0                
+                if(polygon.properties.ADMIN == "France" || polygon.properties.ADMIN == "Norway" || polygon.properties.ADMIN == "Kosovo" ){
+                    switch(polygon.properties.ADMIN) {
+                        case "France":
+                            arcArray = exports["FRA"];
+                            break;
+                        case "Norway":
+                            arcArray = exports["NOR"];
+                            break; 
+                        case "Kosovo":
+                            arcArray = exports["XKX"];
+                            break; 
+                    }
+                }else{
+                    arcArray = exports[polygon.properties.ISO_A3];
+                }
+                //console.log(exports[polygon.properties.ISO_A3]);                
                 var allArcs = []
                 for (var i = 0; i < arcArray.length; i++) {
                     var newArc = {
@@ -97,11 +110,14 @@
                         endLat: arcArray[i][7],
                         endLng: arcArray[i][8],
                         //color: [['red', 'white', 'blue', 'green'][Math.round(Math.random() * 3)], ['red', 'white', 'blue', 'green'][Math.round(Math.random() * 3)]]
-                        //color: [`rgba(0, 255, 0, ${arcArray[i][9]})`, `rgba(255, 0, 0, ${arcArray[i][9]})`],
+                        color: `rgba(255, 0, 0 , ${Math.min(Math.max(arcArray[i][9] * 15, 0.3) , 0.8)})`,
+                        original_color: `rgba(255, 0, 0 , ${Math.min(Math.max(arcArray[i][9] * 15, 0.3) , 0.8)})`,
                         //color: [`rgba(0, 255, 0, 1.50)`, `rgba(255, 0, 0, 1.50)`],
-                        color: "gainsboro",
-                        stroke: Math.min(Math.max(arcArray[i][9] * 8, 0.5) , 2) 
+                        //color: "gainsboro",
+                        stroke: Math.min(Math.max(arcArray[i][9] * 8, 0.5) , 2) ,
+                        name: `${arcArray[i][1]} &#8594; ${arcArray[i][5]} : ${money_amount_fixer(arcArray[i][0])}`
                     }
+                    console.log(arcArray[i][9] *255 * 5)
                     allArcs =   [...allArcs, newArc]             
                 }
                 myGlobe.arcsData(allArcs);    
@@ -123,16 +139,31 @@
 
             }
             function PolygonColorChanger(d,polygon,arcArray){
-                var targets = arcArray.map(d => d[5]);
+                var targets_A3 = arcArray.map(x => x[5]);
+                var target_Name = arcArray.map(x => x[6]);
                 if (d === polygon){
                     console.log(d)
                     return "steelblue"
-                }else if(targets.includes(d.properties.ISO_A3)){
+                }else if(targets_A3.includes(d.properties.ISO_A3) || target_Name.includes(d.properties.ADMIN)){
                     return "lightsalmon"
                 }                    
                 else{
                     return "grey"
                 }
+            }
+            function money_amount_fixer(amount){
+                var fixed_amount = 0
+                if (amount > 1000000000){
+                    fixed_amount = "$" + (amount / 1000000000).toFixed(2) + "B "
+                    
+                }
+                else if(amount > 1000000){
+                    fixed_amount = "$" + (amount / 1000000).toFixed(2) + "M "
+                }
+                else{
+                    fixed_amount = "$" + amount
+                }
+                return fixed_amount
             }
 
             
