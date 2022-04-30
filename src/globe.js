@@ -15,9 +15,6 @@ fetch('../dataset/countries.geojson').then(res => res.json()).then(countries =>{
         const myGlobe = Globe()
         (document.getElementById('globeViz'))  
         .globeImageUrl('https://unpkg.com/three-globe@2.24.4/example/img/earth-night.jpg')
-        //.globeImageUrl('https://unpkg.com/three-globe@2.24.4/example/img/earth-dark.jpg')
-        // .globeImageUrl('https://unpkg.com/three-globe@2.24.4/example/img/earth-blue-marble.jpg')
-        //.globeImageUrl('https://unpkg.com/three-globe@2.24.4/example/img/earth-day.jpg')
         .backgroundImageUrl('https://unpkg.com/three-globe@2.24.4/example/img/night-sky.png')
         .pointOfView({ lat: 39.6, lng: -98.5, altitude: 2 }) // aim at continental US centroid
         .onGlobeClick(reset)
@@ -30,16 +27,35 @@ fetch('../dataset/countries.geojson').then(res => res.json()).then(countries =>{
         //.arcDashAnimateTime(2000)
         .arcDashLength(0.1)
         .arcDashGap(0.1)
-        //.arcDashInitialGap(() => Math.random())
         .arcDashAnimateTime(2000)
+        .onArcHover(hoverArc => {
+            console.log("here")
+            if(hoverArc== null){
+                myGlobe.arcColor(d => {
+                    return d.original_color;
+            });
+            }else{
+                myGlobe.arcColor(d => {                     
+                var split_color = hoverArc.color.substring(5, hoverArc.color.length-1).split(",");
+                //const op = !hoverArc ? split_color[3] : d === hoverArc ? 0.9 : split_color[3] / 4;
+                const op = hoverArc == d? 1:0.15
+                return `rgba(${split_color[0]}, ${split_color[1]}, ${split_color[2]}, ${op})`;
+            });
+
+            }                               
+            
+        })
         //.arcColor(d => [`rgba(0, 255, 0, ${OPACITY})`, `rgba(255, 0, 0, ${OPACITY})`])
         .arcColor('color')
         .arcsTransitionDuration(0)
+        .onGlobeClick(reset)
+        .onPolygonClick(radiate_arcs)
         .arcStroke("stroke")
+        //airport
+        .lineHoverPrecision(0)
 
 
         //// Polygon
-        .lineHoverPrecision(0)
         .polygonsData(countries.features.filter(d => d.properties.ISO_A2 !== 'AQ'))
         .polygonAltitude(0.01)
         .polygonCapColor(feat => convertRGBToRGBA(colorScale(getVal(feat)), OPACITY_POLYGONE))
@@ -96,20 +112,6 @@ fetch('../dataset/countries.geojson').then(res => res.json()).then(countries =>{
         // .hexPolygonAltitude(0.011)
 
 
-        // Gen random data
-        const N = 20;
-        const arcsData = [...Array(N).keys()].map(() => ({
-        startLat: 56.6,
-        startLng: -104.5,
-        endLat: (Math.random() - 0.5) * 180,
-        endLng: (Math.random() - 0.5) * 360,
-        //color: [['red', 'white', 'blue', 'green'][Math.round(Math.random() * 3)], ['red', 'white', 'blue', 'green'][Math.round(Math.random() * 3)]]
-        color: [`rgba(0, 255, 0, ${OPACITY})`, `rgba(255, 0, 0, ${OPACITY})`],
-        stroke: 0.5
-        }));
-
-        //myGlobe.arcsData(arcsData)
-
         var neutral = false
 
         function reset({ lat: endLat, lng: endLng }) {
@@ -118,16 +120,19 @@ fetch('../dataset/countries.geojson').then(res => res.json()).then(countries =>{
             //myGlobe.polygonCapColor(feat => colorScale(getVal(feat)), OPACITY_POLYGONE)
             //myGlobe.hexPolygonsData(countries.features)
             myGlobe.labelsData([])
-            myGlobe.onPolygonHover(hoverD => myGlobe.polygonAltitude(d => d === hoverD ? 0.1 : 0.01))
+            myGlobe.onPolygonHover(hoverD => myGlobe.polygonAltitude(d => d === hoverD ? 0.1 : 0.01))        
         }
 
         function radiate_arcs(polygon, event, { lat: clicklat, lng:clicklng, altitude }){
             reset(10,10)
+            
             //Remove changing altitude of country after a country has been selected
             myGlobe.onPolygonHover(_ => myGlobe.polygonAltitude(0.01))
+            
             //const arc = { startLat: startlat, startLng: startlng, endLat:39.6, endLng:-98.5 };
             //myGlobe.arcsData([...myGlobe.arcsData(), arc]);
-            console.log(exports[polygon.properties.ISO_A3]);
+            
+            //Data has already been cleaned, no need to change the ADMIN property for france, norway and Kosovo
             var arcArray = exports[polygon.properties.ISO_A3];
             var allArcs = []
             for (var i = 0; i < arcArray.length; i++) {
@@ -137,11 +142,14 @@ fetch('../dataset/countries.geojson').then(res => res.json()).then(countries =>{
                     endLat: arcArray[i][7],
                     endLng: arcArray[i][8],
                     //color: [['red', 'white', 'blue', 'green'][Math.round(Math.random() * 3)], ['red', 'white', 'blue', 'green'][Math.round(Math.random() * 3)]]
-                    //color: [`rgba(0, 255, 0, ${arcArray[i][9]})`, `rgba(255, 0, 0, ${arcArray[i][9]})`],
+                    color: `rgba(255, 0, 0 , ${Math.min(Math.max(arcArray[i][9] * 15, 0.3) , 0.8)})`,
+                    original_color: `rgba(255, 0, 0 , ${Math.min(Math.max(arcArray[i][9] * 15, 0.3) , 0.8)})`,
                     //color: [`rgba(0, 255, 0, 1.50)`, `rgba(255, 0, 0, 1.50)`],
-                    color: "gainsboro",
-                    stroke: Math.min(Math.max(arcArray[i][9] * 8, 0.5) , 2) 
+                    //color: "gainsboro",
+                    stroke: Math.min(Math.max(arcArray[i][9] * 8, 0.5) , 2) ,
+                    name: `${arcArray[i][1]} &#8594; ${arcArray[i][5]} : ${money_amount_fixer(arcArray[i][0])}`
                 }
+                console.log(arcArray[i][9] *255 * 5)
                 allArcs =   [...allArcs, newArc]             
             }
             myGlobe.arcsData(allArcs);    
@@ -162,23 +170,39 @@ fetch('../dataset/countries.geojson').then(res => res.json()).then(countries =>{
             myGlobe.labelAltitude(0.025)
 
             //myGlobe.hexPolygonsData(exports[polygon.properties.ISO_A3])
-
         }
 
         function PolygonColorChanger(d,polygon,arcArray){
-            var targets = arcArray.map(d => d[5]);
+            var targets_A3 = arcArray.map(x => x[5]);
+            var target_Name = arcArray.map(x => x[6]);
             if (d === polygon){
                 console.log(d)
-                //return "steelblue"
+                //steelblue
                 return `rgba(70, 130, 180, ${OPACITY_POLYGONE})`
-            }else if(targets.includes(d.properties.ISO_A3)){
-                //return "lightsalmon"
+            }else if(targets_A3.includes(d.properties.ISO_A3) || target_Name.includes(d.properties.ADMIN)){
+                //lightsalmon
                 return `rgba(255, 160, 122, ${OPACITY_POLYGONE})`
             }                    
             else{
-                //return "grey"
+                //grey
                 return `rgba(128, 128, 128, ${OPACITY_POLYGONE})`
             }
+        }
+
+        function money_amount_fixer(amount){
+            // var fixed_amount = 0
+            // if (amount > 1000000000){
+            //     fixed_amount = "$" + (amount / 1000000000).toFixed(2) + "B "
+                
+            // }
+            // else if(amount > 1000000){
+            //     fixed_amount = "$" + (amount / 1000000).toFixed(2) + "M "
+            // }
+            // else{
+            //     fixed_amount = "$" + amount
+            // }
+            // return fixed_amount
+            return d3.format('.4s')(amount).replace(/G/,"B USD").replace(/M/,"M USD").replace(/k/,"k USD")
         }
     })
 });
