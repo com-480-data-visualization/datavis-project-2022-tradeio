@@ -16,7 +16,7 @@
 
 ## Milestone 2 (7th May, 5pm)
 
-**10% of the final grade**
+[Milestone 2 - Report](./Milestones/Milestone2.md)
 
 
 ## Milestone 3 (4th June, 5pm)

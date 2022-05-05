@@ -68,7 +68,7 @@ fetch('./dataset/countries.geojson').then(res => res.json()).then(countries =>{
             return `
               <div class="card">
                 <img class="card-img" src="${flagEndpoint}/${d.ISO_A2.toLowerCase()}.png" alt="flag" />
-                <div class="container">
+                <div class="card_container">
                     <span class="card-title"><b>${d.ADMIN}</b></span> <br />
                     <div class="card-spacer"></div>
                     <hr />
