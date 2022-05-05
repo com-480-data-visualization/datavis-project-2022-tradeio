@@ -26,7 +26,7 @@ This is a design created to show the visualization and functions of our final we
 
 ## Extra Ideas
 
-<ins>Product Categories Bar:</ins> his component is the multi-colored bar located at the bottom of the page. By default unspecified is selected and all the trade information is shown. If the user clicks on a product group then only the data corresponding to that group will be shown and the colors used in the globe component will change in order to convey a visual difference.
+<ins>Product Categories Bar:</ins> This component is the multi-colored bar located at the bottom of the page. By default unspecified is selected and all the trade information is shown. If the user clicks on a product group then only the data corresponding to that group will be shown and the colors used in the globe component will change in order to convey a visual difference.
 
 
 <ins>Play Button:</ins> This component is located just left of the time slider. When the play button is pressed the data(and by extension colors) displayed on the globe slowly change to show an impression of evolution through time to the user. This feature is listed as extra since the constant refresh of the globe might be unsightly if we can not find a fix for it.
