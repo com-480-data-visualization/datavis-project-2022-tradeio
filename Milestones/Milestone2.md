@@ -41,7 +41,7 @@ The current website can be found [here](https://com-480-data-visualization.githu
 
 As mentionned before, we are pretty happy with the advancement that we could make already, the website looks already quite complete and has nearly all the basic visualizations that the final design will have. However, there are still quite some work to do from fixing design problems to implementing new features.
 
-### What already is implemented
+### What is already implemented
 
 The globe using the Globe.gl library works and can be moved and clicked. The countries are colored with the ```d3.interpolateYlOrRd``` color scheme where the countries are colored depending on their exporting value (the darker the color the higher the export).
 
@@ -55,21 +55,23 @@ When hovering over a country, a card with some information about the country app
 
 The above described data only represents the trades made in 2019. 
 
-Additionaly, when clicking on a country, the country is marked as selected and there are arcs from the selected country to all the trade partners where exports above a certain value was made. The color of the selected country changes to a blue and the trade partners change the color to a salmon color. All the other countries that do not have high enough trades with the selected country are colored with grey.
+Additionaly, when clicking on a country, the country is marked as selected and there are arcs from the selected country to all the trade partners where exports above a certain value were made. The color of the selected country changes to a blue color and the trade partners change the color to a salmon color. All the other countries that do not have high enough trades with the selected country are colored with grey.
 The size of the arcs is dependant on the value of the trade made. For now the arcs only represent the exports. When hovering over an arc, the exported amount in USD is displayed.
 
 ### What still needs to be done or fixed
 
 #### Design
 
-- The objects are for now hardcoded on the webpage. That means that for example the position of the slider and play button is fixed using the top and left side of the screen. When changing the screen size, the objects stay in a fixed position which makes them out of place. 
+- The objects are for now hardcoded on the webpage. That means that for example the position of the slider and play button is fixed using the top and left side of the screen. When changing the screen size, the objects stay in a fixed position which places them out of place. 
 - The right side table is missing when clicking on a country and still needs to be implemented.
-- The cards displayong information about a country is for displayed under the mouse and moves with the mouse instead of appearing on the left side of the screen.
-- When loading the page, all the objects except the globe are already rendered (the globe takes some time to appear). This makes the webpage look broken and incomplete for the first few seconds.
+- The cards displaying information about a country is for now displayed under the mouse and moves with the mouse instead of appearing on the left side of the screen.
+- When loading the page, all the objects except the globe are already rendered on a white screen (the globe takes some time to appear). This makes the webpage look broken and incomplete for the first few seconds.
+- The slider does not display the selected year.
 
 #### Functional
 
 - The displayed data is hardcoded for the year 2019 i.e. the slider is not implemented and no other data then the one for 2019 is displayed.
+- The play button of the slider has no effect.
 - All the values are hardcoded using the exports (Import/Export button has no effect).
 - The country selection from the top left side menu is not yet implemented.
-- All the implementation for the products still needs to be done (displaying the information on the country cards and selecting the products from the bottom table).
+- All the implementations for the products still needs to be done (displaying the information on the country cards and selecting the products from the bottom table).
