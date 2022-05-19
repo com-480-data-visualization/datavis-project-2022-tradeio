@@ -66,8 +66,10 @@ fetch('./dataset/countries.geojson').then(res => res.json()).then(countries =>{
         .polygonSideColor(() => 'rgba(0, 100, 0, 0.15)')
         .polygonStrokeColor(() => '#111')
         .polygonsTransitionDuration(300)
-        .polygonLabel(country => changeCountryCard(base_card, country))
-        .onPolygonHover(hoverD => myGlobe.polygonAltitude(d => d === hoverD ? 0.1 : 0.01))
+        .onPolygonHover(hoverD => {
+            myGlobe.polygonAltitude(d => d === hoverD ? 0.1 : 0.01);
+            changeCountryCard(base_card, hoverD);
+        })
         .onPolygonClick(radiate_arcs)
 
 
@@ -92,8 +94,10 @@ fetch('./dataset/countries.geojson').then(res => res.json()).then(countries =>{
             //myGlobe.polygonCapColor(feat => colorScale(getVal(feat)), OPACITY_POLYGONE)
             //myGlobe.hexPolygonsData(countries.features)
             myGlobe.labelsData([])
-            myGlobe.onPolygonHover(hoverD => myGlobe.polygonAltitude(d => d === hoverD ? 0.1 : 0.01))        
-            myGlobe.polygonLabel(country => changeCountryCard(base_card, country))
+            myGlobe.onPolygonHover(hoverD => {
+                myGlobe.polygonAltitude(d => d === hoverD ? 0.1 : 0.01);
+                changeCountryCard(base_card, hoverD);
+            })        
         }
 
         function radiate_arcs(polygon, event, { lat: clicklat, lng:clicklng, altitude }){
@@ -101,10 +105,12 @@ fetch('./dataset/countries.geojson').then(res => res.json()).then(countries =>{
             //After reset display the country card again
             changeCountryCard(base_card, polygon)
 
-            //Remove changing altitude of country after a country has been selected
-            myGlobe.onPolygonHover(_ => myGlobe.polygonAltitude(0.01))
-            //Remove card changing
-            myGlobe.polygonLabel(_ => changeCountryCard(base_card, polygon))
+            //Remove changing altitude of country and card changes after a country has been selected 
+            myGlobe.onPolygonHover(_ => {
+                myGlobe.polygonAltitude(0.01);
+                changeCountryCard(base_card, polygon);
+            })
+            
 
             //const arc = { startLat: startlat, startLng: startlng, endLat:39.6, endLng:-98.5 };
             //myGlobe.arcsData([...myGlobe.arcsData(), arc]);
@@ -167,18 +173,6 @@ fetch('./dataset/countries.geojson').then(res => res.json()).then(countries =>{
         }
 
         function money_amount_fixer(amount){
-            // var fixed_amount = 0
-            // if (amount > 1000000000){
-            //     fixed_amount = "$" + (amount / 1000000000).toFixed(2) + "B "
-                
-            // }
-            // else if(amount > 1000000){
-            //     fixed_amount = "$" + (amount / 1000000).toFixed(2) + "M "
-            // }
-            // else{
-            //     fixed_amount = "$" + amount
-            // }
-            // return fixed_amount
             return d3.format('.4s')(amount).replace(/G/,"B USD").replace(/M/,"M USD").replace(/k/,"k USD")
         }
     })
