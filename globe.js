@@ -27,7 +27,7 @@ fetch('./dataset/country_coords.json').then(res => res.json()).then(coords =>{co
 
 //fetch('./dataset/classifications_data/ne_110m_admin_0_countries.geojson').then(res => res.json()).then(countries =>{
 fetch('./dataset/countries.geojson').then(res => res.json()).then(countries =>{
-    fetch('./dataset/trade_data.json').then(x => x.json()).then(trades =>{
+    fetch('./dataset/trade_data_All.json').then(x => x.json()).then(trades =>{
         current_trades = trades
         console.log(trades);
         myGlobe = Globe()
