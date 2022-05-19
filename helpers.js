@@ -28,15 +28,15 @@ var changeCountryCard = function(card_container, country) {
                 <div class="card-spacer"></div>
                 <hr />
                 <div class="card-spacer"></div>
-                <span><b>Total Trades:</b> ${country.properties.total_trades_2019 === -1  ? 'No Data available' : d3.format('.4s')(country.properties.total_trades_2019).replace(/G/,"B USD").replace(/M/,"M USD").replace(/k/,"k USD") } - ${d3.format(".2f")(country.properties.percentage_total_2019)}%</span><br />
-                <span><b>Total Export:</b> ${country.properties.export_value_2019 === -1  ? 'No Data available' : d3.format('.4s')(country.properties.export_value_2019).replace(/G/,"B USD").replace(/M/,"M USD").replace(/k/,"k USD") } - ${d3.format(",.2f")(country.properties.percentage_exports_2019)}%</span> <br />
-                <span><b>Total Import:</b> ${country.properties.import_value_2019 === -1  ? 'No Data available' : d3.format('.4s')(country.properties.import_value_2019).replace(/G/,"B USD").replace(/M/,"M USD").replace(/k/,"k USD") } - ${d3.format(",.2f")(country.properties.percentage_imports_2019)}%</span>
+                <span><b>Total Trades:</b> ${country.properties.total_trades[selected_year] === -1  ? 'No Data available' : d3.format('.4s')(country.properties.total_trades[selected_year]).replace(/G/,"B USD").replace(/M/,"M USD").replace(/k/,"k USD") } - ${d3.format(".2f")(country.properties.percentage_total[selected_year])}%</span><br />
+                <span><b>Total Export:</b> ${country.properties.export_value[selected_year] === -1  ? 'No Data available' : d3.format('.4s')(country.properties.export_value[selected_year]).replace(/G/,"B USD").replace(/M/,"M USD").replace(/k/,"k USD") } - ${d3.format(",.2f")(country.properties.percentage_exports[selected_year])}%</span> <br />
+                <span><b>Total Import:</b> ${country.properties.import_value[selected_year] === -1  ? 'No Data available' : d3.format('.4s')(country.properties.import_value[selected_year]).replace(/G/,"B USD").replace(/M/,"M USD").replace(/k/,"k USD") } - ${d3.format(",.2f")(country.properties.percentage_imports[selected_year])}%</span>
     
                 <div class="card-spacer"></div>
                 <hr />
                 <div class="card-spacer"></div>
-                <span><b>Largest exports:</b> ${country.properties.trade_value_exported_2019 === -1  ? 'No Data available' : d3.format('.4s')(country.properties.trade_value_exported_2019).replace(/G/,"B USD").replace(/M/,"M USD").replace(/k/,"k USD")} to ${country.properties.highest_export_to_2019} </span><br />
-                <span><b>Largest Imports:</b> ${country.properties.trade_value_imported_2019 === -1  ? 'No Data available' : d3.format('.4s')(country.properties.trade_value_imported_2019).replace(/G/,"B USD").replace(/M/,"M USD").replace(/k/,"k USD")} from ${country.properties.highest_import_from_2019} </span><br />
+                <span><b>Largest exports:</b> ${country.properties.trade_value_exported[selected_year] === -1  ? 'No Data available' : d3.format('.4s')(country.properties.trade_value_exported[selected_year]).replace(/G/,"B USD").replace(/M/,"M USD").replace(/k/,"k USD")} to ${country.properties.highest_export_to[selected_year]} </span><br />
+                <span><b>Largest Imports:</b> ${country.properties.trade_value_imported[selected_year] === -1  ? 'No Data available' : d3.format('.4s')(country.properties.trade_value_imported[selected_year]).replace(/G/,"B USD").replace(/M/,"M USD").replace(/k/,"k USD")} from ${country.properties.highest_import_from[selected_year]} </span><br />
     
                 <!-- <div class="card-spacer"></div>
                 <hr />
@@ -50,6 +50,7 @@ var changeCountryCard = function(card_container, country) {
         </div>`;
     }
 }
+
 
 
 
