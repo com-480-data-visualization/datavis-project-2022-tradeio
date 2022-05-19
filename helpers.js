@@ -49,5 +49,39 @@ var changeCountryCard = function(card_container, country) {
             </div>
         </div>`;
     }
+}
+
+
+
+var changeCountryTable = function(table_container, countries, export_import) {
+    if (country === null){
+        table_container.innerHTML = ``;
+    }
+    else{
+        table_container.innerHTML = 
+        `<table border = "1" cellpadding = "5" cellspacing = "5">
+                <tr>
+                    <th colspan = "2">${export_import}</th>
+                 </tr>
+                 <tr>
+                    <th>Name</th>
+                    <th>Salary</th>
+                 </tr>
+                 <tr>
+                    <td>Ramesh Raman</td>
+                    <td>5000</td>
+                 </tr>
+                 <tr>
+                    <td>Shabbir Hussein</td>
+                    <td>7000</td>
+                 </tr>
+        </table>`;
+    }
     return ``;
 }
+
+
+
+
+
+

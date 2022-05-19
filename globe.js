@@ -6,6 +6,7 @@ const OPACITY_POLYGONE = 1
 const colorScale = d3.scaleSequentialSqrt(d3.interpolateYlOrRd);
 const flagEndpoint = 'https://corona.lmao.ninja/assets/img/flags';
 const base_card = document.getElementById('card_placeholder');
+const country_table = document.getElementById('table_placeholder');
 
 
 // GDP per capita (avoiding countries with small pop)
@@ -104,6 +105,7 @@ fetch('./dataset/countries.geojson').then(res => res.json()).then(countries =>{
             reset(10,10)
             //After reset display the country card again
             changeCountryCard(base_card, polygon)
+            //changeCountryTable(country_table, polygon, 'Export')
 
             //Remove changing altitude of country and card changes after a country has been selected 
             myGlobe.onPolygonHover(_ => {

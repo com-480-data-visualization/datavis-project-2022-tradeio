@@ -90,7 +90,7 @@ def get_highest_trading_countries(df_data):
     return df_highest_partners
 
 
-def contries_table_1969_2019():
+def contries_table_1962_2019():
     """
     Creates a pd.DataFrame containing trade statistics for all available years.
 
