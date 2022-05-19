@@ -365,6 +365,32 @@ table {
   height: 1px;
 }
 
+.countriesTable{
+  border: 1px solid;
+  /*border-radius: 5px;
+  border-spacing: 0; */
+  padding: 5px;
+  border-collapse: collapse;
+  border-radius: 10px;
+  border-style: hidden; /* hide standard table (collapsed) border */
+  box-shadow: 0 0 0 1px rgb(255, 255, 255); /* this draws the table border  */
+}
+
+.countriesTable td, th{
+  border: 1px solid;
+  padding: 5px;
+}
+
+/* .countriesTable tr:last-child td:first-child {
+  border: 2px solid orange;
+  border-bottom-left-radius: 10px;
+}
+
+.countriesTable tr:last-child td:last-child {
+  border: 2px solid green;
+  border-bottom-right-radius: 10px;
+} */
+
 #table_placeholder {
   z-index: 1;
   top: 50%;

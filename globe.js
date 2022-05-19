@@ -6,7 +6,11 @@ const OPACITY_POLYGONE = 1
 const colorScale = d3.scaleSequentialSqrt(d3.interpolateYlOrRd);
 const flagEndpoint = 'https://corona.lmao.ninja/assets/img/flags';
 const base_card = document.getElementById('card_placeholder');
-const country_table = document.getElementById('table_placeholder');
+const countryTable = document.getElementById('countriesTable');
+countryTable.style.visibility='hidden';
+const tableBody = document.getElementById('countriesTableBody');
+var trgts_table = []
+
 
 var selected_year = "2019"
 // GDP per capita (avoiding countries with small pop)
@@ -84,26 +88,11 @@ fetch('./dataset/countries.geojson').then(res => res.json()).then(countries =>{
             myGlobe.polygonAltitude(d => d === hoverD ? 0.1 : 0.01);
             changeCountryCard(base_card, hoverD);
         })
-        .onPolygonClick(radiate_arcs)
-
-
-        //// HexPolygon
-        // .hexPolygonsData(countries.features)
-        // .hexPolygonResolution(3)
-        // .hexPolygonMargin(0.6)
-        // .hexPolygonColor(() => `#${Math.round(Math.random() * Math.pow(2, 24)).toString(16).padStart(6, '0')}`)
-        // .hexPolygonLabel(({ properties: d }) => `
-        //   <b>${d.ADMIN} (${d.ISO_A2})</b> <br />
-        //   Population: <i>${d.GDP_MD}</i>
-        // `)
-        // .hexPolygonAltitude(0.011)       
-        
+        .onPolygonClick(radiate_arcs)   
         
         for (const poly of myGlobe.polygonsData()) {
             polygon_dict[poly.properties.ISO_A2] = poly;
         } 
-              
-        
     })
 });
 
@@ -143,7 +132,9 @@ function onYearChange(year){
 
 
 function reset({ lat: endLat, lng: endLng }) {
-    base_card.innerHTML = ``
+    base_card.innerHTML = ''
+    //countryTable.innerHTML = ''
+    countryTable.style.visibility='hidden'
     myGlobe.arcsData([]);
     myGlobe.polygonCapColor(feat => convertRGBToRGBA(colorScale(getVal(feat)), OPACITY_POLYGONE))
     GlobaState = false 
@@ -156,26 +147,7 @@ function reset({ lat: endLat, lng: endLng }) {
     })  
 }
 
-function money_amount_fixer(amount){
-    return d3.format('.4s')(amount).replace(/G/,"B USD").replace(/M/,"M USD").replace(/k/,"k USD")
-}  
 
-function PolygonColorChanger(d,polygon,arcArray){
-    var targets_A2 = arcArray.map(x => x[3]);
-    var target_Name = arcArray.map(x => x[4]);
-    if (d === polygon){
-        //console.log(d)
-        //steelblue
-        return `rgba(70, 130, 180, ${OPACITY_POLYGONE})`
-    }else if(targets_A2.includes(d.properties.ISO_A2) || target_Name.includes(d.properties.ADMIN)){
-        //lightsalmon
-        return `rgba(255, 160, 122, ${OPACITY_POLYGONE})`
-    }                    
-    else{
-        //grey
-        return `rgba(128, 128, 128, ${OPACITY_POLYGONE})`
-    }
-}
 
 function radiate_arcs(polygon, event, { lat: clicklat, lng:clicklng, altitude }){
 
@@ -205,15 +177,20 @@ function radiate_arcs(polygon, event, { lat: clicklat, lng:clicklng, altitude })
     var startLngx = 0;
     var endLat = 0;
     var endLng = 0;
+    countriesTable = []
+
     for (var i = 0; i < arcArray.length; i++) {
-        
-        
         var src = country_locs[arcArray[i][1]];
         var trgt = country_locs[arcArray[i][3]];
+
+        countriesTable.push([trgt[2], money_amount_fixer(arcArray[i][0])]) //Add name and value to the list of countries for the table
+        
         if(tradeType == "import_value"){
             src = country_locs[arcArray[i][3]];
             trgt = country_locs[arcArray[i][1]];
         }
+
+
         startLat = src[0];
         startLng_ = src[1];
         endLat = trgt[0];
@@ -234,8 +211,12 @@ function radiate_arcs(polygon, event, { lat: clicklat, lng:clicklng, altitude })
             name: `${arcArray[i][1]} &#8594; ${arcArray[i][3]} : ${money_amount_fixer(arcArray[i][0])}`
         }
         //console.log(arcArray[i][9] *255 * 5)
-        allArcs =   [...allArcs, newArc]             
+        allArcs =   [...allArcs, newArc]
+        
     }
+    
+    changeCountryTable(countryTable, tableBody, countriesTable, tradeType)
+
     myGlobe.arcsData(allArcs);    
     //myGlobe.polygonCapColor(d => d === polygon ? 'steelblue' : "lightsalmon")
     myGlobe.polygonCapColor(d => PolygonColorChanger(d,polygon,arcArray))     
@@ -255,4 +236,6 @@ function radiate_arcs(polygon, event, { lat: clicklat, lng:clicklng, altitude })
 
     //myGlobe.hexPolygonsData(exports[polygon.properties.ISO_A3])
 }       
+
+
 

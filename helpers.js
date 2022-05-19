@@ -1,3 +1,6 @@
+const nbrCountriesTable = 10;
+
+
 var convertRGBToRGBA = function(rgb, opacity=1) {     
     /* Backward compatibility for whole number based opacity values. */
     if (opacity > 1 && opacity <= 100) {
@@ -51,38 +54,106 @@ var changeCountryCard = function(card_container, country) {
     }
 }
 
+var changeCountryTable = function(table, tableBody, countries, tradeType) {
+    tradeType = tradeType=="import_value" ? "Imports from" : "Exports to";
+    table.tHead.innerHTML = `<tr><th colspan = "2">${tradeType}</th></tr>`;
+    countries = countries.slice(0, nbrCountriesTable);
+    console.log(countries)
 
+    var idx = 0;
+    const rowNumber = tableBody.rows.length;
+    countries.forEach(country => {
+        rowNumber == 0 ? addRowTable(tableBody, country) : updateRowTable(tableBody, idx, country);
+        idx++;
+    })
 
+    // table_container.innerHTML = 
+    //     `<table border = "1" cellpadding = "5" cellspacing = "5">
+    //         <tr>
+    //             <th colspan = "2">${tradeType}</th>
+    //         </tr>
+    //         <tr>
+    //             <th>${countries[0][0]}</th>
+    //             <th>${countries[0][1]}</th>
+    //         </tr>
+    //         <tr>
+    //             <th>${countries[1][0]}</th>
+    //             <th>${countries[1][1]}</th>
+    //         </tr>
+    //         <tr>
+    //             <th>${countries[2][0]}</th>
+    //             <th>${countries[2][1]}</th>
+    //         </tr>
+    //         <tr>
+    //             <th>${countries[1][0]}</th>
+    //             <th>${countries[1][1]}</th>
+    //         </tr>
+    //         <tr>
+    //             <th>${countries[2][0]}</th>
+    //             <th>${countries[3][1]}</th>
+    //         </tr>
+    //         <tr>
+    //             <th>${countries[1][0]}</th>
+    //             <th>${countries[1][1]}</th>
+    //         </tr>
+    //         <tr>
+    //             <th>${countries[2][0]}</th>
+    //             <th>${countries[3][1]}</th>
+    //         </tr>
+    //         <tr>
+    //             <th>${countries[1][0]}</th>
+    //             <th>${countries[1][1]}</th>
+    //         </tr>
+    //         <tr>
+    //             <th>${countries[2][0]}</th>
+    //             <th>${countries[3][1]}</th>
+    //         </tr>
+    //         <tr>
+    //             <th>${countries[1][0]}</th>
+    //             <th>${countries[1][1]}</th>
+    //         </tr>
+    //         <tr>
+    //             <th>${countries[2][0]}</th>
+    //             <th>${countries[3][1]}</th>
+    //         </tr>
+    //     </table>`;
+    table.style.visibility='visible'
 
-var changeCountryTable = function(table_container, countries, export_import) {
-    if (country === null){
-        table_container.innerHTML = ``;
-    }
-    else{
-        table_container.innerHTML = 
-        `<table border = "1" cellpadding = "5" cellspacing = "5">
-                <tr>
-                    <th colspan = "2">${export_import}</th>
-                 </tr>
-                 <tr>
-                    <th>Name</th>
-                    <th>Salary</th>
-                 </tr>
-                 <tr>
-                    <td>Ramesh Raman</td>
-                    <td>5000</td>
-                 </tr>
-                 <tr>
-                    <td>Shabbir Hussein</td>
-                    <td>7000</td>
-                 </tr>
-        </table>`;
-    }
-    return ``;
 }
 
+function addRowTable(tableBody, country){
+    var newRow = tableBody.insertRow(tableBody.rows.length);
+    var nameCell = newRow.insertCell(0);
+    var valueCell = newRow.insertCell(1);
+    var playerText = document.createTextNode(country[0]);
+    var scoreText = document.createTextNode(country[1]);
+    nameCell.appendChild(playerText);
+    valueCell.appendChild(scoreText);
+}
 
+function updateRowTable(tableBody, rowNumber, country){
+    tableBody.rows[rowNumber].cells[0].innerText = country[0];
+    tableBody.rows[rowNumber].cells[1].innerText = country[1];
+}
 
+var money_amount_fixer = function(amount){
+    return d3.format('.4s')(amount).replace(/G/,"B USD").replace(/M/,"M USD").replace(/k/,"k USD")
+}  
 
-
+var PolygonColorChanger = function(d,polygon,arcArray){
+    var targets_A2 = arcArray.map(x => x[3]);
+    var target_Name = arcArray.map(x => x[4]);
+    if (d === polygon){
+        //console.log(d)
+        //steelblue
+        return `rgba(70, 130, 180, ${OPACITY_POLYGONE})`
+    }else if(targets_A2.includes(d.properties.ISO_A2) || target_Name.includes(d.properties.ADMIN)){
+        //lightsalmon
+        return `rgba(255, 160, 122, ${OPACITY_POLYGONE})`
+    }                    
+    else{
+        //grey
+        return `rgba(128, 128, 128, ${OPACITY_POLYGONE})`
+    }
+}
 
