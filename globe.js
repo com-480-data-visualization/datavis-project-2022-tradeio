@@ -10,9 +10,9 @@ const flagEndpoint = 'https://corona.lmao.ninja/assets/img/flags';
 //const getVal = feat => feat.properties.GDP_MD / (5 * 1e6); //  / Math.max(1e5, feat.properties.POP_EST);
 const getVal = feat => feat.properties.total_trades_2019 / (5*1e12); //  / Math.max(1e5, feat.properties.POP_EST);
 
-//fetch('../dataset/classifications_data/ne_110m_admin_0_countries.geojson').then(res => res.json()).then(countries =>{
-fetch('../dataset/countries.geojson').then(res => res.json()).then(countries =>{
-    fetch('../dataset/geo_export.json').then(x => x.json()).then(exports =>{
+//fetch('./dataset/classifications_data/ne_110m_admin_0_countries.geojson').then(res => res.json()).then(countries =>{
+fetch('./dataset/countries.geojson').then(res => res.json()).then(countries =>{
+    fetch('./dataset/geo_export.json').then(x => x.json()).then(exports =>{
         const myGlobe = Globe()
         (document.getElementById('globeViz'))  
         .globeImageUrl('https://unpkg.com/three-globe@2.24.4/example/img/earth-night.jpg')
@@ -68,7 +68,7 @@ fetch('../dataset/countries.geojson').then(res => res.json()).then(countries =>{
             return `
               <div class="card">
                 <img class="card-img" src="${flagEndpoint}/${d.ISO_A2.toLowerCase()}.png" alt="flag" />
-                <div class="container">
+                <div class="card_container">
                     <span class="card-title"><b>${d.ADMIN}</b></span> <br />
                     <div class="card-spacer"></div>
                     <hr />

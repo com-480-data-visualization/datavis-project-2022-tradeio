@@ -1,0 +1,361 @@
+*{
+  font-family: sans-serif; 
+}
+
+.body{
+  padding-top: 60px;
+  padding-bottom: 40px;
+  background-color:black;
+  color: whitesmoke;
+  align-items: left;
+  justify-content: left;
+}
+
+.top-info-container {
+  z-index: 1;
+  top: 20px;
+  position: absolute;
+  color: white;
+  /*text-align: center;*/
+  width: 100%;
+}
+
+.slider-container {
+  z-index: 1;
+  top: 20px;
+  position: absolute;
+  color: white;
+  text-align: center;
+  width: 100%;
+}
+
+.bottom-info-container {
+  z-index: 10000;
+  bottom: 20px;
+  position: absolute;
+  color: white;
+  text-align: center;
+  width: 100%;
+}
+
+.globeContainer {
+  background-color:black;
+  color: whitesmoke;
+  position: absolute;
+  top: 0px;
+  z-index: 3000;
+}
+
+.topleft {
+  background-color:black;
+  color: whitesmoke;
+  position: absolute;
+  left: 10px;
+  font-size: 27px;
+  font-family: "Bradley Hand";
+}    
+
+input {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+}
+
+label {
+  display: flex;
+  align-items: left;
+  justify-content: left;
+  margin: 0 auto;
+  position: relative;
+  top: 70px;
+  left: 20px;
+  font-size: 11pt;
+  font-family: Georgia;
+}
+
+select {
+  background-color: black;
+  color: #FFF;
+  padding: 2pt;
+  border-radius: 3pt;
+  border-color: #FFF;
+  border-width: 1pt;
+  font-size: 11pt;
+  font-family: Georgia;
+  position: relative;
+  top: 50px;
+  left: 90px;
+}
+
+/*=================the Color Key==================*/
+
+table {
+  align-self: center;
+  align-items: center;
+  position: sticky;
+  top: 0px;
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 80%;
+  left: 170px;
+  height: 0px;
+}
+
+.chooseCategory{
+  position: sticky;
+  top: 1000px;
+  padding-top:0px;
+  padding-bottom: 0px;
+  z-index: 1000;
+  text-align: center;
+  font-size: 15px;
+  overflow: auto;
+  height:100%;
+  width:100%;
+  align-self: center;
+  align-items: center;
+}
+.chooseCategory:hover{
+  background-color: #FFF;
+  color:#080808;
+  align-self: center;
+  align-items: center;
+}
+
+.categoryButton{
+  position: sticky;
+  top: 1000px;
+  height: 20px;
+  color: white;
+  vertical-align: bottom;
+  padding: 3px;
+  width:5%;
+  text-align: center;
+  z-index: 1000;
+  opacity: 1;
+  -moz-background-clip: border;
+  -webkit-background-clip: border;
+  background-clip: border-box;
+  align-self: center;
+  align-items: center;
+}
+
+.categoryButton:hover{
+  border-top: 0px;
+}
+.categorySelected{
+  background-color: #FFF;
+  color:#080808;
+}
+
+/*===================================*/
+
+.timeline-container {
+  z-index: 10000; /*1*/
+  position: fixed;
+  top: 50px;
+  display: flex;
+  color: white;
+  width: 60%;
+  align-items: center;
+}
+    
+/*@media only screen and (max-width: 768px) {
+  .timeline-container {
+    width: 90%;
+  }
+}*/
+    
+.slider {
+  -webkit-appearance: none;
+  height: 2px;
+  width: 100%;
+  margin-right: 10px;
+  border-radius: 5px;
+  background: white;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: 0.2s;
+  transition: opacity 0.2s;
+}
+    
+.slider:hover {
+  opacity: 1;
+}
+    
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+  border: 2px solid black;
+}
+    
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: white;
+  cursor: pointer;
+  border: 2px solid black;
+}
+    
+.play-button {
+  /*border-radius: 5px;*/
+  /*padding: 5px;*/
+  font-size: 14px;
+  cursor: pointer;
+  background-color: rgba(1, 1, 1, 0);
+  border: 0px solid black;
+  position: fixed;
+  top: 32px;
+  left: 280px;
+  /*color: white;*/
+  outline: none;
+  width: 2em;
+}
+
+
+/*===================================*/
+
+.input {
+  width: 20px; /*node*/
+  height: 20px; /*node*/
+  background-color: lightblue;
+  position: relative;
+  border-radius: 50%; 
+} 
+
+/*doesn't change anything*/
+.input:hover {
+  cursor: pointer; 
+}
+
+.input::before, .input::after {
+  content: ''; /*lines in between nodes*/
+  display: block;
+  position: absolute;
+  z-index: -1;
+  /*top: -60px;*/
+  transform: translateY(-50%);
+  background-color: lightblue;
+  width: 120px;
+  height: 15px; /*height of lines in between nodes*/
+  max-width: 200px; 
+}
+
+/*the line (and the following codes are for the nodes)*/
+.input::before {
+  left: calc(-4vw + 12.5px);
+}
+
+/*two lines deleted here*/
+.input.active {
+  background-color: grey; 
+}
+
+.input.active::before {
+ background-color: grey; 
+}
+
+/*a point in the middle of two labelled time points*/
+.input.active::after {
+  background-color: grey; 
+}
+
+.input.active span {
+  font-weight: 700; 
+}
+    
+/*for bold*/
+/*several lines are deleted here*/
+.input.active span::after {
+  font-size: 15px; 
+}
+
+/*zoom the current time */
+.input.active ~ .input, .input.active ~ .input::before, .input.active ~ .input::after {
+  background-color: grey; 
+}
+
+.input span {
+  width: 1px;
+  height: 1px;
+  position: relative;
+  /*top: 80%;*/
+  left: 50%;
+  transform: translate(-50%, -50%);
+  visibility: hidden; 
+}
+.input span::before, .input span::after {
+  visibility: visible;
+  position: absolute;
+  left: 50%; 
+}
+.input span::after {
+  content: attr(data-year);
+  /*top: -60px;*/
+  transform: translateX(-50%);
+  font-size: 14px; 
+}
+.input span::before {
+  content: attr(data-info);
+  /*top: -60px;*/
+  width: 70px;
+  transform: translateX(-5px) rotateZ(-45deg);
+  font-size: 12px;
+  text-indent: -10px; 
+}
+
+ /* Card that is displayed when hovering over a country */
+     
+.card {
+/* position: fixed;
+  left: 0; */
+  font-family: 'Space Mono', monospace;
+  transition: 0.3s;
+  background-color: black;
+  width: 330px;
+  border: 4px solid  rgb(0, 100, 60) ;
+  border-radius: 10px;
+  color: white;
+}
+
+#card_left_side_base {
+  z-index: 10;
+  position: relative;
+  color: white;
+}
+
+.card_container {
+  /* padding: 3px 16px; */
+  padding-top: 1px;
+  padding-bottom: 8px;
+  padding-left: 12px;
+  padding-right: 12px;
+  text-align: left;
+  margin: 0;
+  padding: 5;
+  color: white;
+}
+
+.card-img {
+  object-fit: contain;
+  width: 100%;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+}
+
+.card-title {
+  font-weight: bold;
+  color: white;
+}
+
+.card-spacer {
+  height: 1px;
+}
+
