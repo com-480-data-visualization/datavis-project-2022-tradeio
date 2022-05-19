@@ -325,10 +325,14 @@ table {
   color: white;
 }
 
-#card_left_side_base {
-  z-index: 10;
-  position: relative;
+#card_placeholder {
+  z-index: 1;
+  top: 30%;
+  left: 10px;
+  position: absolute;
   color: white;
+  width: 330px;
+  vertical-align: middle;
 }
 
 .card_container {

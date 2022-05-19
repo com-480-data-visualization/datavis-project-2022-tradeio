@@ -5,6 +5,8 @@ const OPACITY = 0.99;
 const OPACITY_POLYGONE = 1
 const colorScale = d3.scaleSequentialSqrt(d3.interpolateYlOrRd);
 const flagEndpoint = 'https://corona.lmao.ninja/assets/img/flags';
+const base_card = document.getElementById('card_placeholder');
+
 
 // GDP per capita (avoiding countries with small pop)
 //const getVal = feat => feat.properties.GDP_MD / (5 * 1e6); //  / Math.max(1e5, feat.properties.POP_EST);
@@ -64,39 +66,7 @@ fetch('./dataset/countries.geojson').then(res => res.json()).then(countries =>{
         .polygonSideColor(() => 'rgba(0, 100, 0, 0.15)')
         .polygonStrokeColor(() => '#111')
         .polygonsTransitionDuration(300)
-        .polygonLabel(({ properties: d}) => {
-            return `
-              <div class="card">
-                <img class="card-img" src="${flagEndpoint}/${d.ISO_A2.toLowerCase()}.png" alt="flag" />
-                <div class="card_container">
-                    <span class="card-title"><b>${d.ADMIN}</b></span> <br />
-                    <div class="card-spacer"></div>
-                    <hr />
-                    <div class="card-spacer"></div>
-                    <span><b>Total Trades:</b> ${d.total_trades_2019 === -1  ? 'No Data available' : d3.format('.4s')(d.total_trades_2019).replace(/G/,"B USD").replace(/M/,"M USD").replace(/k/,"k USD") } - ${d3.format(".2f")(d.percentage_total_2019)}%</span><br />
-                    <span><b>Total Export:</b> ${d.export_value_2019 === -1  ? 'No Data available' : d3.format('.4s')(d.export_value_2019).replace(/G/,"B USD").replace(/M/,"M USD").replace(/k/,"k USD") } - ${d3.format(",.2f")(d.percentage_exports_2019)}%</span> <br />
-                    <span><b>Total Import:</b> ${d.import_value_2019 === -1  ? 'No Data available' : d3.format('.4s')(d.import_value_2019).replace(/G/,"B USD").replace(/M/,"M USD").replace(/k/,"k USD") } - ${d3.format(",.2f")(d.percentage_imports_2019)}%</span>
-
-                    <div class="card-spacer"></div>
-                    <hr />
-                    <div class="card-spacer"></div>
-                    <span><b>Largest exports:</b> ${d.trade_value_exported_2019 === -1  ? 'No Data available' : d3.format('.4s')(d.trade_value_exported_2019).replace(/G/,"B USD").replace(/M/,"M USD").replace(/k/,"k USD")} to ${d.highest_export_to_2019} </span><br />
-                    <span><b>Largest Imports:</b> ${d.trade_value_imported_2019 === -1  ? 'No Data available' : d3.format('.4s')(d.trade_value_imported_2019).replace(/G/,"B USD").replace(/M/,"M USD").replace(/k/,"k USD")} from ${d.highest_import_from_2019} </span><br />
-
-                    <!--
-                    <div class="card-spacer"></div>
-                    <hr />
-                    <div class="card-spacer"></div>
-                    <span><b>Largest Export:</b> ${d.Export_trade_value_usd  === -1 ? 'No Data available' : d.Export_commodity}</span><br />
-                    <span><b>Value largest Export: </b>${d.Export_trade_value_usd  === -1 ? 'No Data available' : d3.format('.4s')(d.Export_trade_value_usd).replace(/G/,"B USD").replace(/M/,"M USD").replace(/k/,"k USD") } </span><br /><br />             
-                    <span><b>Largest Import:</b> ${d.Import_trade_value_usd  === -1  ? 'No Data available' : d.Import_commodity}</span><br />
-                    <span><b>Value largest Import: </b>${d.Import_trade_value_usd  === -1  ? 'No Data available' : d3.format('.4s')(d.Import_trade_value_usd).replace(/G/,"B USD").replace(/M/,"M USD").replace(/k/,"k USD") } </span>             
-                    </div>
-                    -->
-                </div>
-              </div>
-            `;
-        })
+        .polygonLabel(country => changeCountryCard(base_card, country))
         .onPolygonHover(hoverD => myGlobe.polygonAltitude(d => d === hoverD ? 0.1 : 0.01))
         .onPolygonClick(radiate_arcs)
 
@@ -116,20 +86,26 @@ fetch('./dataset/countries.geojson').then(res => res.json()).then(countries =>{
         var neutral = false
 
         function reset({ lat: endLat, lng: endLng }) {
+            base_card.innerHTML = ``
             myGlobe.arcsData([]);
             myGlobe.polygonCapColor(feat => convertRGBToRGBA(colorScale(getVal(feat)), OPACITY_POLYGONE))
             //myGlobe.polygonCapColor(feat => colorScale(getVal(feat)), OPACITY_POLYGONE)
             //myGlobe.hexPolygonsData(countries.features)
             myGlobe.labelsData([])
             myGlobe.onPolygonHover(hoverD => myGlobe.polygonAltitude(d => d === hoverD ? 0.1 : 0.01))        
+            myGlobe.polygonLabel(country => changeCountryCard(base_card, country))
         }
 
         function radiate_arcs(polygon, event, { lat: clicklat, lng:clicklng, altitude }){
             reset(10,10)
-            
+            //After reset display the country card again
+            changeCountryCard(base_card, polygon)
+
             //Remove changing altitude of country after a country has been selected
             myGlobe.onPolygonHover(_ => myGlobe.polygonAltitude(0.01))
-            
+            //Remove card changing
+            myGlobe.polygonLabel(_ => changeCountryCard(base_card, polygon))
+
             //const arc = { startLat: startlat, startLng: startlng, endLat:39.6, endLng:-98.5 };
             //myGlobe.arcsData([...myGlobe.arcsData(), arc]);
             
