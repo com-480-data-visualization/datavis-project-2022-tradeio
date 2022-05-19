@@ -327,12 +327,12 @@ table {
 
 #card_placeholder {
   z-index: 1;
-  top: 30%;
+  top: 50%;
+  transform: translateY(-50%);
   left: 10px;
   position: absolute;
   color: white;
   width: 330px;
-  vertical-align: middle;
 }
 
 .card_container {
