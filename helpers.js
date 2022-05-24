@@ -58,81 +58,28 @@ var changeCountryTable = function(table, tableBody, countries, tradeType) {
     tradeType = tradeType=="import_value" ? "Imports from" : "Exports to";
     table.tHead.innerHTML = `<tr><th colspan = "2">${tradeType}</th></tr>`;
     countries = countries.slice(0, nbrCountriesTable);
-    console.log(countries)
 
     var idx = 0;
     const rowNumber = tableBody.rows.length;
     countries.forEach(country => {
-        rowNumber == 0 ? addRowTable(tableBody, country) : updateRowTable(tableBody, idx, country);
+        rowNumber == 0 ? addRowTable(tableBody, country, idx) : updateRowTable(tableBody, idx, country);
         idx++;
     })
-
-    // table_container.innerHTML = 
-    //     `<table border = "1" cellpadding = "5" cellspacing = "5">
-    //         <tr>
-    //             <th colspan = "2">${tradeType}</th>
-    //         </tr>
-    //         <tr>
-    //             <th>${countries[0][0]}</th>
-    //             <th>${countries[0][1]}</th>
-    //         </tr>
-    //         <tr>
-    //             <th>${countries[1][0]}</th>
-    //             <th>${countries[1][1]}</th>
-    //         </tr>
-    //         <tr>
-    //             <th>${countries[2][0]}</th>
-    //             <th>${countries[2][1]}</th>
-    //         </tr>
-    //         <tr>
-    //             <th>${countries[1][0]}</th>
-    //             <th>${countries[1][1]}</th>
-    //         </tr>
-    //         <tr>
-    //             <th>${countries[2][0]}</th>
-    //             <th>${countries[3][1]}</th>
-    //         </tr>
-    //         <tr>
-    //             <th>${countries[1][0]}</th>
-    //             <th>${countries[1][1]}</th>
-    //         </tr>
-    //         <tr>
-    //             <th>${countries[2][0]}</th>
-    //             <th>${countries[3][1]}</th>
-    //         </tr>
-    //         <tr>
-    //             <th>${countries[1][0]}</th>
-    //             <th>${countries[1][1]}</th>
-    //         </tr>
-    //         <tr>
-    //             <th>${countries[2][0]}</th>
-    //             <th>${countries[3][1]}</th>
-    //         </tr>
-    //         <tr>
-    //             <th>${countries[1][0]}</th>
-    //             <th>${countries[1][1]}</th>
-    //         </tr>
-    //         <tr>
-    //             <th>${countries[2][0]}</th>
-    //             <th>${countries[3][1]}</th>
-    //         </tr>
-    //     </table>`;
     table.style.visibility='visible'
-
 }
 
-function addRowTable(tableBody, country){
-    var newRow = tableBody.insertRow(tableBody.rows.length);
+function addRowTable(tableBody, country, rowNumber){
+    var newRow = tableBody.insertRow(rowNumber);
     var nameCell = newRow.insertCell(0);
     var valueCell = newRow.insertCell(1);
-    var playerText = document.createTextNode(country[0]);
+    var playerText = document.createTextNode(`${rowNumber+1}. ${country[0]}`);
     var scoreText = document.createTextNode(country[1]);
     nameCell.appendChild(playerText);
     valueCell.appendChild(scoreText);
 }
 
 function updateRowTable(tableBody, rowNumber, country){
-    tableBody.rows[rowNumber].cells[0].innerText = country[0];
+    tableBody.rows[rowNumber].cells[0].innerText = `${rowNumber+1}. ${country[0]}`;
     tableBody.rows[rowNumber].cells[1].innerText = country[1];
 }
 
