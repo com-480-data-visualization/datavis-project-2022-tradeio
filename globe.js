@@ -83,10 +83,11 @@ fetch('./dataset/countries.geojson').then(res => res.json()).then(countries =>{
         .polygonCapColor(feat => convertRGBToRGBA(colorScale(getVal(feat)), OPACITY_POLYGONE))
         .polygonSideColor(() => 'rgba(0, 100, 0, 0.15)')
         .polygonStrokeColor(() => '#111')
-        .polygonsTransitionDuration(300)        
+        .polygonsTransitionDuration(300)
+        .polygonLabel(d => countryCard(d))       
         .onPolygonHover(hoverD => {
             myGlobe.polygonAltitude(d => d === hoverD ? 0.1 : 0.01);
-            changeCountryCard(base_card, hoverD);
+            //changeCountryCard(base_card, hoverD);
         })
         .onPolygonClick(radiate_arcs)   
         
@@ -143,8 +144,9 @@ function reset({ lat: endLat, lng: endLng }) {
 
     myGlobe.onPolygonHover(hoverD => {
         myGlobe.polygonAltitude(d => d === hoverD ? 0.1 : 0.01);
-        changeCountryCard(base_card, hoverD);
+        //changeCountryCard(base_card, hoverD);
     })  
+    myGlobe.polygonLabel(d => countryCard(d))
 }
 
 
@@ -164,6 +166,8 @@ function radiate_arcs(polygon, event, { lat: clicklat, lng:clicklng, altitude })
         myGlobe.polygonAltitude(0.01);
         changeCountryCard(base_card, polygon);
     })
+    myGlobe.polygonLabel(_ => '')       
+
     
     //const arc = { startLat: startlat, startLng: startlng, endLat:39.6, endLng:-98.5 };
     //myGlobe.arcsData([...myGlobe.arcsData(), arc]);

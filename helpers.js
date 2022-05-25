@@ -19,12 +19,12 @@ var convertRGBToRGBA = function(rgb, opacity=1) {
 };
 
 var changeCountryCard = function(card_container, country) {
-    if (country === null){
-        card_container.innerHTML = ``;
-    }
-    else{
-        card_container.innerHTML = 
-        `<div class="card">
+    card_container.innerHTML = (country === null) ? '' : countryCard(country)
+}
+
+
+var countryCard = function(country) {
+    return  `<div class="card">
             <img class="card-img" src="${flagEndpoint}/${country.properties.ISO_A2.toLowerCase()}.png" alt="flag" />
             <div class="card_container">
                 <span class="card-title"><b>${country.properties.ADMIN}</b></span> <br />
@@ -50,8 +50,7 @@ var changeCountryCard = function(card_container, country) {
                 <span><b>Value largest Import: </b>${country.properties.Import_trade_value_usd  === -1  ? 'No Data available' : d3.format('.4s')(country.properties.Import_trade_value_usd).replace(/G/,"B USD").replace(/M/,"M USD").replace(/k/,"k USD") } </span>             
                 </div> -->
             </div>
-        </div>`;
-    }
+            </div>`;
 }
 
 var changeCountryTable = function(table, tableBody, countries, tradeType) {

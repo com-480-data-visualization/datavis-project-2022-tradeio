@@ -373,23 +373,13 @@ table {
   border-collapse: collapse;
   border-radius: 10px;
   border-style: hidden; /* hide standard table (collapsed) border */
-  box-shadow: 0 0 0 1px rgb(255, 255, 255); /* this draws the table border  */
+  box-shadow: 0 0 0 2px rgb(0, 100, 60); /* this draws the table border  */
 }
 
 .countriesTable td, th{
   border: 1px solid;
   padding: 5px;
 }
-
-/* .countriesTable tr:last-child td:first-child {
-  border: 2px solid orange;
-  border-bottom-left-radius: 10px;
-}
-
-.countriesTable tr:last-child td:last-child {
-  border: 2px solid green;
-  border-bottom-right-radius: 10px;
-} */
 
 #table_placeholder {
   z-index: 1;
