@@ -16,8 +16,6 @@
 </head>
 
 <body>
-
-  <!--<script src="slider.js"></script>-->
   
   <div class="top-info-container">
     <div class="topleft">Trade.io</div>
@@ -83,80 +81,16 @@
         </div>
       </div>
     </div>
-    <script>
-      const slider = document.querySelector('.slider');
-      output.innerHTML = this.value;
-    </script>
+
+    <script src="script.js"></script>
     <!--<div class="gradslider-container">
-      <div class="range-slider grad" style='--min:0; --max:10000; --step:100; --value:200; --text-value:"200"; --prefix:"$"'>
-        <input type="range" min="0" max="10000" step="100" value="200" oninput="this.parentNode.style.setProperty('--value',this.value); this.parentNode.style.setProperty('--text-value', JSON.stringify((+this.value).toLocaleString()))">
+      <div class="range-slider grad" style='--min:1962; --max:2019; --step:1; --value:2000; --text-value:"2000"'>
+        <input type="range" min="1962" max="2019" step="1" value="2000" oninput="this.parentNode.style.setProperty('--value',this.value); this.parentNode.style.setProperty('--text-value', JSON.stringify((+this.value).toLocaleString()))">
         <output></output>
         <div class='range-slider__progress'></div>
       </div>
       </div>-->
 
-        <script>
-          
-          // Slider
-          // var slider = document.getElementById("years");
-          // Play button
-          const playButton = document.querySelector('.play-button');
-          // Slider
-          var output = document.getElementById("demo");
-          // Slider date
-          const sliderDate = document.querySelector('.slider-date');
-          // playButton.disabled = false;
-      
-          // slider.oninput = function() {
-          //   output.innerHTML = slider.value;
-          //   slider.click();
-          // }
-      
-          // when play button is clicked on 
-          playButton.addEventListener('click', () => {
-              if (playButton.innerText == 'Play') {
-                playButton.innerText = 'Pause';
-              } else {
-                playButton.innerText = 'Play';
-                clearInterval(interval);
-                // slider.click();
-                return;
-              }
-            // Check if slider position is max
-            if (+slider.value === 2019) {
-              slider.value = 2019;
-            }
-            sliderDate.innerHTML = slider.value;
-            output.innerHTML = slider.value;
-      
-            interval = setInterval(() => {
-              slider.value++;
-              sliderDate.innerHTML = slider.value;
-              output.innerHTML = slider.value;
-              selected_year = selected_year + 1;
-              slider.click();
-              // onYearChange(selected_year);
-              if (+slider.value === 2019) {
-                playButton.innerHTML = 'Play';
-                slider.value = 2019;
-                clearInterval(interval);
-              }
-            }, 200);
-          });
-          if ('oninput' in slider) {
-              slider.addEventListener(
-              'input',
-              function () {
-                  selected_year = selected_year + 1;
-                  slider.click();
-              },
-              false
-            );
-            document.getElementById('years').click();
-          }
-      
-          output.innerHTML = slider.value;
-        </script>
       
 
 
@@ -189,5 +123,7 @@
     <script src="helpers.js"></script>
     <script src="globe.js"></script>
   </div>
+  
+  <!--<script src="slider.css"></script>-->
 
 </body>
