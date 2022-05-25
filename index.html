@@ -12,12 +12,12 @@
   <script src="https://unpkg.com/globe.gl@2.26.1/dist/globe.gl.min.js"></script>
 
 	<link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="slider.css">
+  <!--<link rel="stylesheet" href="slider.css">-->
 </head>
 
 <body>
 
-  <script src="slider.js"></script>
+  <!--<script src="slider.js"></script>-->
   
   <div class="top-info-container">
     <div class="topleft">Trade.io</div>
@@ -83,14 +83,17 @@
         </div>
       </div>
     </div>
-
-    <div class="gradslider-container">
+    <script>
+      const slider = document.querySelector('.slider');
+      output.innerHTML = this.value;
+    </script>
+    <!--<div class="gradslider-container">
       <div class="range-slider grad" style='--min:0; --max:10000; --step:100; --value:200; --text-value:"200"; --prefix:"$"'>
         <input type="range" min="0" max="10000" step="100" value="200" oninput="this.parentNode.style.setProperty('--value',this.value); this.parentNode.style.setProperty('--text-value', JSON.stringify((+this.value).toLocaleString()))">
         <output></output>
         <div class='range-slider__progress'></div>
       </div>
-      </div>
+      </div>-->
 
         <script>
           
@@ -99,10 +102,9 @@
           // Play button
           const playButton = document.querySelector('.play-button');
           // Slider
-          const slider = document.querySelector('.slider');
+          var output = document.getElementById("demo");
           // Slider date
           const sliderDate = document.querySelector('.slider-date');
-          var output = document.getElementById("demo");
           // playButton.disabled = false;
       
           // slider.oninput = function() {
