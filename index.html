@@ -12,11 +12,11 @@
   <script src="https://unpkg.com/globe.gl@2.26.1/dist/globe.gl.min.js"></script>
 
 	<link rel="stylesheet" href="styles.css">
+  <!--<link rel="stylesheet" href="slider.css">-->
 </head>
-  
+
 <body>
-
-
+  
   <div class="top-info-container">
     <div class="topleft">Trade.io</div>
 
@@ -44,38 +44,60 @@
         <option value="UY"> Uruguay </option><option value="US">United States </option><option value="UZ">Uzbekistan </option><option value="VE">Venezuela </option><option value="VN">Vietnam </option><option value="YE"> Yemen </option><option value="ZA"> South Africa </option><option value="ZM"> Zambia </option><option value="ZW"> Zimbabwe </option>
       </select>
     </form>
-    
     <!-- <hr> -->
-    <form action="#">
-        <label for="trade">Trade Type</label>
-        <select name="trade" id="trade" onchange="onTradeChange(this)">          
-          <option selected value="export_value">Export </option>
-          <option value="import_value">Import </option>
-        </select>
+      <form action="#">
+          <label for="trade">Trade Type</label>
+          <select name="trade" id="trade" onchange="onTradeChange(this)" style="left: 100px;">          
+            <option selected value="export_value">Export </option>
+            <option value="import_value">Import </option>
+          </select>
     </form>
-    
-    <!-- <hr style="width: 250px;"> -->
   </div>
 
   <div class="slider-container">
     <div style="display: flex; justify-content: center;">
-      <div class="timeline-container">
-        <button style="background-color: black;" class="play-button">
-          <img src="images/play.jpeg" width="35px">
-        </button>
-        <input
-          class="slider"
-          type="range"
-          min="1969"
-          max="2019"
-          value = "2019"
-          step="1"
-          onchange= "onYearChange(this.value)"
-          oninput = "onYearChange(this.value)"
-        />
+        <div class="timeline-container">
+          <button style="background-color: black;" class="play-button">
+            <img src="images/play.jpeg" style="width: 30px;">
+          </button>
+          <label for="years" style="top: 0.1em; left: -4em; font-family: Georgia;">Year: <span id="demo"></span>
+          </label>
+          <input
+            class="slider"
+            type="range"
+            name="years"
+            id="years"
+            min="1962"
+            max="2019"
+            value = "2019"
+            step="1"
+            onchange= "onYearChange(this.value)"
+            oninput = "onYearChange(this.value)"
+          />
+          <span
+          style="font-size: 14px; color: #ccd6f6;"
+          class="slider-date"
+          ></span>
+        </div>
       </div>
     </div>
-  </div>
+
+    <script src="script.js"></script>
+    <!--<div class="gradslider-container">
+      <div class="range-slider grad" style='--min:1962; --max:2019; --step:1; --value:2000; --text-value:"2000"'>
+        <input type="range" min="1962" max="2019" step="1" value="2000" oninput="this.parentNode.style.setProperty('--value',this.value); this.parentNode.style.setProperty('--text-value', JSON.stringify((+this.value).toLocaleString()))">
+        <output></output>
+        <div class='range-slider__progress'></div>
+      </div>
+      </div>-->
+
+      
+
+
+    <!-- <hr style="width: 250px;"> -->
+
+
+
   
   <div class="bottom-info-container">
   <table><tbody><tr>
@@ -95,12 +117,13 @@
   <div id="card_placeholder"> </div>
   <div id="table_placeholder"> </div>
 
-
   <div id="globeViz" ></div>
 
-  <!--<div style="z-index: 100; width: 70%;">-->
-  <script src="helpers.js" style="z-index: -1;"></script>
-  <script src="globe.js" style="z-index: -1;"></script>
-  <!--</div>-->
+  <div class="globe-container">
+    <script src="helpers.js"></script>
+    <script src="globe.js"></script>
+  </div>
+  
+  <!--<script src="slider.css"></script>-->
 
 </body>
