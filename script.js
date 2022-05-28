@@ -3,7 +3,7 @@ const slider = document.querySelector('.slider');
 // Play button
 const playButton = document.querySelector('.play-button');
 // Slider
-var output = document.getElementById("demo");
+// var output = document.getElementById("demo");
 // Slider date
 const sliderDate = document.querySelector('.slider-date');
 // playButton.disabled = false;
@@ -13,17 +13,17 @@ const sliderDate = document.querySelector('.slider-date');
 //   slider.click();
 // }
 // onYearChange(slider.value);
-function yearLabel(){
+/*function yearLabel(){
   output.innerHTML = slider.value;
-}
+}*/
 
 const
   range = document.getElementById('years'),
   rangeV = document.getElementById('rangeV'),
   setValue = ()=>{
     const
-      newValue = Number( (range.value - range.min) * 86.8 / (range.max - range.min) ),
-      newPosition = 128 - (newValue * 0.2);
+      newValue = Number( (range.value - range.min) * 94 / (range.max - range.min) ),
+      newPosition = 55 - (newValue * 0.2);
       newPositionTop = -34.5;
     rangeV.innerHTML = `<span>${range.value}</span>`;
     rangeV.style.left = `calc(${newValue}% + (${newPosition}px))`;
@@ -47,14 +47,16 @@ playButton.addEventListener('click', () => {
     slider.value = 2019;
   }
   // sliderDate.innerHTML = slider.value;
-  output.innerHTML = slider.value;
+  //output.innerHTML = slider.value;
 
   interval = setInterval(() => {
     slider.value++;
     // sliderDate.innerHTML = slider.value;
-    output.innerHTML = slider.value;
+    // output.innerHTML = slider.value;
     selected_year = selected_year + 1;
     onYearChange(slider.value);
+    setValue();
+    rangeV.innerHTML = `<span>${range.value}</span>`;
     slider.click();
     // onYearChange(selected_year);
     if (+slider.value === 2019) {
@@ -70,6 +72,8 @@ if ('oninput' in slider) {
     function () {
         selected_year = selected_year + 1;
         onYearChange(slider.value);
+        setValue();
+        rangeV.innerHTML = `<span>${range.value}</span>`;
         slider.click();
     },
     false
@@ -77,4 +81,4 @@ if ('oninput' in slider) {
   document.getElementById('years').click();
 }
 
-output.innerHTML = slider.value;
+// output.innerHTML = slider.value;

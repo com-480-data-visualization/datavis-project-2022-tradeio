@@ -56,10 +56,10 @@
    <div class="slider-container">
     <div style="display: flex; justify-content: center;">
         <div class="timeline-container">
-          <button style="background-color: black; top: -0.1em; left: 4em; font-size: 12pt; font-family: Georgia;" class="play-button">
+          <button style="background-color: black; top: -0.1em; left: -1em; font-size: 12pt; font-family: Georgia;" class="play-button">
             Play <!--<img src="images/play.jpeg" style="width: 30px;">-->
           </button>
-          <label for="years" style="font-size: 12pt; top: -0.1em; left: -5em;font-family: Georgia;">Year: <span id="demo"></span>
+          <!--<label for="years" style="font-size: 12pt; top: -0.1em; left: -5em;font-family: Georgia;">Year: <span id="demo"></span>-->
           </label>
           <div class="range-value" id="rangeV"></div>
           <input
@@ -71,8 +71,8 @@
             max="2019"
             value = "2019"
             step="1"
-            onchange= "yearLabel(); onYearChange(this.value)"
-            oninput = "yearLabel(); onYearChange(this.value), this.parentNode.style.setProperty('--value',this.value); this.parentNode.style.setProperty('--text-value', JSON.stringify((+this.value).toLocaleString()))"
+            onchange= "yearLabel(); onYearChange(this.value); setValue()"
+            oninput = "yearLabel(); onYearChange(this.value); setValue(); this.parentNode.style.setProperty('--value',this.value); this.parentNode.style.setProperty('--text-value', JSON.stringify((+this.value).toLocaleString()))"
           />
           <datalist id="ticks">
             <option>1962</option>
