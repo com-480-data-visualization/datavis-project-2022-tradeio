@@ -28,11 +28,11 @@
 
 .slider-container {
   z-index: 100;
-  top: 0px;
+  /*top: 0px;
   position: fixed;
   color: white;
   text-align: center;
-  width: 100%;
+  width: 100%;*/
 }
 
 .bottom-info-container {
@@ -166,7 +166,7 @@ table {
 .timeline-container {
   z-index: 100;
   position: fixed;
-  top: 30px;
+  top: 40px;
   display: flex;
   color: white;
   width: 60%;
@@ -182,22 +182,24 @@ table {
 .slider {
   -webkit-appearance: none;
   height: 2px;
-  width: 100%;
+  width: 2000pt;
   margin-right: 10px;
   border-radius: 5px;
   background: white;
   outline: none;
   opacity: 0.7;
-  -webkit-transition: 0.2s;
+  /*-webkit-transition: 0.2s;*/
   transition: opacity 0.2s;
   z-index: 100;
 }
-    
+  
+/* for the color change when hovered */
 .slider:hover {
   opacity: 1;
-  z-index: 100;
+  z-index: -1;
 }
     
+/* hover botton */
 .slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
@@ -209,7 +211,6 @@ table {
   border: 2px solid black;
   z-index: 100;
 }
-    
 .slider::-moz-range-thumb {
   width: 25px;
   height: 25px;
@@ -219,6 +220,41 @@ table {
   border: 2px solid black;
   z-index: 100;
 }
+.range-value{
+  position: absolute;
+  top: -50%;
+}
+.range-value span{
+  width: 30px;
+  height: 24px;
+  line-height: 24px;
+  text-align: center;
+  background: white;
+  color: black;
+  font-size: 16pt;
+  font-family: Georgia;
+  font-size: 12px;
+  display: block;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
+  border-radius: 6px;
+}
+.range-value span:before{
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-top: 10px solid white;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  margin-top: -1px;
+}
+
+
     
 .play-button {
   border-radius: 5px;
@@ -419,5 +455,5 @@ table {
 }
 
 .globe-container{
-  z-index: 100;
+  z-index: 1;
 }

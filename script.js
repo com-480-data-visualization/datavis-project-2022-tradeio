@@ -1,4 +1,3 @@
-
 // Slider
 const slider = document.querySelector('.slider');
 // Play button
@@ -14,9 +13,24 @@ const sliderDate = document.querySelector('.slider-date');
 //   slider.click();
 // }
 // onYearChange(slider.value);
-output.innerHTML = slider.value;
+function yearLabel(){
+  output.innerHTML = slider.value;
+}
 
-
+const
+  range = document.getElementById('years'),
+  rangeV = document.getElementById('rangeV'),
+  setValue = ()=>{
+    const
+      newValue = Number( (range.value - range.min) * 86.8 / (range.max - range.min) ),
+      newPosition = 128 - (newValue * 0.2);
+      newPositionTop = -34.5;
+    rangeV.innerHTML = `<span>${range.value}</span>`;
+    rangeV.style.left = `calc(${newValue}% + (${newPosition}px))`;
+    rangeV.style.top = `${newPositionTop}px`;
+  };
+document.addEventListener("DOMContentLoaded", setValue);
+range.addEventListener('input', setValue);
 
 // when play button is clicked on 
 playButton.addEventListener('click', () => {

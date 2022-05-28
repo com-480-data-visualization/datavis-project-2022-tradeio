@@ -12,11 +12,10 @@
   <script src="https://unpkg.com/globe.gl@2.26.1/dist/globe.gl.min.js"></script>
 
 	<link rel="stylesheet" href="styles.css">
-  <!--<link rel="stylesheet" href="slider.css">-->
 </head>
 
 <body>
-  
+
   <div class="top-info-container">
     <div class="topleft">Trade.io</div>
 
@@ -54,14 +53,15 @@
     </form>
   </div>
 
-  <div class="slider-container">
+   <div class="slider-container">
     <div style="display: flex; justify-content: center;">
         <div class="timeline-container">
-          <button style="background-color: black;" class="play-button">
-            <img src="images/play.jpeg" style="width: 30px;">
+          <button style="background-color: black; top: -0.1em; left: 4em; font-size: 12pt; font-family: Georgia;" class="play-button">
+            Play <!--<img src="images/play.jpeg" style="width: 30px;">-->
           </button>
-          <label for="years" style="top: 0.1em; left: -4em; font-family: Georgia;">Year: <span id="demo"></span>
+          <label for="years" style="font-size: 12pt; top: -0.1em; left: -5em;font-family: Georgia;">Year: <span id="demo"></span>
           </label>
+          <div class="range-value" id="rangeV"></div>
           <input
             class="slider"
             type="range"
@@ -71,33 +71,36 @@
             max="2019"
             value = "2019"
             step="1"
-            onchange= "onYearChange(this.value)"
-            oninput = "onYearChange(this.value)"
+            onchange= "yearLabel(); onYearChange(this.value)"
+            oninput = "yearLabel(); onYearChange(this.value), this.parentNode.style.setProperty('--value',this.value); this.parentNode.style.setProperty('--text-value', JSON.stringify((+this.value).toLocaleString()))"
           />
-          <span
-          style="font-size: 14px; color: #ccd6f6;"
-          class="slider-date"
-          ></span>
+          <datalist id="ticks">
+            <option>1962</option>
+            <option>1972</option>
+            <option>1982</option>
+            <option>1992</option>
+            <option>2002</option>
+            <option>2012</option>
+          </datalist>
         </div>
       </div>
     </div>
 
     <script src="script.js"></script>
-    <!--<div class="gradslider-container">
-      <div class="range-slider grad" style='--min:1962; --max:2019; --step:1; --value:2000; --text-value:"2000"'>
+
+    <!--<div class="gradslider-container">-->
+      <!--<div class="range-slider grad" style='--min:1962; --max:2019; --step:1; --value:2000; --text-value:"2000"'>
         <input type="range" min="1962" max="2019" step="1" value="2000" oninput="this.parentNode.style.setProperty('--value',this.value); this.parentNode.style.setProperty('--text-value', JSON.stringify((+this.value).toLocaleString()))">
         <output></output>
         <div class='range-slider__progress'></div>
-      </div>
       </div>-->
 
-      
+    <script>
+      var output = document.getElementById("demo");
+      output.innerHTML = slider.value;
+    </script>
 
-
-    <!-- <hr style="width: 250px;"> -->
-
-
-
+  <!--<hr style="width: 250px;"> -->
   
   <div class="bottom-info-container">
   <table><tbody><tr>
@@ -119,11 +122,9 @@
 
   <div id="globeViz" ></div>
 
-  <div class="globe-container">
+  <div class="globe-container" style="z-index: 1;">
     <script src="helpers.js"></script>
     <script src="globe.js"></script>
   </div>
-  
-  <!--<script src="slider.css"></script>-->
 
 </body>
