@@ -13,9 +13,6 @@ let interval;
 
 
 var selected_year = "2019"
-// GDP per capita (avoiding countries with small pop)
-//const getVal = feat => feat.properties.GDP_MD / (5 * 1e6); //  / Math.max(1e5, feat.properties.POP_EST);
-//const getVal = feat => feat.properties.total_trades[selected_year]  / (5*1e12) ; //  / Math.max(1e5, feat.properties.POP_EST);
 const getVal = feat => feat.properties.percentage_total[selected_year] / (8)
 
 var myGlobe;
