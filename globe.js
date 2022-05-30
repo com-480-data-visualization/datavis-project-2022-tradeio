@@ -8,9 +8,9 @@ const tableBody = document.getElementById('countriesTableBody');
 var trgts_table = []
 let interval;
 
-var currentCard = ''
-var selected_year = "2019"
-var selected_prod = "all"
+var currentCard = '';
+var selected_year = "2019";
+var selected_prod = "all";
 const getVal = feat => feat.properties.percentage_total[selected_year] / (8)
 
 var myGlobe;
@@ -21,11 +21,11 @@ var lastClickEvent;
 var current_trades;
 var polygon_dict = {};
 var country_locs;
-var oldProd = 'all'
+var oldProd = '';
 
 fetch('./dataset/country_coords.json').then(res => res.json()).then(coords =>{country_locs = coords; })
 fetch('./dataset/countries.geojson').then(res => res.json()).then(countries =>{init_globe(countries) });
-onProductChange(oldProd)
+onProductChange('all')
 
 let drag = false;
 var globeContainer = document.getElementById('globeViz')
@@ -66,8 +66,14 @@ function onYearChange(year){
 
 
 function onProductChange(product){
-    categoryBtnOld = document.getElementById(oldProd)
-    categoryBtnOld.style.color = 'white'
+    if (product === oldProd) 
+        return
+
+    if (oldProd !== ''){
+        categoryBtnOld = document.getElementById(oldProd)
+        categoryBtnOld.style.color = 'white'
+    }
+    
     categoryBtnNew = document.getElementById(product)
     categoryBtnNew.style.color = 'lime'
     fetch('./dataset/trade_data_' + product + '.json').then(x => x.json()).then(trades => {current_trades = trades; 
