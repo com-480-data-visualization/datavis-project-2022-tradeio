@@ -316,8 +316,6 @@ table {
  /* Card that is displayed when hovering over a country */
      
 .card {
-/* position: fixed;
-  left: 0; */
   font-family: 'Space Mono', monospace;
   transition: 0.3s;
   background-color: black;
