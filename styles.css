@@ -1,20 +1,24 @@
 *{
   font-family: sans-serif; 
-  /*background-color: #080808;*/
-  /*z-index: -1;*/
+  /*background: #000000;*/
+  /*opacity: 0.5;
+  z-index: -1;*/
 }
 
 .body{
   padding-top: 60px;
   padding-bottom: 40px;
   background-color:black;
-  color: whitesmoke;
+  color: white;
+  overflow: hidden;
+  background: black;
   align-items: left;
   justify-content: left;
+  z-index: 100;
 }
 
 .top-info-container {
-  z-index: 1;
+  z-index: 100;
   top: 20px;
   position: absolute;
   color: white;
@@ -23,18 +27,18 @@
 }
 
 .slider-container {
-  z-index: 1;
-  top: 20px;
-  position: absolute;
+  z-index: 100;
+  /*top: 0px;
+  position: fixed;
   color: white;
   text-align: center;
-  width: 100%;
+  width: 100%;*/
 }
 
 .bottom-info-container {
-  z-index: 10000;
+  z-index: 100;
   bottom: 20px;
-  position: absolute;
+  position: fixed;
   color: white;
   text-align: center;
   width: 100%;
@@ -45,7 +49,7 @@
   color: whitesmoke;
   position: absolute;
   top: 0px;
-  z-index: 3000;
+  z-index: 100;
 }
 
 .topleft {
@@ -55,6 +59,7 @@
   left: 10px;
   font-size: 27px;
   font-family: "Bradley Hand";
+  z-index: 100;
 }    
 
 input {
@@ -62,6 +67,7 @@ input {
   align-items: center;
   justify-content: center;
   margin: 0 auto;
+  z-index: 100;
 }
 
 label {
@@ -74,6 +80,7 @@ label {
   left: 20px;
   font-size: 11pt;
   font-family: Georgia;
+  z-index: 100;
 }
 
 select {
@@ -88,6 +95,7 @@ select {
   position: relative;
   top: 50px;
   left: 90px;
+  z-index: 100;
 }
 
 /*=================the Color Key==================*/
@@ -102,6 +110,7 @@ table {
   width: 80%;
   left: 170px;
   height: 0px;
+  z-index: 100;
 }
 
 .chooseCategory{
@@ -109,7 +118,7 @@ table {
   top: 1000px;
   padding-top:0px;
   padding-bottom: 0px;
-  z-index: 1000;
+  z-index: 100;
   text-align: center;
   font-size: 15px;
   overflow: auto;
@@ -123,18 +132,19 @@ table {
   color:#080808;
   align-self: center;
   align-items: center;
+  z-index: 100;
 }
 
 .categoryButton{
   position: sticky;
   top: 1000px;
-  height: 20px;
+  height: 40px;
   color: white;
   vertical-align: bottom;
   padding: 3px;
   width:5%;
   text-align: center;
-  z-index: 1000;
+  z-index: 100;
   opacity: 1;
   -moz-background-clip: border;
   -webkit-background-clip: border;
@@ -154,9 +164,9 @@ table {
 /*===================================*/
 
 .timeline-container {
-  z-index: 10000; /*1*/
+  z-index: 100;
   position: fixed;
-  top: 50px;
+  top: 40px;
   display: flex;
   color: white;
   width: 60%;
@@ -172,20 +182,24 @@ table {
 .slider {
   -webkit-appearance: none;
   height: 2px;
-  width: 100%;
+  width: 2000pt;
   margin-right: 10px;
   border-radius: 5px;
   background: white;
   outline: none;
   opacity: 0.7;
-  -webkit-transition: 0.2s;
+  /*-webkit-transition: 0.2s;*/
   transition: opacity 0.2s;
+  z-index: 100;
 }
-    
+  
+/* for the color change when hovered */
 .slider:hover {
   opacity: 1;
+  z-index: -1;
 }
     
+/* hover botton */
 .slider::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
@@ -195,8 +209,8 @@ table {
   background: white;
   cursor: pointer;
   border: 2px solid black;
+  z-index: 100;
 }
-    
 .slider::-moz-range-thumb {
   width: 25px;
   height: 25px;
@@ -204,23 +218,85 @@ table {
   background: white;
   cursor: pointer;
   border: 2px solid black;
+  z-index: 100;
 }
-    
-.play-button {
-  /*border-radius: 5px;*/
-  /*padding: 5px;*/
-  font-size: 14px;
-  cursor: pointer;
-  background-color: rgba(1, 1, 1, 0);
-  border: 0px solid black;
-  position: fixed;
-  top: 32px;
-  left: 280px;
-  /*color: white;*/
-  outline: none;
-  width: 2em;
+.range-value{
+  position: absolute;
+  top: -50%;
+}
+.range-value span{
+  width: 30px;
+  height: 24px;
+  line-height: 24px;
+  text-align: center;
+  background: white;
+  color: black;
+  font-size: 16pt;
+  font-family: Georgia;
+  font-size: 12px;
+  display: block;
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, 0);
+  border-radius: 6px;
+}
+.range-value span:before{
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  border-top: 10px solid white;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  margin-top: -1px;
 }
 
+
+    
+.play-button {
+  border-radius: 5px;
+  /*padding: 5px;*/
+  /*font-size: 14px;*/
+  cursor: pointer;
+  background-color: white; /*rgba(1, 1, 1, 0);*/
+  border: 0px solid black;
+  position: relative;
+  top: 1px;
+  left: 5em;
+  color: white;
+  outline: none;
+  z-index: 300;
+  /*width: 5px;*/
+}
+
+.year-label {
+  border-radius: 5px;
+  /*padding: 5px;*/
+  /*font-size: 14px;*/
+  cursor: pointer;
+  background-color: white; /*rgba(1, 1, 1, 0);*/
+  border: 0px solid black;
+  position: relative;
+  top: 1px;
+  left: -20px;
+  color: white;
+  outline: none;
+  z-index: 300;
+  /*width: 5px;*/
+}
+
+.legend-min {
+  float: left;
+  margin-left: 2px;
+}
+
+.legend-max {
+  float: right;
+  margin-right: 4px;
+}
 
 /*===================================*/
 
@@ -230,11 +306,13 @@ table {
   background-color: lightblue;
   position: relative;
   border-radius: 50%; 
+  z-index: 100;
 } 
 
 /*doesn't change anything*/
 .input:hover {
   cursor: pointer; 
+  z-index: 100;
 }
 
 .input::before, .input::after {
@@ -248,6 +326,7 @@ table {
   width: 120px;
   height: 15px; /*height of lines in between nodes*/
   max-width: 200px; 
+  z-index: 100;
 }
 
 /*the line (and the following codes are for the nodes)*/
@@ -387,4 +466,8 @@ table {
   position: absolute;
   color: white;
   width: 330px;
+}
+
+.globe-container{
+  z-index: 1;
 }

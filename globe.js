@@ -1,8 +1,7 @@
-
 const COUNTRY = 'United States';
 //const OPACITY = 0.22;
 const OPACITY = 0.99;
-const OPACITY_POLYGONE = 1
+const OPACITY_POLYGONE = 1;
 const colorScale = d3.scaleSequentialSqrt(d3.interpolateYlOrRd);
 const flagEndpoint = 'https://corona.lmao.ninja/assets/img/flags';
 const base_card = document.getElementById('card_placeholder');
@@ -10,6 +9,7 @@ const countryTable = document.getElementById('countriesTable');
 countryTable.style.visibility='hidden';
 const tableBody = document.getElementById('countriesTableBody');
 var trgts_table = []
+let interval;
 
 
 var selected_year = "2019"
@@ -24,16 +24,18 @@ var GlobaState = false
 //Store the last click event so that we can simulate it when time/trade is changed
 var lastClickEvent;
 var current_trades;
-var polygon_dict = {}
+var polygon_dict = {};
 var country_locs;
+
+
 fetch('./dataset/country_coords.json').then(res => res.json()).then(coords =>{country_locs = coords; })
 
 
 //fetch('./dataset/classifications_data/ne_110m_admin_0_countries.geojson').then(res => res.json()).then(countries =>{
 fetch('./dataset/countries.geojson').then(res => res.json()).then(countries =>{
-    fetch('./dataset/trade_data_All.json').then(x => x.json()).then(trades =>{
+    fetch('./dataset/trade_data_0.json').then(x => x.json()).then(trades =>{
         current_trades = trades
-        console.log(trades);
+        //console.log(trades);
         myGlobe = Globe()
         (document.getElementById('globeViz'))  
         .globeImageUrl('https://unpkg.com/three-globe@2.24.4/example/img/earth-night.jpg')
@@ -97,8 +99,10 @@ fetch('./dataset/countries.geojson').then(res => res.json()).then(countries =>{
     })
 });
 
+
+
 function onTradeChange(selectObject){    
-    console.log(lastClickEvent)
+    //console.log(lastClickEvent)
     if(GlobaState){
         radiate_arcs(lastClickEvent["polygon"], lastClickEvent["event"],0,0)   
     }else{
@@ -109,28 +113,18 @@ function onTradeChange(selectObject){
 function onCounChange(selectObject){    
     const poly =   polygon_dict[selectObject.value]
     radiate_arcs(poly , 0,0,0)
-    var coord = poly.geometry.coordinates[0]
-    while(true){
-        //might need a better way to orient
-        if(!Array.isArray(coord[Math.floor(coord.length / 3)])){
-            break
-        }
-        coord = coord[Math.floor(coord.length / 3)]
-        
-    } 
-    console.log(coord)
-    myGlobe.pointOfView({ lat: coord[1], lng: coord[0], altitude: 2 },1000)  
+    var coord = country_locs[poly.properties.ISO_A2]
+    myGlobe.pointOfView({ lat: coord[0], lng: coord[1], altitude: 2 },1000)  
 }
 
-function onYearChange(year){    
+function onYearChange(year){
     selected_year = year.toString();
     if(GlobaState){
         radiate_arcs(lastClickEvent["polygon"], lastClickEvent["event"],0,0)   
     }else{
-        reset(10,10)  
+        reset(10,10)
     }
 }
-
 
 function reset({ lat: endLat, lng: endLng }) {
     base_card.innerHTML = ''
@@ -227,7 +221,7 @@ function radiate_arcs(polygon, event, { lat: clicklat, lng:clicklng, altitude })
     //console.log(exports[polygon.properties.ISO_A3]);
     var clickLabel = ["a", "a", "a", arcArray[0][1]];
 
-    console.log(country_locs)
+    //console.log(country_locs)
     myGlobe.labelsData([...arcArray, clickLabel]);
     myGlobe.labelLat(d => country_locs[d[3]][0])
     myGlobe.labelLng(d => country_locs[d[3]][1])
