@@ -16,6 +16,7 @@
 
 <body>
 
+
   <div class="top-info-container">
     <div class="topleft">Trade.io</div>
 
@@ -91,20 +92,19 @@
   <!--<hr style="width: 250px;"> -->
   
   <div class="bottom-info-container">
-  <table><tbody><tr>
-    <td class="categoryButton" style="border-top:8px solid #009ACD ;">
-        <div id="cat0" class="chooseCategory" style="align-content: center;"> Food </div></td>
-        <td class="categoryButton" style="border-top:8px solid #1c587e;"><div id="food_pid0" class="chooseCategory">Food</div></td>
-        <td class="categoryButton" style="border-top:8px solid #FF8C00;"><div id="beverage_pid1" class="chooseCategory">Beverage</div></td>
-        <td class="categoryButton" style="border-top:8px solid #8B0000 ;"><div id="materials_pid2" class="chooseCategory">Crude Materials</div></td>
-        <td class="categoryButton" style="border-top:8px solid #8B4513 ;"><div id="fuels_pid3" class="chooseCategory">Fuels</div></td>
-        <td class="categoryButton" style="border-top:8px solid #DB7093 ;"><div id="oils_pid4" class="chooseCategory">Vegetable Oils</div></td>
-        <td class="categoryButton" style="border-top:8px solid #FFEC8B ;"><div id="chemicals_pid5" class="chooseCategory">Chemicals</div></td>
-        <td class="categoryButton" style="border-top:8px solid #483D8B ;"><div id="mat_manufacturers_pid6" class="chooseCategory">Material Manufactures</div></td>
-        <td class="categoryButton" style="border-top:8px solid #6E8B3D ;"><div id="machine_vehicle_pid7" class="chooseCategory">Machinery &amp Vehicles</div></td>
-        <td class="categoryButton" style="border-top:8px solid #97FFFF ;"><div id="manufacturers_pid8" class="chooseCategory">Other Manufactures</div></td>
-        <td class="categoryButton" style="border-top:8px solid #CDC5BF ;"><div id="unspecified_pid9" class="chooseCategory">Unspecified</div></td>
-        <td class="categoryButton" style="border-top:8px solid #8d52a4 ;"><div id="services_pid10" class="chooseCategory">Services</div></td></tr></tbody></table>
+  <table><tbody>
+        <td class="categoryButton" style="border-top:8px solid #8d52a4;"><div id="all" class="chooseCategory" onclick="onProductChange('all')">All</div></td>
+        <td class="categoryButton" style="border-top:8px solid #1c587e;"><div id="food" class="chooseCategory" onclick="onProductChange('food')">Food</div></td>
+        <td class="categoryButton" style="border-top:8px solid #FF8C00;"><div id="beverage" class="chooseCategory" onclick="onProductChange('beverage')">Beverage</div></td>
+        <td class="categoryButton" style="border-top:8px solid #8B0000;"><div id="crude_materials" class="chooseCategory" onclick="onProductChange('crude_materials')">Crude Materials</div></td>
+        <td class="categoryButton" style="border-top:8px solid #8B4513;"><div id="fuels" class="chooseCategory" onclick="onProductChange('fuels')">Fuels</div></td>
+        <td class="categoryButton" style="border-top:8px solid #DB7093;"><div id="vegetable_oil" class="chooseCategory" onclick="onProductChange('vegetable_oil')">Vegetable Oils</div></td>
+        <td class="categoryButton" style="border-top:8px solid #FFEC8B;"><div id="chemicals" class="chooseCategory" onclick="onProductChange('chemicals')">Chemicals</div></td>
+        <td class="categoryButton" style="border-top:8px solid #483D8B;"><div id="material_manufacturers" class="chooseCategory" onclick="onProductChange('material_manufacturers')">Material Manufacturers</div></td>
+        <td class="categoryButton" style="border-top:8px solid #6E8B3D;"><div id="machinery" class="chooseCategory" onclick="onProductChange('machinery')">Machinery &amp Vehicles</div></td>
+        <td class="categoryButton" style="border-top:8px solid #97FFFF;"><div id="other_manufacturers" class="chooseCategory" onclick="onProductChange('other_manufacturers')">Other Manufacturers</div></td>
+        <td class="categoryButton" style="border-top:8px solid #CDC5BF;"><div id="unspecified" class="chooseCategory" onclick="onProductChange('unspecified')">Unspecified</div></td>
+  </tbody></table>
   </div>
 
   <div id="card_placeholder"> </div>

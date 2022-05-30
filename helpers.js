@@ -1,23 +1,5 @@
 const nbrCountriesTable = 10;
 
-
-var convertRGBToRGBA = function(rgb, opacity=1) {     
-    /* Backward compatibility for whole number based opacity values. */
-    if (opacity > 1 && opacity <= 100) {
-        opacity = opacity / 100;   
-    }
-
-    // Check that color is not rgba already
-    var rgba = rgb
-    if(rgb != null){
-        if(rgb.indexOf('a') == -1){
-            //rgb colors are written in the from of: rgb(xxx, yyy, zzz)
-            rgba = rgb.replace(')', `, ${opacity})`).replace('rgb', 'rgba');
-        }
-    }
-    return rgba;
-};
-
 var changeCountryCard = function(card_container, country) {
     card_container.innerHTML = (country === null) ? '' : countryCard(country)
 }
@@ -31,30 +13,30 @@ var countryCard = function(country) {
                 <div class="card-spacer"></div>
                 <hr />
                 <div class="card-spacer"></div>
-                <span><b>Total Trades:</b> ${country.properties.total_trades[selected_year] === -1  ? 'No Data available' : d3.format('.4s')(country.properties.total_trades[selected_year]).replace(/G/,"B USD").replace(/M/,"M USD").replace(/k/,"k USD") } - ${d3.format(".2f")(country.properties.percentage_total[selected_year])}%</span><br />
-                <span><b>Total Export:</b> ${country.properties.export_value[selected_year] === -1  ? 'No Data available' : d3.format('.4s')(country.properties.export_value[selected_year]).replace(/G/,"B USD").replace(/M/,"M USD").replace(/k/,"k USD") } - ${d3.format(",.2f")(country.properties.percentage_exports[selected_year])}%</span> <br />
-                <span><b>Total Import:</b> ${country.properties.import_value[selected_year] === -1  ? 'No Data available' : d3.format('.4s')(country.properties.import_value[selected_year]).replace(/G/,"B USD").replace(/M/,"M USD").replace(/k/,"k USD") } - ${d3.format(",.2f")(country.properties.percentage_imports[selected_year])}%</span>
+                <span><b>Total Trades:</b> ${country.properties.total_trades[selected_year] === -1  ? 'No Data available' : money_amount_fixer(country.properties.total_trades[selected_year]) } - ${d3.format(".2f")(country.properties.percentage_total[selected_year])}%</span><br />
+                <span><b>Total Export:</b> ${country.properties.export_value[selected_year] === -1  ? 'No Data available' : money_amount_fixer(country.properties.export_value[selected_year]) } - ${d3.format(",.2f")(country.properties.percentage_exports[selected_year])}%</span> <br />
+                <span><b>Total Import:</b> ${country.properties.import_value[selected_year] === -1  ? 'No Data available' : money_amount_fixer(country.properties.import_value[selected_year]) } - ${d3.format(",.2f")(country.properties.percentage_imports[selected_year])}%</span>
     
                 <div class="card-spacer"></div>
                 <hr />
                 <div class="card-spacer"></div>
-                <span><b>Largest exports:</b> ${country.properties.trade_value_exported[selected_year] === -1  ? 'No Data available' : d3.format('.4s')(country.properties.trade_value_exported[selected_year]).replace(/G/,"B USD").replace(/M/,"M USD").replace(/k/,"k USD")} to ${country.properties.highest_export_to[selected_year]} </span><br />
-                <span><b>Largest Imports:</b> ${country.properties.trade_value_imported[selected_year] === -1  ? 'No Data available' : d3.format('.4s')(country.properties.trade_value_imported[selected_year]).replace(/G/,"B USD").replace(/M/,"M USD").replace(/k/,"k USD")} from ${country.properties.highest_import_from[selected_year]} </span><br />
+                <span><b>Largest exports:</b> ${country.properties.trade_value_exported[selected_year] === -1  ? 'No Data available' : money_amount_fixer(country.properties.trade_value_exported[selected_year])} to ${country.properties.highest_export_to[selected_year]} </span><br />
+                <span><b>Largest Imports:</b> ${country.properties.trade_value_imported[selected_year] === -1  ? 'No Data available' : money_amount_fixer(country.properties.trade_value_imported[selected_year])} from ${country.properties.highest_import_from[selected_year]} </span><br />
     
                 <!-- <div class="card-spacer"></div>
                 <hr />
                 <div class="card-spacer"></div>
                 <span><b>Largest Export:</b> ${country.properties.Export_trade_value_usd  === -1 ? 'No Data available' : country.properties.Export_commodity}</span><br />
-                <span><b>Value largest Export: </b>${country.properties.Export_trade_value_usd  === -1 ? 'No Data available' : d3.format('.4s')(country.properties.Export_trade_value_usd).replace(/G/,"B USD").replace(/M/,"M USD").replace(/k/,"k USD") } </span><br /><br />             
+                <span><b>Value largest Export: </b>${country.properties.Export_trade_value_usd  === -1 ? 'No Data available' : money_amount_fixer(country.properties.Export_trade_value_usd)} </span><br /><br />             
                 <span><b>Largest Import:</b> ${country.properties.Import_trade_value_usd  === -1  ? 'No Data available' : country.properties.Import_commodity}</span><br />
-                <span><b>Value largest Import: </b>${country.properties.Import_trade_value_usd  === -1  ? 'No Data available' : d3.format('.4s')(country.properties.Import_trade_value_usd).replace(/G/,"B USD").replace(/M/,"M USD").replace(/k/,"k USD") } </span>             
+                <span><b>Value largest Import: </b>${country.properties.Import_trade_value_usd  === -1  ? 'No Data available' : money_amount_fixer(country.properties.Import_trade_value_usd)} </span>             
                 </div> -->
             </div>
             </div>`;
 }
 
 var changeCountryTable = function(table, tableBody, countries, tradeType) {
-    tradeType = tradeType=="import_value" ? "Imports from" : "Exports to";
+    tradeType = tradeType=="import_value" ? "Imports from (USD)" : "Exports to (USD)";
     table.tHead.innerHTML = `<tr><th colspan = "2">${tradeType}</th></tr>`;
     countries = countries.slice(0, nbrCountriesTable);
 
@@ -90,16 +72,12 @@ var PolygonColorChanger = function(d,polygon,arcArray){
     var targets_A2 = arcArray.map(x => x[3]);
     var target_Name = arcArray.map(x => x[4]);
     if (d === polygon){
-        //console.log(d)
-        //steelblue
-        return `rgba(70, 130, 180, ${OPACITY_POLYGONE})`
+        return 'steelblue'
     }else if(targets_A2.includes(d.properties.ISO_A2) || target_Name.includes(d.properties.ADMIN)){
-        //lightsalmon
-        return `rgba(255, 160, 122, ${OPACITY_POLYGONE})`
+        return 'lightsalmon'
     }                    
     else{
-        //grey
-        return `rgba(128, 128, 128, ${OPACITY_POLYGONE})`
+        return 'grey'
     }
 }
 

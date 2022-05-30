@@ -1,7 +1,4 @@
 const COUNTRY = 'United States';
-//const OPACITY = 0.22;
-const OPACITY = 0.99;
-const OPACITY_POLYGONE = 1;
 const colorScale = d3.scaleSequentialSqrt(d3.interpolateYlOrRd);
 const flagEndpoint = 'https://corona.lmao.ninja/assets/img/flags';
 const base_card = document.getElementById('card_placeholder');
@@ -11,8 +8,9 @@ const tableBody = document.getElementById('countriesTableBody');
 var trgts_table = []
 let interval;
 
-
+var currentCard = ''
 var selected_year = "2019"
+var selected_prod = "all"
 const getVal = feat => feat.properties.percentage_total[selected_year] / (8)
 
 var myGlobe;
@@ -23,79 +21,20 @@ var lastClickEvent;
 var current_trades;
 var polygon_dict = {};
 var country_locs;
-
+var oldProd = 'all'
 
 fetch('./dataset/country_coords.json').then(res => res.json()).then(coords =>{country_locs = coords; })
+fetch('./dataset/countries.geojson').then(res => res.json()).then(countries =>{init_globe(countries) });
+onProductChange(oldProd)
 
-
-//fetch('./dataset/classifications_data/ne_110m_admin_0_countries.geojson').then(res => res.json()).then(countries =>{
-fetch('./dataset/countries.geojson').then(res => res.json()).then(countries =>{
-    fetch('./dataset/trade_data_0.json').then(x => x.json()).then(trades =>{
-        current_trades = trades
-        //console.log(trades);
-        myGlobe = Globe()
-        (document.getElementById('globeViz'))  
-        .globeImageUrl('https://unpkg.com/three-globe@2.24.4/example/img/earth-night.jpg')
-        .backgroundImageUrl('https://unpkg.com/three-globe@2.24.4/example/img/night-sky.png')
-        .pointOfView({ lat: 39.6, lng: -98.5, altitude: 2 }) // aim at continental US centroid
-        .onGlobeClick(reset)
-
-
-        //// Arcs
-        //.arcDashLength(0.5)
-        //.arcDashGap(0.5)
-        //.arcDashInitialGap(() => Math.random())
-        //.arcDashAnimateTime(2000)
-        .arcDashLength(0.1)
-        .arcDashGap(0.1)
-        .arcDashAnimateTime(2000)
-        .onArcHover(hoverArc => {
-            //console.log("here")
-            if(hoverArc== null){
-                myGlobe.arcColor(d => {
-                    return d.original_color;
-            });
-            }else{
-                myGlobe.arcColor(d => {                     
-                var split_color = hoverArc.color.substring(5, hoverArc.color.length-1).split(",");
-                //const op = !hoverArc ? split_color[3] : d === hoverArc ? 0.9 : split_color[3] / 4;
-                const op = hoverArc == d? 1:0.15
-                return `rgba(${split_color[0]}, ${split_color[1]}, ${split_color[2]}, ${op})`;
-            });
-
-            }                               
-            
-        })
-        //.arcColor(d => [`rgba(0, 255, 0, ${OPACITY})`, `rgba(255, 0, 0, ${OPACITY})`])
-        .arcColor('color')
-        .arcsTransitionDuration(0)
-        .onGlobeClick(reset)        
-        .arcStroke("stroke")
-        //airport
-        .lineHoverPrecision(0)
-
-
-        //// Polygon
-        .polygonsData(countries.features.filter(d => d.properties.ISO_A2 !== 'AQ'))
-        .polygonAltitude(0.01)
-        .polygonCapColor(feat => convertRGBToRGBA(colorScale(getVal(feat)), OPACITY_POLYGONE))
-        .polygonCapColor(feat => convertRGBToRGBA(colorScale(getVal(feat)), OPACITY_POLYGONE))
-        .polygonSideColor(() => 'rgba(0, 100, 0, 0.15)')
-        .polygonStrokeColor(() => '#111')
-        .polygonsTransitionDuration(300)
-        .polygonLabel(d => countryCard(d))       
-        .onPolygonHover(hoverD => {
-            myGlobe.polygonAltitude(d => d === hoverD ? 0.1 : 0.01);
-            //changeCountryCard(base_card, hoverD);
-        })
-        .onPolygonClick(radiate_arcs)   
-        
-        for (const poly of myGlobe.polygonsData()) {
-            polygon_dict[poly.properties.ISO_A2] = poly;
-        } 
-    })
-});
-
+let drag = false;
+var globeContainer = document.getElementById('globeViz')
+globeContainer.addEventListener(
+    'mousedown', () => drag = false);
+globeContainer.addEventListener(
+    'mousemove', () => drag = true);
+globeContainer.addEventListener(
+    'mouseup', () => drag ? '' : reset(10,10));
 
 
 function onTradeChange(selectObject){    
@@ -107,12 +46,14 @@ function onTradeChange(selectObject){
     }
 }
 
+
 function onCounChange(selectObject){    
     const poly =   polygon_dict[selectObject.value]
     radiate_arcs(poly , 0,0,0)
     var coord = country_locs[poly.properties.ISO_A2]
     myGlobe.pointOfView({ lat: coord[0], lng: coord[1], altitude: 2 },1000)  
 }
+
 
 function onYearChange(year){
     selected_year = year.toString();
@@ -123,28 +64,40 @@ function onYearChange(year){
     }
 }
 
+
+function onProductChange(product){
+    categoryBtnOld = document.getElementById(oldProd)
+    categoryBtnOld.style.color = 'white'
+    categoryBtnNew = document.getElementById(product)
+    categoryBtnNew.style.color = 'lime'
+    fetch('./dataset/trade_data_' + product + '.json').then(x => x.json()).then(trades => {current_trades = trades; 
+    if(GlobaState){
+        radiate_arcs(lastClickEvent["polygon"], lastClickEvent["event"],0,0)   
+    }else{
+        reset(10,10)
+    }})
+    oldProd = product
+}
+
+
 function reset({ lat: endLat, lng: endLng }) {
     base_card.innerHTML = ''
     //countryTable.innerHTML = ''
     countryTable.style.visibility='hidden'
     myGlobe.arcsData([]);
-    myGlobe.polygonCapColor(feat => convertRGBToRGBA(colorScale(getVal(feat)), OPACITY_POLYGONE))
+    myGlobe.polygonCapColor(feat => colorScale(getVal(feat)))
     GlobaState = false 
     document.getElementById("coun") .value = ""    
     myGlobe.labelsData([])
 
     myGlobe.onPolygonHover(hoverD => {
         myGlobe.polygonAltitude(d => d === hoverD ? 0.1 : 0.01);
-        //changeCountryCard(base_card, hoverD);
     })  
-    myGlobe.polygonLabel(d => countryCard(d))
+    currentCard = ''  
 }
 
 
-
 function radiate_arcs(polygon, event, { lat: clicklat, lng:clicklng, altitude }){
-
-    reset(10,10)
     //After reset display the country card again
     changeCountryCard(base_card, polygon)
     document.getElementById("coun").value = polygon.properties.ISO_A2;    
@@ -157,13 +110,10 @@ function radiate_arcs(polygon, event, { lat: clicklat, lng:clicklng, altitude })
         myGlobe.polygonAltitude(0.01);
         changeCountryCard(base_card, polygon);
     })
-    myGlobe.polygonLabel(_ => '')       
-
     
     //const arc = { startLat: startlat, startLng: startlng, endLat:39.6, endLng:-98.5 };
     //myGlobe.arcsData([...myGlobe.arcsData(), arc]);
     
-    //Data has already been cleaned, no need to change the ADMIN property for france, norway and Kosovo   
     var tradeType =  document.getElementById("trade").value ;   
     
     var arcArray = current_trades[selected_year][polygon.properties.ISO_A2][tradeType];
@@ -178,7 +128,7 @@ function radiate_arcs(polygon, event, { lat: clicklat, lng:clicklng, altitude })
         var src = country_locs[arcArray[i][1]];
         var trgt = country_locs[arcArray[i][3]];
 
-        countriesTable.push([trgt[2], money_amount_fixer(arcArray[i][0])]) //Add name and value to the list of countries for the table
+        countriesTable.push([trgt[2], money_amount_fixer(arcArray[i][0]).replace(' USD', '')]) //Add name and value to the list of countries for the table
         
         if(tradeType == "import_value"){
             src = country_locs[arcArray[i][3]];
@@ -228,9 +178,70 @@ function radiate_arcs(polygon, event, { lat: clicklat, lng:clicklng, altitude })
     myGlobe.labelColor(() => 'darkturquoise')                
     myGlobe.labelResolution(8)
     myGlobe.labelAltitude(0.025)
-
-    //myGlobe.hexPolygonsData(exports[polygon.properties.ISO_A3])
 }       
 
 
+function init_globe(countries){
+    myGlobe = Globe()
+    (document.getElementById('globeViz'))  
+    .globeImageUrl('https://unpkg.com/three-globe@2.24.4/example/img/earth-night.jpg')
+    .backgroundImageUrl('https://unpkg.com/three-globe@2.24.4/example/img/night-sky.png')
+    .pointOfView({ lat: 39.6, lng: -98.5, altitude: 2 }) // aim at continental US centroid
+    .onGlobeClick(reset)
 
+    //// Arcs
+    //.arcDashLength(0.5)
+    //.arcDashGap(0.5)
+    //.arcDashInitialGap(() => Math.random())
+    //.arcDashAnimateTime(2000)
+    .arcDashLength(0.1)
+    .arcDashGap(0.1)
+    .arcDashAnimateTime(2000)
+    .onArcHover(hoverArc => {
+        //console.log("here")
+        if(hoverArc== null){
+            myGlobe.arcColor(d => {
+                return d.original_color;
+        });
+        }else{
+            myGlobe.arcColor(d => {                     
+            var split_color = hoverArc.color.substring(5, hoverArc.color.length-1).split(",");
+            //const op = !hoverArc ? split_color[3] : d === hoverArc ? 0.9 : split_color[3] / 4;
+            const op = hoverArc == d? 1:0.15
+            return `rgba(${split_color[0]}, ${split_color[1]}, ${split_color[2]}, ${op})`;
+        });
+
+        }                               
+        
+    })
+    .arcColor('color')
+    .arcsTransitionDuration(0)
+    .onGlobeClick(reset)        
+    .arcStroke("stroke")
+    //airport
+    .lineHoverPrecision(0)
+
+
+    //// Polygon
+    .polygonsData(countries.features.filter(d => d.properties.ISO_A2 !== 'AQ'))
+    .polygonAltitude(0.01)
+    .polygonCapColor(feat => colorScale(getVal(feat)))
+    .polygonCapColor(feat => colorScale(getVal(feat)))
+    .polygonSideColor(() => 'rgba(0, 100, 0, 0.15)')
+    .polygonStrokeColor(() => '#111')
+    .polygonsTransitionDuration(300)
+    .polygonLabel(d => {
+        currentCard = GlobaState ? '' : countryCard(d)
+        return currentCard
+    })       
+    .onPolygonHover(hoverD => {
+        myGlobe.polygonAltitude(d => d === hoverD ? 0.1 : 0.01);
+    })
+    .onPolygonClick(radiate_arcs)  
+    // .htmlElement(elem => console.log(elem))
+    // .htmlElementsData(elem => console.log(elem))
+    
+    for (const poly of myGlobe.polygonsData()) {
+        polygon_dict[poly.properties.ISO_A2] = poly;
+    } 
+}

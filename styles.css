@@ -1,11 +1,17 @@
 *{
-  font-family: sans-serif; 
+  font-family: Sans-Serif; 
   /*background: #000000;*/
   /*opacity: 0.5;
   z-index: -1;*/
 }
 
+body {
+  overflow-y: hidden; /* Hide vertical scrollbar */
+  overflow-x: hidden; /* Hide horizontal scrollbar */
+} 
+
 .body{
+  font-family: Sans-Serif;
   padding-top: 60px;
   padding-bottom: 40px;
   background-color:black;
@@ -127,19 +133,25 @@ table {
   align-self: center;
   align-items: center;
 }
+
 .chooseCategory:hover{
-  background-color: #FFF;
-  color:#080808;
+  color: lime !important;
   align-self: center;
   align-items: center;
   z-index: 100;
+  transition: 0.3s;
 }
 
 .categoryButton{
-  position: sticky;
+  background-color: transparent;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  outline: none;  position: sticky;
   top: 1000px;
   height: 40px;
-  color: white;
+  /* color: white; */
   vertical-align: bottom;
   padding: 3px;
   width:5%;
@@ -151,14 +163,6 @@ table {
   background-clip: border-box;
   align-self: center;
   align-items: center;
-}
-
-.categoryButton:hover{
-  border-top: 0px;
-}
-.categorySelected{
-  background-color: #FFF;
-  color:#080808;
 }
 
 /*===================================*/
