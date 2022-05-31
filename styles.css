@@ -416,6 +416,7 @@ table {
   position: absolute;
   color: white;
   width: 330px;
+  cursor: pointer;
 }
 
 .card_container {

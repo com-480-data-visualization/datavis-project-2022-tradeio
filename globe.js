@@ -10,8 +10,7 @@ const products = ['all', 'food', 'beverage', 'crude_materials', 'fuels', 'vegeta
 var trgts_table = []
 var products_dict = {}
 let interval;
-var arcArray;
-var polygon_arc;
+var polygon_country = {lat:0, lng:0, altitude:2};
 
 var selected_year = "2019";
 var selected_prod = "all";
@@ -33,92 +32,7 @@ fetch('./dataset/countries.geojson').then(res => res.json()).then(countries =>{i
 load_trade_data(products);
 
 
-let drag = false;
-var globeContainer = document.getElementById('globeViz')
-globeContainer.addEventListener(
-    'mousedown', () => drag = false);
-globeContainer.addEventListener(
-    'mousemove', () => drag = true);
-globeContainer.addEventListener(
-    'mouseup', () => {
-        // Check if click was made on a 
-        globeClick = myGlobe.controls().domElement.classList.contains('clickable');        
-        console.log(globeClick)
-        console.log(myGlobe.controls().domElement)
-        // console.log(myGlobe.controls().domElement)
-        return (drag || globeClick) ? '' : reset(10,10)
-    });
-
-
-
-function onTradeChange(selectObject){    
-    console.log("tradeChanged")
-    if(GlobaState){
-        radiate_arcs(lastClickEvent["polygon"], lastClickEvent["event"],0,0)   
-    }else{
-        reset(10,10)  
-    }
-}
-
-
-function onCounChange(selectObject){   
-    console.log("countryChanged") 
-    const poly =   polygon_dict[selectObject.value]
-    radiate_arcs(poly , 0,0,0)
-    var coord = country_locs[poly.properties.ISO_A2]
-    myGlobe.pointOfView({ lat: coord[0], lng: coord[1], altitude: 2 },1000)  
-}
-
-
-function onYearChange(year){
-    selected_year = year.toString();
-    if(GlobaState){
-        radiate_arcs(lastClickEvent["polygon"], lastClickEvent["event"],0,0)   
-    }else{
-        reset(10,10)
-    }
-}
-
-
-function onProductChange(product){
-    if (product === oldProd) 
-        return
-
-    if (oldProd !== ''){
-        categoryBtnOld = document.getElementById(oldProd)
-        categoryBtnOld.style.color = 'white'
-    }
-    
-    categoryBtnNew = document.getElementById(product)
-    categoryBtnNew.style.color = 'lime'
-
-    current_trades = products_dict[product]; 
-    if(GlobaState){
-        radiate_arcs(lastClickEvent["polygon"], lastClickEvent["event"],0,0)   
-    }else if(oldProd !== ''){
-        reset(10,10)
-    }
-    oldProd = product
-}
-
-
-function reload_globe(){
-    console.log('reload')
-    // base_card.innerHTML = ''
-    // countryTable.style.visibility='hidden'
-    // myGlobe.arcsData([]);
-    // myGlobe.polygonCapColor(feat => colorScale(getVal(feat)))
-    // GlobaState = false 
-    // document.getElementById("coun") .value = ""    
-    // myGlobe.labelsData([])
-
-    myGlobe.onPolygonHover(hoverD => {
-        myGlobe.polygonAltitude(d => d === hoverD ? 0.1 : 0.01);
-    })  
-}
-
 function reset({ lat: endLat, lng: endLng }) {
-    console.log('reset')
     base_card.innerHTML = ''
     countryTable.style.visibility='hidden'
     myGlobe.arcsData([]);
@@ -156,7 +70,7 @@ function radiate_arcs(polygon, event, { lat: clicklat, lng:clicklng, altitude })
     
     var tradeType =  document.getElementById("trade").value ;   
     
-    arcArray = current_trades[selected_year][polygon.properties.ISO_A2][tradeType];
+    var arcArray = current_trades[selected_year][polygon.properties.ISO_A2][tradeType];
     var allArcs = []
     var startLat = 0;
     var startLngx = 0;
@@ -199,6 +113,9 @@ function radiate_arcs(polygon, event, { lat: clicklat, lng:clicklng, altitude })
         allArcs =   [...allArcs, newArc]
         
     }
+
+    polygon_country.lat = startLat
+    polygon_country.lng = startLng_
     
     changeCountryTable(countryTable, tableBody, countriesTable, tradeType)
 
@@ -227,18 +144,12 @@ function init_globe(countries){
     .globeImageUrl('https://unpkg.com/three-globe@2.24.4/example/img/earth-night.jpg')
     .backgroundImageUrl('https://unpkg.com/three-globe@2.24.4/example/img/night-sky.png')
     .pointOfView({ lat: 39.6, lng: -98.5, altitude: 2 }) // aim at continental US centroid
-    // .onGlobeClick(_ => {globeClick = true;})
 
     //// Arcs
-    //.arcDashLength(0.5)
-    //.arcDashGap(0.5)
-    //.arcDashInitialGap(() => Math.random())
-    //.arcDashAnimateTime(2000)
     .arcDashLength(0.1)
     .arcDashGap(0.1)
     .arcDashAnimateTime(2000)
     .onArcHover(hoverArc => {
-        //console.log("here")
         if(hoverArc== null){
             myGlobe.arcColor(d => {
                 return d.original_color;
@@ -255,9 +166,9 @@ function init_globe(countries){
         
     })
     .onArcClick(arc => {
-        coords = geographicMiddle(arc.startLat, arc.startLng, arc.endLat, arc.endLng)
-        console.log(arc)
-        myGlobe.pointOfView({ lat: coords.lat, lng: coords.lon, altitude: 2.5}, 1000) // aim at continental US centroid
+        midCoords = geographicMiddle(arc.startLat, arc.startLng, arc.endLat, arc.endLng)
+        // myGlobe.pointOfView({ lat: midCoords.lat, lng: midCoords.lon, altitude: 2.5}, 1000)
+        myGlobe.pointOfView({ lat: arc.endLat, lng: arc.endLng, altitude: 2.5}, 1000)
     })
     .arcColor('color')
     .arcsTransitionDuration(0)
@@ -277,8 +188,6 @@ function init_globe(countries){
         myGlobe.polygonAltitude(d => d === hoverD ? 0.1 : 0.01);
     })
     .onPolygonClick(radiate_arcs)  
-    // .htmlElement(elem => console.log(elem))
-    // .htmlElementsData(elem => console.log(elem))
     
     for (const poly of myGlobe.polygonsData()) {
         polygon_dict[poly.properties.ISO_A2] = poly;
