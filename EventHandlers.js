@@ -13,7 +13,7 @@ globeContainer.addEventListener(
 });
 
 
-function onTradeChange(selectObject){    
+function onTradeChange(){    
     if(GlobaState){
         radiate_arcs(lastClickEvent["polygon"], lastClickEvent["event"],0,0)   
     }else{

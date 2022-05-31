@@ -4,7 +4,6 @@ var changeCountryCard = function(card_container, country) {
     card_container.innerHTML = (country === null) ? '' : countryCard(country)
 }
 
-
 var countryCard = function(country) {
     return  `<div class="card">
             <img class="card-img" src="${flagEndpoint}/${country.properties.ISO_A2.toLowerCase()}.png" alt="flag" />
@@ -36,8 +35,13 @@ var countryCard = function(country) {
 }
 
 var changeCountryTable = function(table, tableBody, countries, tradeType) {
-    tradeType = tradeType=="import_value" ? "Imports from (USD)" : "Exports to (USD)";
-    table.tHead.innerHTML = `<tr><th colspan = "2">${tradeType}</th></tr>`;
+    tradeTypeHead = tradeType=="import_value" ? "Imports from (USD)" : "Exports to (USD)";
+    table.tHead.innerHTML = `<tr><th colspan = "2" >${tradeTypeHead}</th></tr>`;
+    table.tHead.addEventListener("click", function(){
+        //tradeType = document.getElementById("trade").value
+        document.getElementById("trade").value = tradeType=="import_value" ? "export_value" : "import_value"
+        onTradeChange()
+    })
     countries = countries.slice(0, nbrCountriesTable);
 
     var idx = 0;
@@ -52,15 +56,21 @@ var changeCountryTable = function(table, tableBody, countries, tradeType) {
 function addRowTable(tableBody, country, rowNumber){
     var newRow = tableBody.insertRow(rowNumber);
     var nameCell = newRow.insertCell(0);
+    nameCell.addEventListener("click",function(){
+        myGlobe.pointOfView(country[2], 1000)
+    });
     var valueCell = newRow.insertCell(1);
-    var playerText = document.createTextNode(`${rowNumber+1}. ${country[0]}`);
-    var scoreText = document.createTextNode(country[1]);
-    nameCell.appendChild(playerText);
-    valueCell.appendChild(scoreText);
+    var countryName = document.createTextNode(`${rowNumber+1}. ${country[0]}`);
+    var value = document.createTextNode(country[1]);
+    nameCell.appendChild(countryName);
+    valueCell.appendChild(value);
 }
 
 function updateRowTable(tableBody, rowNumber, country){
     tableBody.rows[rowNumber].cells[0].innerText = `${rowNumber+1}. ${country[0]}`;
+    tableBody.rows[rowNumber].cells[0].addEventListener("click",function(){
+        myGlobe.pointOfView(country[2], 1000)
+    });
     tableBody.rows[rowNumber].cells[1].innerText = country[1];
 }
 

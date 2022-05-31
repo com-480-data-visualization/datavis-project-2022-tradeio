@@ -82,7 +82,7 @@ function radiate_arcs(polygon, event, { lat: clicklat, lng:clicklng, altitude })
         var src = country_locs[arcArray[i][1]];
         var trgt = country_locs[arcArray[i][3]];
 
-        countriesTable.push([trgt[2], money_amount_fixer(arcArray[i][0]).replace(' USD', '')]) //Add name and value to the list of countries for the table
+        countriesTable.push([trgt[2], money_amount_fixer(arcArray[i][0]).replace(' USD', ''), {lat:trgt[0], lng:trgt[1], altitude:2.5}]) //Add name and value to the list of countries for the table
         
         if(tradeType == "import_value"){
             src = country_locs[arcArray[i][3]];
@@ -114,15 +114,17 @@ function radiate_arcs(polygon, event, { lat: clicklat, lng:clicklng, altitude })
         
     }
 
-    polygon_country.lat = startLat
-    polygon_country.lng = startLng_
+    polygon_country.lat = tradeType == "import_value" ? trgt[0] : src[0]
+    polygon_country.lng = tradeType == "import_value" ? trgt[1] : src[1]
+     
+    myGlobe.pointOfView(polygon_country, 1000)
+
     
     changeCountryTable(countryTable, tableBody, countriesTable, tradeType)
 
     myGlobe.arcsData(allArcs);    
-    //myGlobe.polygonCapColor(d => d === polygon ? 'steelblue' : "lightsalmon")
     myGlobe.polygonCapColor(d => PolygonColorChanger(d,polygon,arcArray))     
-    //console.log(exports[polygon.properties.ISO_A3]);
+
     var clickLabel = ["a", "a", "a", arcArray[0][1]];
 
     //console.log(country_locs)
