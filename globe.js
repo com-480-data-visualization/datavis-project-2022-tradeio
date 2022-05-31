@@ -10,6 +10,8 @@ const products = ['all', 'food', 'beverage', 'crude_materials', 'fuels', 'vegeta
 var trgts_table = []
 var products_dict = {}
 let interval;
+var arcArray;
+var polygon_arc;
 
 var selected_year = "2019";
 var selected_prod = "all";
@@ -24,6 +26,7 @@ var current_trades;
 var polygon_dict = {};
 var country_locs;
 var oldProd = '';
+var globeClick = false;
 
 fetch('./dataset/country_coords.json').then(res => res.json()).then(coords =>{country_locs = coords; });
 fetch('./dataset/countries.geojson').then(res => res.json()).then(countries =>{init_globe(countries) });
@@ -37,18 +40,19 @@ globeContainer.addEventListener(
 globeContainer.addEventListener(
     'mousemove', () => drag = true);
 globeContainer.addEventListener(
-    'mouseup', () => drag ? '' : reset(10,10));
+    'mouseup', () => {
+        // Check if click was made on a 
+        globeClick = myGlobe.controls().domElement.classList.contains('clickable');        
+        console.log(globeClick)
+        console.log(myGlobe.controls().domElement)
+        // console.log(myGlobe.controls().domElement)
+        return (drag || globeClick) ? '' : reset(10,10)
+    });
 
-
-  
-// Create the event
-var event_drag = new CustomEvent('mouseup', {"drag": drag=true});
-  
-  
 
 
 function onTradeChange(selectObject){    
-    //console.log(lastClickEvent)
+    console.log("tradeChanged")
     if(GlobaState){
         radiate_arcs(lastClickEvent["polygon"], lastClickEvent["event"],0,0)   
     }else{
@@ -57,7 +61,8 @@ function onTradeChange(selectObject){
 }
 
 
-function onCounChange(selectObject){    
+function onCounChange(selectObject){   
+    console.log("countryChanged") 
     const poly =   polygon_dict[selectObject.value]
     radiate_arcs(poly , 0,0,0)
     var coord = country_locs[poly.properties.ISO_A2]
@@ -97,6 +102,21 @@ function onProductChange(product){
 }
 
 
+function reload_globe(){
+    console.log('reload')
+    // base_card.innerHTML = ''
+    // countryTable.style.visibility='hidden'
+    // myGlobe.arcsData([]);
+    // myGlobe.polygonCapColor(feat => colorScale(getVal(feat)))
+    // GlobaState = false 
+    // document.getElementById("coun") .value = ""    
+    // myGlobe.labelsData([])
+
+    myGlobe.onPolygonHover(hoverD => {
+        myGlobe.polygonAltitude(d => d === hoverD ? 0.1 : 0.01);
+    })  
+}
+
 function reset({ lat: endLat, lng: endLng }) {
     console.log('reset')
     base_card.innerHTML = ''
@@ -114,7 +134,7 @@ function reset({ lat: endLat, lng: endLng }) {
 
 
 function radiate_arcs(polygon, event, { lat: clicklat, lng:clicklng, altitude }){
-    
+    polygon_arc = polygon
     //Reset polygonLabel
     myGlobe.controls().domElement.previousElementSibling.innerHTML = ''
     //After reset display the country card again
@@ -136,7 +156,7 @@ function radiate_arcs(polygon, event, { lat: clicklat, lng:clicklng, altitude })
     
     var tradeType =  document.getElementById("trade").value ;   
     
-    var arcArray = current_trades[selected_year][polygon.properties.ISO_A2][tradeType];
+    arcArray = current_trades[selected_year][polygon.properties.ISO_A2][tradeType];
     var allArcs = []
     var startLat = 0;
     var startLngx = 0;
@@ -207,7 +227,7 @@ function init_globe(countries){
     .globeImageUrl('https://unpkg.com/three-globe@2.24.4/example/img/earth-night.jpg')
     .backgroundImageUrl('https://unpkg.com/three-globe@2.24.4/example/img/night-sky.png')
     .pointOfView({ lat: 39.6, lng: -98.5, altitude: 2 }) // aim at continental US centroid
-    .onGlobeClick(reset)
+    // .onGlobeClick(_ => {globeClick = true;})
 
     //// Arcs
     //.arcDashLength(0.5)
@@ -234,18 +254,20 @@ function init_globe(countries){
         }                               
         
     })
+    .onArcClick(arc => {
+        coords = geographicMiddle(arc.startLat, arc.startLng, arc.endLat, arc.endLng)
+        console.log(arc)
+        myGlobe.pointOfView({ lat: coords.lat, lng: coords.lon, altitude: 2.5}, 1000) // aim at continental US centroid
+    })
     .arcColor('color')
     .arcsTransitionDuration(0)
-    //.onGlobeClick(reset)        
     .arcStroke("stroke")
-    //airport
     .lineHoverPrecision(0)
 
 
     //// Polygon
     .polygonsData(countries.features.filter(d => d.properties.ISO_A2 !== 'AQ'))
     .polygonAltitude(0.01)
-    .polygonCapColor(feat => colorScale(getVal(feat)))
     .polygonCapColor(feat => colorScale(getVal(feat)))
     .polygonSideColor(() => 'rgba(0, 100, 0, 0.15)')
     .polygonStrokeColor(() => '#111')

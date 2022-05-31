@@ -90,3 +90,32 @@ var load_trade_data = function(prods){
     });
     onProductChange('all')
 }
+
+
+
+var geographicMiddle = function(lat1, lng1, lat2, lng2) {
+	
+    //-- Longitude difference
+    var dLng = degToRad(lng2 - lng1);
+
+    //-- Convert to radians
+    lat1 = degToRad(lat1);
+    lat2 = degToRad(lat2);
+    lng1 = degToRad(lng1);
+
+    var bX = Math.cos(lat2) * Math.cos(dLng);
+    var bY = Math.cos(lat2) * Math.sin(dLng);
+    var lat3 = Math.atan2(Math.sin(lat1) + Math.sin(lat2), Math.sqrt((Math.cos(lat1) + bX) * (Math.cos(lat1) + bX) + bY * bY));
+    var lng3 = lng1 + Math.atan2(bY, Math.cos(lat1) + bX);
+
+    //-- Return result
+    return {'lat':radToDeg(lat3), 'lon':radToDeg(lng3)};
+}
+
+var degToRad = function(deg) {
+    return deg * (Math.PI / 180.0);
+}
+
+var radToDeg = function(rad) {
+    return rad * (180.0 / Math.PI);
+}
