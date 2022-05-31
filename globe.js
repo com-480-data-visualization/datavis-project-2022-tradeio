@@ -5,10 +5,12 @@ const base_card = document.getElementById('card_placeholder');
 const countryTable = document.getElementById('countriesTable');
 countryTable.style.visibility='hidden';
 const tableBody = document.getElementById('countriesTableBody');
+
+const products = ['all', 'food', 'beverage', 'crude_materials', 'fuels', 'vegetable_oil', 'chemicals', 'material_manufacturers', 'machinery', 'other_manufacturers', 'unspecified']
 var trgts_table = []
+var products_dict = {}
 let interval;
 
-var currentCard = '';
 var selected_year = "2019";
 var selected_prod = "all";
 const getVal = feat => feat.properties.percentage_total[selected_year] / (8)
@@ -23,9 +25,10 @@ var polygon_dict = {};
 var country_locs;
 var oldProd = '';
 
-fetch('./dataset/country_coords.json').then(res => res.json()).then(coords =>{country_locs = coords; })
+fetch('./dataset/country_coords.json').then(res => res.json()).then(coords =>{country_locs = coords; });
 fetch('./dataset/countries.geojson').then(res => res.json()).then(countries =>{init_globe(countries) });
-onProductChange('all')
+load_trade_data(products);
+
 
 let drag = false;
 var globeContainer = document.getElementById('globeViz')
@@ -35,6 +38,13 @@ globeContainer.addEventListener(
     'mousemove', () => drag = true);
 globeContainer.addEventListener(
     'mouseup', () => drag ? '' : reset(10,10));
+
+
+  
+// Create the event
+var event_drag = new CustomEvent('mouseup', {"drag": drag=true});
+  
+  
 
 
 function onTradeChange(selectObject){    
@@ -76,19 +86,20 @@ function onProductChange(product){
     
     categoryBtnNew = document.getElementById(product)
     categoryBtnNew.style.color = 'lime'
-    fetch('./dataset/trade_data_' + product + '.json').then(x => x.json()).then(trades => {current_trades = trades; 
+
+    current_trades = products_dict[product]; 
     if(GlobaState){
         radiate_arcs(lastClickEvent["polygon"], lastClickEvent["event"],0,0)   
-    }else{
+    }else if(oldProd !== ''){
         reset(10,10)
-    }})
+    }
     oldProd = product
 }
 
 
 function reset({ lat: endLat, lng: endLng }) {
+    console.log('reset')
     base_card.innerHTML = ''
-    //countryTable.innerHTML = ''
     countryTable.style.visibility='hidden'
     myGlobe.arcsData([]);
     myGlobe.polygonCapColor(feat => colorScale(getVal(feat)))
@@ -99,11 +110,13 @@ function reset({ lat: endLat, lng: endLng }) {
     myGlobe.onPolygonHover(hoverD => {
         myGlobe.polygonAltitude(d => d === hoverD ? 0.1 : 0.01);
     })  
-    currentCard = ''  
 }
 
 
 function radiate_arcs(polygon, event, { lat: clicklat, lng:clicklng, altitude }){
+    
+    //Reset polygonLabel
+    myGlobe.controls().domElement.previousElementSibling.innerHTML = ''
     //After reset display the country card again
     changeCountryCard(base_card, polygon)
     document.getElementById("coun").value = polygon.properties.ISO_A2;    
@@ -117,6 +130,7 @@ function radiate_arcs(polygon, event, { lat: clicklat, lng:clicklng, altitude })
         changeCountryCard(base_card, polygon);
     })
     
+
     //const arc = { startLat: startlat, startLng: startlng, endLat:39.6, endLng:-98.5 };
     //myGlobe.arcsData([...myGlobe.arcsData(), arc]);
     
@@ -222,7 +236,7 @@ function init_globe(countries){
     })
     .arcColor('color')
     .arcsTransitionDuration(0)
-    .onGlobeClick(reset)        
+    //.onGlobeClick(reset)        
     .arcStroke("stroke")
     //airport
     .lineHoverPrecision(0)
@@ -236,10 +250,7 @@ function init_globe(countries){
     .polygonSideColor(() => 'rgba(0, 100, 0, 0.15)')
     .polygonStrokeColor(() => '#111')
     .polygonsTransitionDuration(300)
-    .polygonLabel(d => {
-        currentCard = GlobaState ? '' : countryCard(d)
-        return currentCard
-    })       
+    .polygonLabel(d => GlobaState ? '' : countryCard(d))       
     .onPolygonHover(hoverD => {
         myGlobe.polygonAltitude(d => d === hoverD ? 0.1 : 0.01);
     })

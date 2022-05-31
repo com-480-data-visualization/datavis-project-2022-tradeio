@@ -81,3 +81,12 @@ var PolygonColorChanger = function(d,polygon,arcArray){
     }
 }
 
+
+var load_trade_data = function(prods){
+    prods.forEach(prod => {
+        fetch('./dataset/trade_data_' + prod + '.json')
+            .then(x => x.json()).then(trades => {products_dict[prod] = trades})
+            .then(_ => {if (prod==='all'){current_trades = products_dict[prod];}});
+    });
+    onProductChange('all')
+}
