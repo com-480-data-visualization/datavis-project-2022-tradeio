@@ -12,11 +12,11 @@
   <script src="https://unpkg.com/globe.gl@2.26.1/dist/globe.gl.min.js"></script>
 
 	<link rel="stylesheet" href="styles.css">
-  <!--<link rel="stylesheet" href="slider.css">-->
 </head>
 
 <body>
-  
+
+
   <div class="top-info-container">
     <div class="topleft">Trade.io</div>
 
@@ -24,24 +24,8 @@
       <label for="coun">Country</label>
       <select name="countries" id="coun" onchange="onCounChange(this)">
         <option value=""selected disabled hidden >Select a country </option>
-        <option value="AO">Angola </option>
-        <option value="AL">Albania </option>
-        <option value="AE"> United Arab Emirates </option><option value="AR">Argentina </option><option value="AU">Australia </option><option value="AT">Austria </option><option value="AZ"> Azerbaijan  </option><option value="BE">Belgium </option><option value="BD"> Bangladesh </option><option value="BG"> Bulgaria </option>
-        <option value="BA">Bosnia and Herzegovina </option><option value="BY"> Belarus  </option><option value="BO"> Bolivia </option><option value="BR"> Brazil </option><option value="CA">Canada </option><option value="CH">Switzerland  </option><option value="CL">Chile </option><option value="CN"> China </option>
-        <option value="CI">Cote d'Ivoire </option><option value="CM">Cameroon </option><option value="CG">Republic of the Congo </option><option value="CO"> Colombia </option><option value="CR">Costa Rica </option><option value="CU"> Cuba </option><option value="CZ">Czech Republic </option>
-        <option value="DE"> Germany </option><option value="DK">Denmark </option><option value="DO">Dominican Republic </option><option value="DZ">Algeria </option><option value="EC">Ecuador </option><option value="EG">Egypt </option><option value="ES"> Spain </option><option value="EE"> Estonia </option>
-        <option value="ET"> Ethiopia </option><option value="FI"> Finland </option><option value="FR">France  </option><option value="GA">Gabon </option><option value="GB">United Kingdom </option><option value="GE">Georgia </option><option value="GH">Ghana </option><option value="GN"> Guinea </option><option value="GR">Greece </option><option value="GT">Guatemala </option>
-        <option value="HK">Hong Kong </option><option value="HN"> Honduras </option><option value="HR">Croatia </option><option value="HU">Hungary </option><option value="ID"> Indonesia </option><option value="IN">India </option><option value="IE"> Ireland </option><option value="IR"> Iran </option><option value="IL"> Israel </option><option value="IT">Italy </option><option value="JM">Jamaica </option>
-        <option value="JO"> Jordan </option><option value="JP">Japan </option><option value="KZ">Kazakhstan </option><option value="KE">Kenya </option><option value="KG">Kyrgyzstan  </option><option value="KH">Cambodia </option><option value="KR">South Korea  </option><option value="KW">Kuwait </option><option value="LA">Laos </option><option value="LB">Lebanon </option>
-        <option value="LR"> Liberia </option><option value="LY"> Libya </option><option value="LK">  Sri Lanka </option><option value="LT">Lithuania </option><option value="LV">Latvia </option><option value="MA"> Morocco </option><option value="MD"> Moldova </option><option value="MG"> Madagascar </option><option value="MX">Mexico  </option><option value="MK"> Macedonia </option><option value="ML"> Mali </option>
-        <option value="MN">Mongolia </option><option value="MZ">Mozambique </option><option value="MR"> Mauritania </option><option value="MU"> Mauritius </option><option value="MW"> Malawi </option><option value="MY">Malaysia </option><option value="NG">Nigeria </option><option value="NI"> Nicaragua </option><option value="NL"> Netherlands </option><option value="NO">Norway </option>
-        <option value="NZ">New Zealand </option><option value="OM"> Oman </option><option value="PK"> Pakistan </option><option value="PA"> Panama </option><option value="PE">Peru </option><option value="PH"> Philippines </option><option value="PG"> Papua New Guinea </option><option value="PL">Poland </option><option value="PT">Portugal </option><option value="PY">Paraguay </option><option value="QA"> Qatar </option>
-        <option value="RO">Romania </option><option value="RU">Russia  </option><option value="SA">Saudi Arabia </option><option value="SN">Senegal </option><option value="SV">El Salvador </option><option value="SK"> Slovakia </option><option value="SI">Slovenia </option><option value="SE"> Sweden </option><option value="SY">Syria  </option><option value="TH">Thailand </option>
-        <option value="TJ">Tajikistan </option>
-        <option value="TM">Turkmenistan </option>
-        <option value="TT">Trinidad and Tobago </option>
-        <option value="TN">Tunisia </option><option value="TR"> Turkey </option><option value="TZ"> Tanzania </option><option value="UG"> Uganda </option><option value="UA"> Ukraine </option>
-        <option value="UY"> Uruguay </option><option value="US">United States </option><option value="UZ">Uzbekistan </option><option value="VE">Venezuela </option><option value="VN">Vietnam </option><option value="YE"> Yemen </option><option value="ZA"> South Africa </option><option value="ZM"> Zambia </option><option value="ZW"> Zimbabwe </option>
+        <option value="AF">Afghanistan</option><option value="AL">Albania</option><option value="DZ">Algeria</option><option value="AO">Angola</option><option value="AQ">Antarctica</option><option value="AR">Argentina</option><option value="AM">Armenia</option><option value="AU">Australia</option><option value="AT">Austria</option><option value="AZ">Azerbaijan</option><option value="BD">Bangladesh</option><option value="BY">Belarus</option><option value="BE">Belgium</option><option value="BZ">Belize</option><option value="BJ">Benin</option><option value="BT">Bhutan</option><option value="BO">Bolivia</option><option value="BA">Bosnia and Herzegovina</option><option value="BW">Botswana</option><option value="BR">Brazil</option><option value="BN">Brunei</option><option value="BG">Bulgaria</option><option value="BF">Burkina Faso</option><option value="BI">Burundi</option><option value="KH">Cambodia</option><option value="CM">Cameroon</option><option value="CA">Canada</option><option value="CF">Central African Republic</option><option value="TD">Chad</option><option value="CL">Chile</option><option value="CN">China</option><option value="CO">Colombia</option><option value="CR">Costa Rica</option><option value="HR">Croatia</option><option value="CU">Cuba</option><option value="CY">Cyprus</option><option value="CZ">Czechia</option><option value="CD">Democratic Republic of the Congo</option><option value="DK">Denmark</option><option value="DJ">Djibouti</option><option value="DO">Dominican Republic</option><option value="TL">East Timor</option><option value="EC">Ecuador</option><option value="EG">Egypt</option><option value="SV">El Salvador</option><option value="GQ">Equatorial Guinea</option><option value="ER">Eritrea</option><option value="EE">Estonia</option><option value="SZ">eSwatini</option><option value="ET">Ethiopia</option><option value="FK">Falkland Islands</option><option value="FJ">Fiji</option><option value="FI">Finland</option><option value="FR">France</option><option value="TF">French Southern and Antarctic Lands</option><option value="GA">Gabon</option><option value="GM">Gambia</option><option value="GE">Georgia</option><option value="DE">Germany</option><option value="GH">Ghana</option><option value="GR">Greece</option><option value="GL">Greenland</option><option value="GT">Guatemala</option><option value="GN">Guinea</option><option value="GW">Guinea-Bissau</option><option value="GY">Guyana</option><option value="HT">Haiti</option><option value="HN">Honduras</option><option value="HU">Hungary</option><option value="IS">Iceland</option><option value="IN">India</option><option value="ID">Indonesia</option><option value="IR">Iran</option><option value="IQ">Iraq</option><option value="IE">Ireland</option><option value="IL">Israel</option><option value="IT">Italy</option><option value="CI">Ivory Coast</option><option value="JM">Jamaica</option><option value="JP">Japan</option><option value="JO">Jordan</option><option value="KZ">Kazakhstan</option><option value="KE">Kenya</option><option value="XK">Kosovo</option><option value="KW">Kuwait</option><option value="KG">Kyrgyzstan</option><option value="LA">Laos</option><option value="LV">Latvia</option><option value="LB">Lebanon</option><option value="LS">Lesotho</option><option value="LR">Liberia</option><option value="LY">Libya</option><option value="LT">Lithuania</option><option value="LU">Luxembourg</option><option value="MG">Madagascar</option><option value="MW">Malawi</option><option value="MY">Malaysia</option><option value="ML">Mali</option><option value="MR">Mauritania</option><option value="MX">Mexico</option><option value="MD">Moldova</option><option value="MN">Mongolia</option><option value="ME">Montenegro</option><option value="MA">Morocco</option><option value="MZ">Mozambique</option><option value="MM">Myanmar</option><option value="NA">Namibia</option><option value="NP">Nepal</option><option value="NL">Netherlands</option><option value="NC">New Caledonia</option><option value="NZ">New Zealand</option><option value="NI">Nicaragua</option><option value="NE">Niger</option><option value="NG">Nigeria</option><option value="KP">North Korea</option><option value="MK">North Macedonia</option><option value="NO">Norway</option><option value="OM">Oman</option><option value="PK">Pakistan</option><option value="PS">Palestine</option><option value="PA">Panama</option><option value="PG">Papua New Guinea</option><option value="PY">Paraguay</option><option value="PE">Peru</option><option value="PH">Philippines</option><option value="PL">Poland</option><option value="PT">Portugal</option><option value="PR">Puerto Rico</option><option value="QA">Qatar</option><option value="RS">Republic of Serbia</option><option value="CG">Republic of the Congo</option><option value="RO">Romania</option><option value="RU">Russia</option><option value="RW">Rwanda</option><option value="SA">Saudi Arabia</option><option value="SN">Senegal</option><option value="SL">Sierra Leone</option><option value="SK">Slovakia</option><option value="SI">Slovenia</option><option value="SB">Solomon Islands</option><option value="SO">Somalia</option><option value="ZA">South Africa</option><option value="KR">South Korea</option><option value="SS">South Sudan</option><option value="ES">Spain</option><option value="LK">Sri Lanka</option><option value="SD">Sudan</option><option value="SR">Suriname</option><option value="SE">Sweden</option><option value="CH">Switzerland</option><option value="SY">Syria</option><option value="TW">Taiwan</option><option value="TJ">Tajikistan</option><option value="TH">Thailand</option><option value="BS">The Bahamas</option><option value="TG">Togo</option><option value="TT">Trinidad and Tobago</option><option value="TN">Tunisia</option><option value="TR">Turkey</option><option value="TM">Turkmenistan</option><option value="UG">Uganda</option><option value="UA">Ukraine</option><option value="AE">United Arab Emirates</option><option value="GB">United Kingdom</option><option value="TZ">United Republic of Tanzania</option><option value="US">United States of America</option><option value="UY">Uruguay</option><option value="UZ">Uzbekistan</option><option value="VU">Vanuatu</option><option value="VE">Venezuela</option><option value="VN">Vietnam</option><option value="EH">Western Sahara</option><option value="YE">Yemen</option><option value="ZM">Zambia</option><option value="ZW">Zimbabwe</option>      
+      
       </select>
     </form>
     <!-- <hr> -->
@@ -54,14 +38,16 @@
     </form>
   </div>
 
-  <div class="slider-container">
-    <div style="display: flex; justify-content: center;">
-        <div class="timeline-container">
-          <button style="background-color: black;" class="play-button">
-            <img src="images/play.jpeg" style="width: 30px;">
+  <div style="display: flex; justify-content: center;">
+    <div class="slider-container">
+          <button class="play-button">
+            Play <!--<img src="images/play.jpeg" style="width: 30px;">-->
           </button>
-          <label for="years" style="top: 0.1em; left: -4em; font-family: Georgia;">Year: <span id="demo"></span>
           </label>
+          <!--<div class="timeline-container">-->
+          <!--<div class="range-value" id="rangeV"></div>-->
+          <!--<div class="timeline-container">-->
+          <!--<div style="z-index: 100;">-->
           <input
             class="slider"
             type="range"
@@ -72,58 +58,67 @@
             value = "2019"
             step="1"
             onchange= "onYearChange(this.value)"
-            oninput = "onYearChange(this.value)"
+            oninput = "onYearChange(this.value); this.parentNode.style.setProperty('--value',this.value); this.parentNode.style.setProperty('--text-value', JSON.stringify((+this.value).toLocaleString()))"
           />
-          <span
-          style="font-size: 14px; color: #ccd6f6;"
-          class="slider-date"
-          ></span>
-        </div>
-      </div>
+          <label for="years" style="font-size: 12pt; position: fixed; left: 80%; top: 3.5%; font-family: Georgia;"><span id="demo"></span>
+          <!--</div>-->
     </div>
-
-    <script src="script.js"></script>
-    <!--<div class="gradslider-container">
-      <div class="range-slider grad" style='--min:1962; --max:2019; --step:1; --value:2000; --text-value:"2000"'>
-        <input type="range" min="1962" max="2019" step="1" value="2000" oninput="this.parentNode.style.setProperty('--value',this.value); this.parentNode.style.setProperty('--text-value', JSON.stringify((+this.value).toLocaleString()))">
-        <output></output>
-        <div class='range-slider__progress'></div>
-      </div>
-      </div>-->
-
-      
-
-
-    <!-- <hr style="width: 250px;"> -->
-
-
-
-  
-  <div class="bottom-info-container">
-  <table><tbody><tr>
-    <td class="categoryButton" style="border-top:8px solid #009ACD ;">
-        <div id="cat0" class="chooseCategory" style="align-content: center;"> Food </div></td>
-        <td class="categoryButton" style="border-top:8px solid #FF8C00;"><div id="cat3" class="chooseCategory">Beverage </div></td>
-        <td class="categoryButton" style="border-top:8px solid #8B0000 ;"><div id="cat6" class="chooseCategory">Crude Materials </div></td>
-        <td class="categoryButton" style="border-top:8px solid #8B4513 ;"><div id="cat7" class="chooseCategory">Fuels </div></td>
-        <td class="categoryButton" style="border-top:8px solid #DB7093 ;"><div id="cat8" class="chooseCategory">Vegetable Oils </div></td>
-        <td class="categoryButton" style="border-top:8px solid #FFEC8B ;"><div id="cat10" class="chooseCategory">Chemicals </div></td>
-        <td class="categoryButton" style="border-top:8px solid #483D8B ;"><div id="cat11" class="chooseCategory">Material Manufactures </div></td>
-        <td class="categoryButton" style="border-top:8px solid #6E8B3D ;"><div id="cat12" class="chooseCategory">Machinery &amp Vehicles </div></td>
-        <td class="categoryButton" style="border-top:8px solid #97FFFF ;"><div id="cat13" class="chooseCategory">Other Manufactures </div></td>
-        <td class="categoryButton" style="border-top:8px solid #CDC5BF ;"><div id="cat14" class="chooseCategory">Unspecified </div></td></tr></tbody></table>
   </div>
 
-  <div id="card_placeholder"> </div>
-  <div id="table_placeholder"> </div>
+
+<!--<div style="display: flex; justify-content: center;">
+  <div class="ticks-container">
+          <svg role="presentation" width="100%" height="10">
+            <rect class="range__tick" x="6.6%" y="3" width="1" height="10"></rect>
+            <rect class="range__tick" x="24%" y="3" width="1" height="10"></rect>
+            <rect class="range__tick" x="26.8%" y="3" width="1" height="10"></rect>
+            <rect class="range__tick" x="36.8%" y="3" width="1" height="10"></rect>
+            <rect class="range__tick" x="46.8%" y="3" width="1" height="10"></rect>
+            <rect class="range__tick" x="56.8%" y="3" width="1" height="10"></rect>
+            <rect class="range__tick" x="66.8%" y="3" width="1" height="10"></rect>
+            <rect class="range__tick" x="76.8%" y="3" width="1" height="10"></rect>
+          </svg>
+    </div>
+</div>-->
+
+  <!--<hr style="width: 250px;"> -->
+  
+  <div class="bottom-info-container">
+  <table><tbody>
+        <td class="categoryButton" style="border-top:8px solid #8d52a4;"><div id="all" class="chooseCategory" onclick="onProductChange('all')">All</div></td>
+        <td class="categoryButton" style="border-top:8px solid #1c587e;"><div id="food" class="chooseCategory" onclick="onProductChange('food')">Food</div></td>
+        <td class="categoryButton" style="border-top:8px solid #FF8C00;"><div id="beverage" class="chooseCategory" onclick="onProductChange('beverage')">Beverage</div></td>
+        <td class="categoryButton" style="border-top:8px solid #8B0000;"><div id="crude_materials" class="chooseCategory" onclick="onProductChange('crude_materials')">Crude Materials</div></td>
+        <td class="categoryButton" style="border-top:8px solid #8B4513;"><div id="fuels" class="chooseCategory" onclick="onProductChange('fuels')">Fuels</div></td>
+        <td class="categoryButton" style="border-top:8px solid #DB7093;"><div id="vegetable_oil" class="chooseCategory" onclick="onProductChange('vegetable_oil')">Vegetable Oils</div></td>
+        <td class="categoryButton" style="border-top:8px solid #FFEC8B;"><div id="chemicals" class="chooseCategory" onclick="onProductChange('chemicals')">Chemicals</div></td>
+        <td class="categoryButton" style="border-top:8px solid #483D8B;"><div id="material_manufacturers" class="chooseCategory" onclick="onProductChange('material_manufacturers')">Material Manufacturers</div></td>
+        <td class="categoryButton" style="border-top:8px solid #6E8B3D;"><div id="machinery" class="chooseCategory" onclick="onProductChange('machinery')">Machinery &amp Vehicles</div></td>
+        <td class="categoryButton" style="border-top:8px solid #97FFFF;"><div id="other_manufacturers" class="chooseCategory" onclick="onProductChange('other_manufacturers')">Other Manufacturers</div></td>
+        <td class="categoryButton" style="border-top:8px solid #CDC5BF;"><div id="unspecified" class="chooseCategory" onclick="onProductChange('unspecified')">Unspecified</div></td>
+  </tbody></table>
+  </div>
+
+  <div id="card_placeholder" onclick="onReturnToCountry()"></div>
+  <div id="table_placeholder">
+    <table class="countriesTable" id="countriesTable">
+      <thead>
+        <tr>
+          <th colspan = "2">Exports</th>
+        </tr>
+      </thead>
+      <tbody id="countriesTableBody">
+      </tbody>
+    </table>
+  </div>
 
   <div id="globeViz" ></div>
 
-  <div class="globe-container">
+  <div class="globe-container" style="z-index: 1;">
+    <script src="EventHandlers.js"></script>
     <script src="helpers.js"></script>
     <script src="globe.js"></script>
   </div>
-  
-  <!--<script src="slider.css"></script>-->
+  <script src="script.js"></script>
 
 </body>
