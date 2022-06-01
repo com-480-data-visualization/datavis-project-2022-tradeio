@@ -52,7 +52,7 @@ var changeCountryTable = function(table, tableBody, countries, tradeType) {
     countries = countries.slice(0, nbrCountriesTable);
 
     var idx = 0;
-    var rowNumber = tableBody.rows.length;
+    const rowNumber = tableBody.rows.length;
     countries.forEach(country => {
         if (rowNumber == 0){
             // Table is empty or rowNumber got decreased and new cells must be added
@@ -93,10 +93,6 @@ function updateRowTable(tableBody, rowNumber, country){
         myGlobe.pointOfView(country[2], 1000)
     });
     tableBody.rows[rowNumber].cells[1].innerText = country[1];
-}
-
-function removeRowTable(table, rowNumber){
-    table.deleteRow(rowNumber);
 }
 
 var money_amount_fixer = function(amount){
@@ -153,4 +149,41 @@ var degToRad = function(deg) {
 
 var radToDeg = function(rad) {
     return rad * (180.0 / Math.PI);
+}
+
+function color_countries_gray(value){
+    //console.log(value)
+    if(value == "rgb(255, 255, 204)"){
+        return "grey"
+    }
+    return value;
+    
+}
+
+function arc_color_product(cat){
+    switch(cat){
+        case 'food': 
+            return [28,88,126];
+        case 'beverage': 
+            return [255,140,0];
+        case 'crude_materials': 
+            return [139,0,0];
+        case 'fuels': 
+            return [139,69,19];
+        case 'vegetable_oil': 
+            return [219,112,147];
+        case 'chemicals': 
+            return [255,236,139];
+        case 'material_manufacturers': 
+            return [72,61,139];
+        case 'machinery': 
+            return [110,139,61];
+        case 'other_manufacturers': 
+            return [151,255,255];
+        case 'unspecified': 
+            return [205,197,191];
+        case 'all': 
+            return [141,82,164];
+            
+    }
 }

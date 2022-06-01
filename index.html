@@ -38,15 +38,16 @@
     </form>
   </div>
 
-   <div class="slider-container">
-    <div style="display: flex; justify-content: center;">
-        <div class="timeline-container">
-          <button style="background-color: black; top: -0.1em; left: -1em; font-size: 12pt; font-family: Georgia;" class="play-button">
+  <div style="display: flex; justify-content: center;">
+    <div class="slider-container">
+          <button class="play-button">
             Play <!--<img src="images/play.jpeg" style="width: 30px;">-->
           </button>
-          <!--<label for="years" style="font-size: 12pt; top: -0.1em; left: -5em;font-family: Georgia;">Year: <span id="demo"></span>-->
           </label>
-          <div class="range-value" id="rangeV"></div>
+          <!--<div class="timeline-container">-->
+          <!--<div class="range-value" id="rangeV"></div>-->
+          <!--<div class="timeline-container">-->
+          <!--<div style="z-index: 100;">-->
           <input
             class="slider"
             type="range"
@@ -56,39 +57,29 @@
             max="2019"
             value = "2019"
             step="1"
-            onchange= "onYearChange(this.value); setValue()"
-            oninput = "onYearChange(this.value); setValue(); this.parentNode.style.setProperty('--value',this.value); this.parentNode.style.setProperty('--text-value', JSON.stringify((+this.value).toLocaleString()))"
+            onchange= "onYearChange(this.value)"
+            oninput = "onYearChange(this.value); this.parentNode.style.setProperty('--value',this.value); this.parentNode.style.setProperty('--text-value', JSON.stringify((+this.value).toLocaleString()))"
           />
-          <datalist id="ticks">
-            <option>1962</option>
-            <option>1972</option>
-            <option>1982</option>
-            <option>1992</option>
-            <option>2002</option>
-            <option>2012</option>
-          </datalist>
-        </div>
-      </div>
+          <label for="years" style="font-size: 12pt; position: fixed; left: 80%; top: 3.5%; font-family: Georgia;"><span id="demo"></span>
+          <!--</div>-->
     </div>
+  </div>
 
-    <script src="script.js"></script>
 
-    <!--<div class="gradslider-container">-->
-      <!--<div class="range-slider grad" style='--min:1962; --max:2019; --step:1; --value:2000; --text-value:"2000"'>
-        <input type="range" min="1962" max="2019" step="1" value="2000" oninput="this.parentNode.style.setProperty('--value',this.value); this.parentNode.style.setProperty('--text-value', JSON.stringify((+this.value).toLocaleString()))">
-        <output></output>
-        <div class='range-slider__progress'></div>
-      </div>-->
-
-    <script>
-      var output = document.getElementById("demo");
-      if (slider.value !== null && output !== null){
-        console.log(slider.value)
-        console.log(output.innerHTML)
-        output.innerHTML = slider.value;
-      }
-    </script>
-
+<!--<div style="display: flex; justify-content: center;">
+  <div class="ticks-container">
+          <svg role="presentation" width="100%" height="10">
+            <rect class="range__tick" x="6.6%" y="3" width="1" height="10"></rect>
+            <rect class="range__tick" x="24%" y="3" width="1" height="10"></rect>
+            <rect class="range__tick" x="26.8%" y="3" width="1" height="10"></rect>
+            <rect class="range__tick" x="36.8%" y="3" width="1" height="10"></rect>
+            <rect class="range__tick" x="46.8%" y="3" width="1" height="10"></rect>
+            <rect class="range__tick" x="56.8%" y="3" width="1" height="10"></rect>
+            <rect class="range__tick" x="66.8%" y="3" width="1" height="10"></rect>
+            <rect class="range__tick" x="76.8%" y="3" width="1" height="10"></rect>
+          </svg>
+    </div>
+</div>-->
   <!--<hr style="width: 250px;"> -->
   
   <div class="bottom-info-container">
@@ -127,5 +118,6 @@
     <script src="helpers.js"></script>
     <script src="globe.js"></script>
   </div>
+  <script src="script.js"></script>
 
 </body>
