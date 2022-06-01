@@ -13,8 +13,9 @@ let interval;
 var polygon_country = {lat:0, lng:0, altitude:2};
 
 var selected_year = "2019";
-var selected_prod = "all";
-const getVal = feat => feat.properties.percentage_total[selected_year] / (8)
+var selected_prod = "";
+var tradeType =  document.getElementById("trade").value ; 
+
 
 var myGlobe;
 //States: False is nothing is selected startup state, 1 a country is selected
@@ -24,12 +25,20 @@ var lastClickEvent;
 var current_trades;
 var polygon_dict = {};
 var country_locs;
-var oldProd = '';
 var globeClick = false;
 
+const getVal = feat => {
+    if (selected_prod==="all" || selected_prod===""){
+        return ((tradeType == "import_value") ? feat.properties.percentage_imports[selected_year] : feat.properties.percentage_exports[selected_year]) / (8)
+    }
+    else{
+        return products_dict[oldProd][selected_year][feat.properties.ISO_A2][(tradeType=="import_value") ? "percentage_imports" : "percentage_exports"] / 8
+    }
+}
+
+load_trade_data(products);
 fetch('./dataset/country_coords.json').then(res => res.json()).then(coords =>{country_locs = coords; });
 fetch('./dataset/countries.geojson').then(res => res.json()).then(countries =>{init_globe(countries) });
-load_trade_data(products);
 
 
 function reset({ lat: endLat, lng: endLng }) {
@@ -68,7 +77,7 @@ function radiate_arcs(polygon, event, { lat: clicklat, lng:clicklng, altitude })
     //const arc = { startLat: startlat, startLng: startlng, endLat:39.6, endLng:-98.5 };
     //myGlobe.arcsData([...myGlobe.arcsData(), arc]);
     
-    var tradeType =  document.getElementById("trade").value ;   
+    tradeType =  document.getElementById("trade").value ;   
     
     var arcArray = current_trades[selected_year][polygon.properties.ISO_A2][tradeType];
     var allArcs = []
@@ -170,7 +179,8 @@ function init_globe(countries){
     .onArcClick(arc => {
         midCoords = geographicMiddle(arc.startLat, arc.startLng, arc.endLat, arc.endLng)
         // myGlobe.pointOfView({ lat: midCoords.lat, lng: midCoords.lon, altitude: 2.5}, 1000)
-        myGlobe.pointOfView({ lat: arc.endLat, lng: arc.endLng, altitude: 2.5}, 1000)
+        selected_poly_coords = (tradeType=="export_value") ? {lat: arc.endLat, lng: arc.endLng, altitude: 2.5} : {lat: arc.startLat, lng: arc.startLng, altitude: 2.5}
+        myGlobe.pointOfView(selected_poly_coords, 1000)
     })
     .arcColor('color')
     .arcsTransitionDuration(0)

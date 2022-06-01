@@ -13,7 +13,8 @@ globeContainer.addEventListener(
 });
 
 
-function onTradeChange(){    
+function onTradeChange(){
+    tradeType =  document.getElementById("trade").value; 
     if(GlobaState){
         radiate_arcs(lastClickEvent["polygon"], lastClickEvent["event"],0,0)   
     }else{
@@ -47,22 +48,23 @@ function onReturnToCountry(){
 
 
 function onProductChange(product){
-    if (product === oldProd) 
+    if (product === selected_prod) 
         return
 
-    if (oldProd !== ''){
-        categoryBtnOld = document.getElementById(oldProd)
+    if (selected_prod !== ''){
+        categoryBtnOld = document.getElementById(selected_prod)
         categoryBtnOld.style.color = 'white'
     }
     
     categoryBtnNew = document.getElementById(product)
     categoryBtnNew.style.color = 'lime'
 
-    current_trades = products_dict[product]; 
+    current_trades = products_dict[product];
+    console.log(current_trades) 
     if(GlobaState){
         radiate_arcs(lastClickEvent["polygon"], lastClickEvent["event"],0,0)   
-    }else if(oldProd !== ''){
+    }else if(selected_prod !== ''){
         reset(10,10)
     }
-    oldProd = product
+    selected_prod = product
 }

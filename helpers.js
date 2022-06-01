@@ -37,13 +37,19 @@ var countryCard = function(country) {
 var changeCountryTable = function(table, tableBody, countries, tradeType) {
     tradeTypeHead = tradeType=="import_value" ? "Imports from (USD)" : "Exports to (USD)";
     table.tHead.innerHTML = `<tr><th colspan = "2" >${tradeTypeHead}</th></tr>`;
+
+
+    // table.tHead.removeEventListener("click");
+    //var el = document.getElementById('el-id'),
+    tHeadClone = table.tHead.cloneNode(true);
+
+    table.tHead.parentNode.replaceChild(tHeadClone, table.tHead);
     table.tHead.addEventListener("click", function(){
         //tradeType = document.getElementById("trade").value
         document.getElementById("trade").value = tradeType=="import_value" ? "export_value" : "import_value"
         onTradeChange()
     })
     countries = countries.slice(0, nbrCountriesTable);
-    console.log(countries.length)
 
     var idx = 0;
     var rowNumber = tableBody.rows.length;
@@ -62,7 +68,7 @@ var changeCountryTable = function(table, tableBody, countries, tradeType) {
                 //Decrease rowNumber until rowNumber == 0 or rowNumber == countries.length
                 rowNumber--;
             }
-        }
+        }   
         idx++;
     })
     table.style.visibility='visible'
@@ -115,9 +121,9 @@ var load_trade_data = function(prods){
     prods.forEach(prod => {
         fetch('./dataset/trade_data_' + prod + '.json')
             .then(x => x.json()).then(trades => {products_dict[prod] = trades})
-            .then(_ => {if (prod==='all'){current_trades = products_dict[prod];}});
+            .then(_ => {if (prod==='all'){current_trades = products_dict[prod];}})
+            .then(onProductChange('all'));
     });
-    onProductChange('all')
 }
 
 
