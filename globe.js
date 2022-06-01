@@ -195,5 +195,5 @@ function init_globe(countries){
     
     for (const poly of myGlobe.polygonsData()) {
         polygon_dict[poly.properties.ISO_A2] = poly;
-    } 
+    }
 }
