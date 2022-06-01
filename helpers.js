@@ -43,11 +43,26 @@ var changeCountryTable = function(table, tableBody, countries, tradeType) {
         onTradeChange()
     })
     countries = countries.slice(0, nbrCountriesTable);
+    console.log(countries.length)
 
     var idx = 0;
-    const rowNumber = tableBody.rows.length;
+    var rowNumber = tableBody.rows.length;
     countries.forEach(country => {
-        rowNumber == 0 ? addRowTable(tableBody, country, idx) : updateRowTable(tableBody, idx, country);
+        if (rowNumber == 0){
+            // Table is empty or rowNumber got decreased and new cells must be added
+            addRowTable(tableBody, country, idx)
+        } else{
+            // Update cells
+            updateRowTable(tableBody, idx, country);
+            if (rowNumber != countries.length){
+                if (rowNumber > countries.length){
+                    // Remove cells if there are more cells than countries
+                    removeRowTable(table, rowNumber)
+                }
+                //Decrease rowNumber until rowNumber == 0 or rowNumber == countries.length
+                rowNumber--;
+            }
+        }
         idx++;
     })
     table.style.visibility='visible'
@@ -72,6 +87,10 @@ function updateRowTable(tableBody, rowNumber, country){
         myGlobe.pointOfView(country[2], 1000)
     });
     tableBody.rows[rowNumber].cells[1].innerText = country[1];
+}
+
+function removeRowTable(table, rowNumber){
+    table.deleteRow(rowNumber);
 }
 
 var money_amount_fixer = function(amount){
