@@ -13,7 +13,7 @@ let interval;
 var polygon_country = {lat:0, lng:0, altitude:2};
 
 var selected_year = "2019";
-var selected_prod = "";
+var selected_prod = "all";
 var tradeType =  document.getElementById("trade").value ; 
 
 
@@ -27,6 +27,7 @@ var polygon_dict = {};
 var country_locs;
 var globeClick = false;
 
+
 const getVal = feat => {
     try {
         if (selected_prod==="all" || selected_prod===""){
@@ -37,7 +38,7 @@ const getVal = feat => {
             return ((tradeType=="import_value") ? country_prod.precentage_imports : country_prod.precentage_exports) / 8
         }
     } catch (error) {
-        console.log(`Percentage does not exist for ${feat.properties.ADMIN}, ${feat.properties.ISO_A2}`)
+        // console.log(`Percentage does not exist for ${feat.properties.ADMIN}, ${feat.properties.ISO_A2}`)
     }
     
 }
@@ -45,7 +46,6 @@ const getVal = feat => {
 load_trade_data(products);
 fetch('./dataset/country_coords.json').then(res => res.json()).then(coords =>{country_locs = coords; });
 fetch('./dataset/countries.geojson').then(res => res.json()).then(countries =>{init_globe(countries) });
-
 
 function reset({ lat: endLat, lng: endLng }) {
     base_card.innerHTML = ''
@@ -63,7 +63,6 @@ function reset({ lat: endLat, lng: endLng }) {
 
 
 function radiate_arcs(polygon, event, { lat: clicklat, lng:clicklng, altitude }){
-
     if(!Object.keys(current_trades[selected_year]).includes(polygon.properties.ISO_A2)){
         reset();
         return;
@@ -116,7 +115,7 @@ function radiate_arcs(polygon, event, { lat: clicklat, lng:clicklng, altitude })
         endLng = trgt[1];
 
         var color = arc_color_product(selected_prod)
-
+        // console.log(selected_prod)
         var newArc = {
             startLat: startLat,
             startLng: startLng_,
@@ -124,7 +123,7 @@ function radiate_arcs(polygon, event, { lat: clicklat, lng:clicklng, altitude })
             endLng: endLng,
             color: `rgba(${color[0]}, ${color[1]}, ${color[2]} , ${Math.min(Math.max(arcArray[i][5] * 15, 0.3) , 0.8)})`,
             original_color: `rgba(${color[0]}, ${color[1]}, ${color[2]} , ${Math.min(Math.max(arcArray[i][5] * 15, 0.3) , 0.8)})`,
-            stroke: Math.min(Math.max(arcArray[i][5] * 8, 0.5) , 2) ,
+            stroke: Math.min(Math.max(((selected_prod=='all') ? arcArray[i][5] : arcArray[i][5]/100) * 8 , 0.5) , 2) ,
             name: `${arcArray[i][1]} &#8594; ${arcArray[i][3]} : ${money_amount_fixer(arcArray[i][0])}`
         }
         allArcs =   [...allArcs, newArc]
@@ -144,7 +143,7 @@ function radiate_arcs(polygon, event, { lat: clicklat, lng:clicklng, altitude })
 
     var clickLabel = ["a", "a", "a", arcArray[0][1]];
 
-    //console.log(country_locs)
+    // console.log(country_locs)
     myGlobe.labelsData([...arcArray, clickLabel]);
     myGlobe.labelLat(d => country_locs[d[3]][0])
     myGlobe.labelLng(d => country_locs[d[3]][1])
