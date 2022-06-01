@@ -3,7 +3,7 @@ const slider = document.querySelector('.slider');
 // Play button
 const playButton = document.querySelector('.play-button');
 // Slider
-var output = document.getElementById("demo");
+// var output = document.getElementById("demo");
 // Slider date
 const sliderDate = document.querySelector('.slider-date');
 playButton.disabled = false;
