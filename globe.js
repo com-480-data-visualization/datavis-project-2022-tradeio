@@ -36,7 +36,7 @@ function reset({ lat: endLat, lng: endLng }) {
     base_card.innerHTML = ''
     countryTable.style.visibility='hidden'
     myGlobe.arcsData([]);
-    myGlobe.polygonCapColor(feat => colorScale(getVal(feat)))
+    myGlobe.polygonCapColor(feat => color_countries_gray(colorScale(getVal(feat))))
     GlobaState = false 
     document.getElementById("coun") .value = ""    
     myGlobe.labelsData([])
@@ -48,6 +48,11 @@ function reset({ lat: endLat, lng: endLng }) {
 
 
 function radiate_arcs(polygon, event, { lat: clicklat, lng:clicklng, altitude }){
+
+    if(!Object.keys(current_trades[selected_year]).includes(polygon.properties.ISO_A2)){
+        reset();
+        return;
+    }
     polygon_arc = polygon
     //Reset polygonLabel
     myGlobe.controls().domElement.previousElementSibling.innerHTML = ''
@@ -76,7 +81,7 @@ function radiate_arcs(polygon, event, { lat: clicklat, lng:clicklng, altitude })
     var startLngx = 0;
     var endLat = 0;
     var endLng = 0;
-    countriesTable = []
+    countriesTable = []    
 
     for (var i = 0; i < arcArray.length; i++) {
         var src = country_locs[arcArray[i][1]];
@@ -95,21 +100,18 @@ function radiate_arcs(polygon, event, { lat: clicklat, lng:clicklng, altitude })
         endLat = trgt[0];
         endLng = trgt[1];
 
+        var color = arc_color_product(selected_prod)
 
         var newArc = {
             startLat: startLat,
             startLng: startLng_,
             endLat: endLat,
             endLng: endLng,
-            //color: [['red', 'white', 'blue', 'green'][Math.round(Math.random() * 3)], ['red', 'white', 'blue', 'green'][Math.round(Math.random() * 3)]]
-            color: `rgba(255, 0, 0 , ${Math.min(Math.max(arcArray[i][5] * 15, 0.3) , 0.8)})`,
-            original_color: `rgba(255, 0, 0 , ${Math.min(Math.max(arcArray[i][5] * 15, 0.3) , 0.8)})`,
-            //color: [`rgba(0, 255, 0, 1.50)`, `rgba(255, 0, 0, 1.50)`],
-            //color: "gainsboro",
+            color: `rgba(${color[0]}, ${color[1]}, ${color[2]} , ${Math.min(Math.max(arcArray[i][5] * 15, 0.3) , 0.8)})`,
+            original_color: `rgba(${color[0]}, ${color[1]}, ${color[2]} , ${Math.min(Math.max(arcArray[i][5] * 15, 0.3) , 0.8)})`,
             stroke: Math.min(Math.max(arcArray[i][5] * 8, 0.5) , 2) ,
             name: `${arcArray[i][1]} &#8594; ${arcArray[i][3]} : ${money_amount_fixer(arcArray[i][0])}`
         }
-        //console.log(arcArray[i][9] *255 * 5)
         allArcs =   [...allArcs, newArc]
         
     }

@@ -148,3 +148,40 @@ var degToRad = function(deg) {
 var radToDeg = function(rad) {
     return rad * (180.0 / Math.PI);
 }
+
+function color_countries_gray(value){
+    //console.log(value)
+    if(value == "rgb(255, 255, 204)"){
+        return "grey"
+    }
+    return value;
+    
+}
+
+function arc_color_product(cat){
+    switch(cat){
+        case 'food': 
+            return [28,88,126];
+        case 'beverage': 
+            return [255,140,0];
+        case 'crude_materials': 
+            return [139,0,0];
+        case 'fuels': 
+            return [139,69,19];
+        case 'vegetable_oil': 
+            return [219,112,147];
+        case 'chemicals': 
+            return [255,236,139];
+        case 'material_manufacturers': 
+            return [72,61,139];
+        case 'machinery': 
+            return [110,139,61];
+        case 'other_manufacturers': 
+            return [151,255,255];
+        case 'unspecified': 
+            return [205,197,191];
+        case 'all': 
+            return [141,82,164];
+            
+    }
+}

@@ -54,7 +54,7 @@ function onProductChange(product){
         categoryBtnOld = document.getElementById(oldProd)
         categoryBtnOld.style.color = 'white'
     }
-    
+    selected_prod = product
     categoryBtnNew = document.getElementById(product)
     categoryBtnNew.style.color = 'lime'
 
