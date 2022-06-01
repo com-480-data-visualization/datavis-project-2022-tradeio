@@ -24,7 +24,6 @@ function onTradeChange(){
 
 
 function onCounChange(selectObject){   
-    console.log("countryChanged") 
     const poly =   polygon_dict[selectObject.value]
     radiate_arcs(poly , 0,0,0)
     var coord = country_locs[poly.properties.ISO_A2]
@@ -60,7 +59,6 @@ function onProductChange(product){
     categoryBtnNew.style.color = 'lime'
 
     current_trades = products_dict[product];
-    console.log(current_trades) 
     if(GlobaState){
         radiate_arcs(lastClickEvent["polygon"], lastClickEvent["event"],0,0)   
     }else if(selected_prod !== ''){

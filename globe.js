@@ -28,12 +28,18 @@ var country_locs;
 var globeClick = false;
 
 const getVal = feat => {
-    if (selected_prod==="all" || selected_prod===""){
-        return ((tradeType == "import_value") ? feat.properties.percentage_imports[selected_year] : feat.properties.percentage_exports[selected_year]) / (8)
+    try {
+        if (selected_prod==="all" || selected_prod===""){
+            return ((tradeType == "import_value") ? feat.properties.percentage_imports[selected_year] : feat.properties.percentage_exports[selected_year]) / (8)
+        }
+        else{
+            country_prod = products_dict[selected_prod][selected_year][feat.properties.ISO_A2]
+            return ((tradeType=="import_value") ? country_prod.precentage_imports : country_prod.precentage_exports) / 8
+        }
+    } catch (error) {
+        console.log(`Percentage does not exist for ${feat.properties.ADMIN}, ${feat.properties.ISO_A2}`)
     }
-    else{
-        return products_dict[oldProd][selected_year][feat.properties.ISO_A2][(tradeType=="import_value") ? "percentage_imports" : "percentage_exports"] / 8
-    }
+    
 }
 
 load_trade_data(products);
