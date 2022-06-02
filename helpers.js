@@ -118,7 +118,6 @@ var load_data_and_globe = async function(prods) {
                     fetch('./dataset/countries.geojson').then(res => res.json()).then(countries =>{init_globe(countries) });
                 }
             })
-            .then(onProductChange("all"))
     }
 }
 
