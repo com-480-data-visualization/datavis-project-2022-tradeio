@@ -9,7 +9,7 @@ globeContainer.addEventListener(
     'mouseup', () => {
         // Check if click was made on a clickable object (polygon or arc)
         globeClick = myGlobe.controls().domElement.classList.contains('clickable');        
-        return (drag || globeClick) ? '' : reset(10,10)
+        return (drag || globeClick) ? '' : reset()
 });
 
 
@@ -18,7 +18,7 @@ function onTradeChange(){
     if(GlobaState){
         radiate_arcs(lastClickEvent["polygon"], lastClickEvent["event"],0,0)   
     }else{
-        reset(10,10)  
+        reset()  
     }
 }
 
@@ -36,7 +36,7 @@ function onYearChange(year){
     if(GlobaState){
         radiate_arcs(lastClickEvent["polygon"], lastClickEvent["event"],0,0)   
     }else{
-        reset(10,10)
+        reset()
     }
 }
 
@@ -62,8 +62,9 @@ function onProductChange(product){
     if(GlobaState){
         radiate_arcs(lastClickEvent["polygon"], lastClickEvent["event"],0,0)   
     }else if(selected_prod !== ''){
-        reset(10,10)
+        reset()
     }
 }
+
 
 

@@ -38,9 +38,6 @@ var changeCountryTable = function(table, tableBody, countries, tradeType) {
     tradeTypeHead = tradeType=="import_value" ? "Imports from (USD)" : "Exports to (USD)";
     table.tHead.innerHTML = `<tr><th colspan = "2" >${tradeTypeHead}</th></tr>`;
 
-
-    // table.tHead.removeEventListener("click");
-    //var el = document.getElementById('el-id'),
     tHeadClone = table.tHead.cloneNode(true);
 
     table.tHead.parentNode.replaceChild(tHeadClone, table.tHead);
@@ -51,24 +48,15 @@ var changeCountryTable = function(table, tableBody, countries, tradeType) {
     })
     countries = countries.slice(0, nbrCountriesTable);
 
+    const rowNumber = tableBody.rows.length;
+
+    for(let row=rowNumber; row>0; row--){
+        removeRowTable(table, row)
+    }
+
     var idx = 0;
-    var rowNumber = tableBody.rows.length;
     countries.forEach(country => {
-        if (rowNumber == 0){
-            // Table is empty or rowNumber got decreased and new cells must be added
-            addRowTable(tableBody, country, idx)
-        } else{
-            // Update cells
-            updateRowTable(tableBody, idx, country);
-            if (rowNumber != countries.length){
-                if (rowNumber > countries.length){
-                    // Remove cells if there are more cells than countries
-                    removeRowTable(table, rowNumber)
-                }
-                //Decrease rowNumber until rowNumber == 0 or rowNumber == countries.length
-                rowNumber--;
-            }
-        }   
+        addRowTable(tableBody, country, idx)
         idx++;
     })
     table.style.visibility='visible'
@@ -155,15 +143,6 @@ var radToDeg = function(rad) {
     return rad * (180.0 / Math.PI);
 }
 
-function color_countries_gray(value){
-    //console.log(value)
-    if(value == "rgb(255, 255, 204)"){
-        return "grey"
-    }
-    return value;
-    
-}
-
 function arc_color_product(cat){
     switch(cat){
         case 'food': 
@@ -195,3 +174,32 @@ function arc_color_product(cat){
 var delay = function(time_ms) {
     return new Promise(resolve => setTimeout(resolve, time_ms));
   }
+
+var hasCountryData = function(feat){
+    if(!Object.keys(current_trades[selected_year]).includes(feat.properties.ISO_A2)){
+        return false;
+    }
+    
+    tradeType =  document.getElementById("trade").value ; 
+    if(!Object.keys(current_trades[selected_year][feat.properties.ISO_A2]).includes(tradeType)){
+        return false;
+    }  
+
+    if(feat.properties.ISO_A2 === 'SS'){
+        return false;
+    }
+
+    var arcArray = current_trades[selected_year][feat.properties.ISO_A2][tradeType];
+    newArcArray = []
+    arcArray.forEach(trade => {
+        if (trade[0] > 0){
+            newArcArray.push(trade)
+        }
+    })
+
+    arcArray = newArcArray
+    if(arcArray.length===0){
+        return false;
+    }
+    return true;
+}

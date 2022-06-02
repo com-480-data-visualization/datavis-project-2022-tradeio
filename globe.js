@@ -50,11 +50,11 @@ fetch('./dataset/countries.geojson').then(res => res.json()).then(countries =>{i
 
 
 
-function reset({ lat: endLat, lng: endLng }) {
+function reset() {
     base_card.innerHTML = ''
     countryTable.style.visibility='hidden'
     myGlobe.arcsData([]);
-    myGlobe.polygonCapColor(feat => color_countries_gray(colorScale(getVal(feat))))
+    myGlobe.polygonCapColor(feat => hasCountryData(feat) ? colorScale(getVal(feat)) : "grey")
     GlobaState = false 
     document.getElementById("coun") .value = ""    
     myGlobe.labelsData([])
@@ -66,9 +66,21 @@ function reset({ lat: endLat, lng: endLng }) {
 
 
 function radiate_arcs(polygon, event, { lat: clicklat, lng:clicklng, altitude }){
-    if(!Object.keys(current_trades[selected_year]).includes(polygon.properties.ISO_A2)){
+
+    if (!hasCountryData(polygon)){
+        reset()
         return;
     }
+
+    var arcArray = current_trades[selected_year][polygon.properties.ISO_A2][tradeType];
+    newArcArray = []
+    arcArray.forEach(trade => {
+        if (trade[0] > 0){
+            newArcArray.push(trade)
+        }
+    })
+    arcArray = newArcArray
+    
     polygon_arc = polygon
     //Reset polygonLabel
     myGlobe.controls().domElement.previousElementSibling.innerHTML = ''
@@ -91,7 +103,6 @@ function radiate_arcs(polygon, event, { lat: clicklat, lng:clicklng, altitude })
     
     tradeType =  document.getElementById("trade").value ;   
     
-    var arcArray = current_trades[selected_year][polygon.properties.ISO_A2][tradeType];
     var allArcs = []
     var startLat = 0;
     var startLngx = 0;
@@ -200,7 +211,7 @@ function init_globe(countries){
     //// Polygon
     .polygonsData(countries.features.filter(d => d.properties.ISO_A2 !== 'AQ'))
     .polygonAltitude(0.01)
-    .polygonCapColor(feat => colorScale(getVal(feat)))
+    .polygonCapColor(feat => hasCountryData(feat) ? colorScale(getVal(feat)) : "grey")
     .polygonSideColor(() => 'rgba(0, 100, 0, 0.15)')
     .polygonStrokeColor(() => '#111')
     .polygonsTransitionDuration(300)

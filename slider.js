@@ -19,6 +19,11 @@ function yearLabel(){
   onYearChange(slider.value);
 }
 
+document.addEventListener('keyup', event => {
+  if (event.code === 'Space') {
+    slider.click();
+  }
+})
 
 // when play button is clicked on 
 playButton.addEventListener('click', () => {
