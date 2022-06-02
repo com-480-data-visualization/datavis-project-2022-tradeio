@@ -43,9 +43,16 @@ const getVal = feat => {
     
 }
 
+setVisible('#loading', true);
+
 load_trade_data(products);
 fetch('./dataset/country_coords.json').then(res => res.json()).then(coords =>{country_locs = coords; });
 fetch('./dataset/countries.geojson').then(res => res.json()).then(countries =>{init_globe(countries) });
+
+document.addEventListener('DOMContentLoaded', () =>
+  wait(3000).then(() => {
+    setVisible('#loading', false);
+  }));
 
 function reset({ lat: endLat, lng: endLng }) {
     base_card.innerHTML = ''

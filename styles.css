@@ -2,7 +2,9 @@
   font-family: Sans-Serif; 
 }
 
+
 body {
+  background-color: black;
   overflow-y: hidden; /* Hide vertical scrollbar */
   overflow-x: hidden; /* Hide horizontal scrollbar */
 } 
@@ -483,4 +485,29 @@ svg {
 
 .globe-container{
   z-index: 1;
+}
+
+#loading {
+  display: flex;
+  position: fixed;
+  z-index: 100;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 1);
+  /* background-image: url("https://i.stack.imgur.com/MnyxU.gif"); */
+  background-image: url("https://c.tenor.com/UnFx-k_lSckAAAAC/amalie-steiness.gif");
+  background-size: 100px 100px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+#text_loading {
+  display: flex;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  color:white;
+  justify-content: center;
+  top: 40%;
+  font-size: large;
 }
