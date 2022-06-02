@@ -182,12 +182,8 @@ var delay = function(time_ms) {
   }
 
 var hasCountryData = function(feat){
-    try {
-        if(!Object.keys(current_trades[selected_year]).includes(feat.properties.ISO_A2)){
-            return false;
-        }
-    } catch (error) {
-        console.log(current_trades)
+    if(!Object.keys(current_trades[selected_year]).includes(feat.properties.ISO_A2)){
+        return false;
     }
     if(!Object.keys(current_trades[selected_year]).includes(feat.properties.ISO_A2)){
         return false;

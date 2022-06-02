@@ -48,7 +48,12 @@ function onReturnToCountry(){
 
 function onProductChange(product){
     if (product === selected_prod) 
+        return  
+
+    if (products_dict[product] == null){
+        alert("The selected data is not loaded yet, please wait and retry in a few moments!");
         return
+    }
 
     categoryBtnOld = document.getElementById(selected_prod)
     categoryBtnOld.style.color = 'white'
@@ -58,7 +63,8 @@ function onProductChange(product){
 
     selected_prod = product
 
-    current_trades = products_dict[product];
+    current_trades = products_dict[product];    
+
     if(GlobaState){
         radiate_arcs(lastClickEvent["polygon"], lastClickEvent["event"],0,0)   
     }else if(selected_prod !== ''){
