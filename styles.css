@@ -156,6 +156,10 @@ table {
   align-items: center;
 }
 
+#all{
+  color: lime;
+}
+
 /*===================================*/
 
 .slider-container {

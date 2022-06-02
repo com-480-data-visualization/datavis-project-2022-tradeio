@@ -14,7 +14,7 @@ var polygon_country = {lat:0, lng:0, altitude:2};
 
 var selected_year = "2019";
 var selected_prod = "all";
-var tradeType =  document.getElementById("trade").value ; 
+var tradeType =  document.getElementById("trade").value; 
 
 
 var myGlobe;
@@ -35,7 +35,7 @@ const getVal = feat => {
         }
         else{
             country_prod = products_dict[selected_prod][selected_year][feat.properties.ISO_A2]
-            return ((tradeType=="import_value") ? country_prod.precentage_imports : country_prod.precentage_exports) / 8
+            return ((tradeType=="import_value") ? country_prod.percentage_imports : country_prod.percentage_exports) / 8
         }
     } catch (error) {
         // console.log(`Percentage does not exist for ${feat.properties.ADMIN}, ${feat.properties.ISO_A2}`)

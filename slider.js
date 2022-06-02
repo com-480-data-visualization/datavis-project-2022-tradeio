@@ -44,7 +44,6 @@ playButton.addEventListener('click', () => {
     } else {
       playButton.innerText = 'Play';
       clearInterval(interval);
-      slider.click();
       return;
     }
   // Check if slider position is max
@@ -70,7 +69,7 @@ playButton.addEventListener('click', () => {
       slider.click();
       clearInterval(interval);
     }
-  }, 200);
+  }, 500);
 });
 if ('oninput' in slider) {
     slider.addEventListener(
@@ -88,4 +87,3 @@ if ('oninput' in slider) {
 
 output.innerHTML = slider.value;
 slider.click();
-onYearChange(slider.value);

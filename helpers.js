@@ -52,7 +52,7 @@ var changeCountryTable = function(table, tableBody, countries, tradeType) {
     countries = countries.slice(0, nbrCountriesTable);
 
     var idx = 0;
-    const rowNumber = tableBody.rows.length;
+    var rowNumber = tableBody.rows.length;
     countries.forEach(country => {
         if (rowNumber == 0){
             // Table is empty or rowNumber got decreased and new cells must be added
@@ -95,6 +95,10 @@ function updateRowTable(tableBody, rowNumber, country){
     tableBody.rows[rowNumber].cells[1].innerText = country[1];
 }
 
+function removeRowTable(table, rowNumber){
+    table.deleteRow(rowNumber);
+}
+
 var money_amount_fixer = function(amount){
     return d3.format('.4s')(amount).replace(/G/,"B USD").replace(/M/,"M USD").replace(/k/,"k USD")
 }  
@@ -118,7 +122,7 @@ var load_trade_data = function(prods){
         fetch('./dataset/trade_data_' + prod + '.json')
             .then(x => x.json()).then(trades => {products_dict[prod] = trades})
             .then(_ => {if (prod===selected_prod){current_trades = products_dict[prod];}})
-            .then(onProductChange(selected_prod));
+            .then(onProductChange("all"));
     });
 }
 
@@ -187,3 +191,7 @@ function arc_color_product(cat){
             
     }
 }
+
+var delay = function(time_ms) {
+    return new Promise(resolve => setTimeout(resolve, time_ms));
+  }

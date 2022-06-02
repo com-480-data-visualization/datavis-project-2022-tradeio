@@ -50,14 +50,14 @@ function onProductChange(product){
     if (product === selected_prod) 
         return
 
-    if (selected_prod !== ''){
-        categoryBtnOld = document.getElementById(selected_prod)
-        categoryBtnOld.style.color = 'white'
-    }
+    categoryBtnOld = document.getElementById(selected_prod)
+    categoryBtnOld.style.color = 'white'
+
     categoryBtnNew = document.getElementById(product)
     categoryBtnNew.style.color = 'lime'
 
     selected_prod = product
+
     current_trades = products_dict[product];
     if(GlobaState){
         radiate_arcs(lastClickEvent["polygon"], lastClickEvent["event"],0,0)   
