@@ -48,6 +48,7 @@ const getVal = feat => {
 load_data_and_globe(products);
 
 function reset() {
+    polygon_iso = ""
     base_card.innerHTML = ''
     countryTable.style.visibility='hidden'
     myGlobe.arcsData([]);
