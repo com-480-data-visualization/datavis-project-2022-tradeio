@@ -105,7 +105,7 @@ var PolygonColorChanger = function(d,polygon,arcArray){
 }
 
 
-var load_trade_data = async function(prods) {
+var load_data_and_globe = async function(prods) {
     for (const prod of prods){
         await fetch('./dataset/trade_data_' + prod + '.json')
             .then(x => x.json())
@@ -113,6 +113,9 @@ var load_trade_data = async function(prods) {
                 products_dict[prod] = trades;
                 if (prod===selected_prod){
                     current_trades = products_dict[prod];
+                    // Start to load country coords and globe once the first data set has been loaded
+                    fetch('./dataset/country_coords.json').then(res => res.json()).then(coords =>{country_locs = coords; });
+                    fetch('./dataset/countries.geojson').then(res => res.json()).then(countries =>{init_globe(countries) });
                 }
             })
             .then(onProductChange("all"))
