@@ -12,6 +12,7 @@ var products_dict = {}
 let interval;
 var polygon_country = {lat:0, lng:0, altitude:2};
 
+var polygon_iso = "";
 var selected_year = "2019";
 var selected_prod = "all";
 var tradeType =  document.getElementById("trade").value; 
@@ -26,6 +27,7 @@ var current_trades;
 var polygon_dict = {};
 var country_locs;
 var globeClick = false;
+
 
 
 const getVal = feat => {
@@ -76,7 +78,6 @@ function radiate_arcs(polygon, event, { lat: clicklat, lng:clicklng, altitude })
     })
     arcArray = newArcArray
     
-    polygon_arc = polygon
     //Reset polygonLabel
     myGlobe.controls().domElement.previousElementSibling.innerHTML = ''
     //After reset display the country card again
@@ -140,8 +141,12 @@ function radiate_arcs(polygon, event, { lat: clicklat, lng:clicklng, altitude })
 
     polygon_country.lat = tradeType == "import_value" ? trgt[0] : src[0]
     polygon_country.lng = tradeType == "import_value" ? trgt[1] : src[1]
-     
-    myGlobe.pointOfView(polygon_country, 1000)
+    
+    if (polygon_iso != polygon.properties.ISO_A2){
+        myGlobe.pointOfView(polygon_country, 1000);
+        polygon_iso = polygon.properties.ISO_A2;
+    }
+    
 
     
     changeCountryTable(countryTable, tableBody, countriesTable, tradeType)
