@@ -43,12 +43,16 @@ const getVal = feat => {
     
 }
 
+const load_globe_and_data = async () => {
+    console.log('load_trade_data')
+    await load_trade_data(products);
+    console.log('Load country coords')
+    await fetch('./dataset/country_coords.json').then(res => res.json()).then(coords =>{country_locs = coords; });
+    console.log('Initialize globe')
+    await fetch('./dataset/countries.geojson').then(res => res.json()).then(countries =>{init_globe(countries) });
+}
 
-load_trade_data(products);
-fetch('./dataset/country_coords.json').then(res => res.json()).then(coords =>{country_locs = coords; });
-fetch('./dataset/countries.geojson').then(res => res.json()).then(countries =>{init_globe(countries) });
-
-
+load_globe_and_data();
 
 function reset() {
     base_card.innerHTML = ''

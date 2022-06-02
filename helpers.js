@@ -110,7 +110,8 @@ var load_trade_data = function(prods){
         fetch('./dataset/trade_data_' + prod + '.json')
             .then(x => x.json()).then(trades => {products_dict[prod] = trades})
             .then(_ => {if (prod===selected_prod){current_trades = products_dict[prod];}})
-            .then(onProductChange("all"));
+            .then(onProductChange("all"))
+            .then(console.log('Finished loading trade data'));
     });
 }
 
