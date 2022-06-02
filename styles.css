@@ -4,7 +4,7 @@
 
 
 body {
-  background-color: black;
+  background-color: rgba(0, 0, 0, 1);
   overflow-y: hidden; /* Hide vertical scrollbar */
   overflow-x: hidden; /* Hide horizontal scrollbar */
 } 
@@ -505,4 +505,5 @@ svg {
   background-size: 100px 100px;
   background-repeat: no-repeat;
   background-position: 50% 10%;
+  
 }
