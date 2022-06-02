@@ -64,7 +64,6 @@ function reset({ lat: endLat, lng: endLng }) {
 
 function radiate_arcs(polygon, event, { lat: clicklat, lng:clicklng, altitude }){
     if(!Object.keys(current_trades[selected_year]).includes(polygon.properties.ISO_A2)){
-        reset();
         return;
     }
     polygon_arc = polygon
