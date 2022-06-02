@@ -29,6 +29,7 @@ body {
   color: white;
   /*text-align: center;*/
   width: 100%;
+  visibility: hidden;
 }
 
 .bottom-info-container {
@@ -169,6 +170,7 @@ table {
   color: white;
   width: 60%;
   align-items: center;
+  visibility: hidden;
 }
 
 .timeline-container {
@@ -487,27 +489,32 @@ svg {
   z-index: 1;
 }
 
-#loading {
+
+#loading_screen {
   display: flex;
   position: fixed;
   z-index: 100;
   width: 100%;
   height: 100%;
+  top: 30%;
+  font-size: large;
+  justify-content: center;
+  color:white;
   background-color: rgba(0, 0, 0, 1);
-  /* background-image: url("https://i.stack.imgur.com/MnyxU.gif"); */
   background-image: url("https://c.tenor.com/UnFx-k_lSckAAAAC/amalie-steiness.gif");
   background-size: 100px 100px;
   background-repeat: no-repeat;
-  background-position: center;
+  background-position: 50% 10%;
 }
 
-#text_loading {
+/* #loading_text {
   display: flex;
   position: fixed;
+  z-index: 100;
   width: 100%;
   height: 100%;
   color:white;
   justify-content: center;
-  top: 40%;
+  top: 45%;
   font-size: large;
-}
+} */

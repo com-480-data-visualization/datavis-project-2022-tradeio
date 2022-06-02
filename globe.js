@@ -43,16 +43,12 @@ const getVal = feat => {
     
 }
 
-setVisible('#loading', true);
 
 load_trade_data(products);
 fetch('./dataset/country_coords.json').then(res => res.json()).then(coords =>{country_locs = coords; });
 fetch('./dataset/countries.geojson').then(res => res.json()).then(countries =>{init_globe(countries) });
 
-document.addEventListener('DOMContentLoaded', () =>
-  wait(3000).then(() => {
-    setVisible('#loading', false);
-  }));
+
 
 function reset({ lat: endLat, lng: endLng }) {
     base_card.innerHTML = ''
@@ -212,7 +208,12 @@ function init_globe(countries){
     .onPolygonHover(hoverD => {
         myGlobe.polygonAltitude(d => d === hoverD ? 0.1 : 0.01);
     })
-    .onPolygonClick(radiate_arcs)  
+    .onPolygonClick(radiate_arcs) 
+    .onGlobeReady(() => {
+        document.getElementById('loading_screen').style.visibility='hidden'
+        document.getElementsByClassName('top-info-container')[0].style.visibility='visible'
+        document.getElementsByClassName('slider-container')[0].style.visibility='visible'
+    })
     
     for (const poly of myGlobe.polygonsData()) {
         polygon_dict[poly.properties.ISO_A2] = poly;
