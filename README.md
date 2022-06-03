@@ -52,7 +52,7 @@ All logic components of our project are organized as follows:
 ## Website
 The website is available at: **[TradeIO website](https://com-480-data-visualization.github.io/datavis-project-2022-tradeio/)**
 
-Here is a short Screencast of our website. Simply click on the image to open it :)
+Below is a short Screencast of our website. Simply click on the image to open it :)
 
 [![Screencast](./images/thumbnail.JPG)](https://www.youtube.com/watch?v=EzGVMe7kMHk)
 
