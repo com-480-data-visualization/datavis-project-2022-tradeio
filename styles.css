@@ -187,6 +187,16 @@ table {
   align-items: center;
 }
 
+.labels-container {
+  z-index: 100;
+  position: fixed;
+  top: 60px;
+  display: flex;
+  color: white;
+  width: 60%;
+  align-items: center;
+}
+
 .slider {
   -webkit-appearance: none;
   height: 2px;
