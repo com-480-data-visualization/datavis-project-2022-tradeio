@@ -21,7 +21,7 @@
 
 ## Milestone 3 (4th June, 5pm)
 
-**80% of the final grade**
+[Milestone 3 - README](./Milestones/Milestone3/README.md)
 
 
 ## Late policy
