@@ -185,6 +185,7 @@ table {
   color: white;
   width: 60%;
   align-items: center;
+  visibility: hidden;
 }
 
 .labels-container {
@@ -195,6 +196,7 @@ table {
   color: white;
   width: 60%;
   align-items: center;
+  visibility: hidden;
 }
 
 .slider {
