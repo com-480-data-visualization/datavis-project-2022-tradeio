@@ -1,13 +1,10 @@
 # Milestone 3
 
-The project is organized as follows:
-* [`dataset/`](../../dataset): Directory containing the data required by the website. Either created by the  [`data_creation.ipynb`](../../data_creation.ipynb) or acquired from our sources. 
-* [`images/`](../../images): a directory contaninig images used for the website and several milestone reports.
-* [`Milestones/`](../): Directory containing our reports for all milestones. You are currently here under its Milestone3 sub-directory
-* Various front-end Files: Further information about them can be found [`here`](./FrontEnd.md)
+All logic components of our project are organized as follows:
 
-The website is available at: **[TradeIO website](https://com-480-data-visualization.github.io/datavis-project-2022-tradeio/)**
-
-The screencast can be found here: **[2 minutes presentation video](https://www.youtube.com/watch?v=EzGVMe7kMHk)**
-
-The process book can be opened from: **[Report.pdf](Report.pdf)**
+* [`Globe.js`](../../globe.js): Main logic file of our website. Prepares the globe and coordinates all others javascript files.
+* [`index.html`](../../images): Main HTML file of our website.
+* [`helpers.js`](../): A file that contains all the helper functions that are used in globe.js
+* [`slider.js`](../): A file that contains logic for the slider.
+* [`EventHanflers.js`](../): A file that contains all the Event handlers that are used in globe.js and index.html
+* [`styles.css`](../): A basic css file.
