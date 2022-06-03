@@ -2,7 +2,7 @@
 
 The project is organized as follows:
 * [`dataset/`](../../dataset): Directory containing the data required by the website. Either created by the  [`data_creation.ipynb`](../../data_creation.ipynb) or acquired from our sources. 
-* [`images/`](../../images): Directory contaninig images used for the website and several milestone reports.
+* [`images/`](../../images): Directory containing images used for the website and several milestone reports.
 * [`Milestones/`](../): Directory containing our reports for all milestones. You are currently here under its Milestone3 sub-directory
 * Various front-end Files: Further information about them can be found [`here`](./FrontEnd.md)
 
