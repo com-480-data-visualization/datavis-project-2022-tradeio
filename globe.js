@@ -225,6 +225,8 @@ function init_globe(countries){
         document.getElementById('loading_screen').style.visibility='hidden'
         document.getElementsByClassName('top-info-container')[0].style.visibility='visible'
         document.getElementsByClassName('slider-container')[0].style.visibility='visible'
+        document.getElementsByClassName('ticks-container')[0].style.visibility='visible'
+        document.getElementsByClassName('labels-container')[0].style.visibility='visible'
     })
     
     for (const poly of myGlobe.polygonsData()) {
