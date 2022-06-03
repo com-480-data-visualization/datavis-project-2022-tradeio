@@ -10,4 +10,4 @@ The website is available at: **[Data visualization website](https://com-480-data
 
 The screencast can be found here: **[2 minutes presentation video](https://youtu.be/cbLrn1bC-Xw)**
 
-The process book can be opened from: **[Processbook.pdf](Processbook.pdf)**
+The process book can be opened from: **[Report.pdf](Report.pdf)**
