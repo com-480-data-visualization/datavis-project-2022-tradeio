@@ -6,7 +6,7 @@ The project is organized as follows:
 * [`python/`](../python): the python related code: exploratory data analysis and data generation script
 * [`report/`](../report): this very directory, containing our reports
 
-The website is available at: **[Data visualization website](https://com-480-data-visualization.github.io/data-visualization-project-2021-ufa/)**
+The website is available at: **[TradeIO website](https://com-480-data-visualization.github.io/data-visualization-project-2022-Tradeio)**
 
 The screencast can be found here: **[2 minutes presentation video](https://www.youtube.com/watch?v=EzGVMe7kMHk)**
 
