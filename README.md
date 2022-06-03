@@ -21,7 +21,7 @@
 
 ## Milestone 3 (4th June, 5pm)
 
-[Milestone 3 - Process book](./Milestones/Milestone3/ProcessBook.pdf)
+[Milestone 3 - Process book](./Milestones/ProcessBook.pdf)
 
 
 ## Technical setup
