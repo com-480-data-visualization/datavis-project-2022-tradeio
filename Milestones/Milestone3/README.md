@@ -2,9 +2,9 @@
 
 The project is organized as follows:
 * [`dataset/`](../../dataset): Directory containing the data required by the website. Either created by the  [`data_creation.ipynb`](../../data_creation.ipynb) or acquired from our sources. 
-* [`mockup/`](../mockup): a directory to store our sketches and mockups
-* [`python/`](../python): the python related code: exploratory data analysis and data generation script
+* [`images/`](../../images): a directory contaninig images used for the website and several milestone reports.
 * [`Milestones/`](../): Directory containing our reports for all milestones. You are currently here under its Milestone3 sub-directory
+* [`Various FrontEnd Files/`]: Further information about them can be found [`here`](../FrontEnd.md)
 
 The website is available at: **[TradeIO website](https://com-480-data-visualization.github.io/datavis-project-2022-tradeio/)**
 
